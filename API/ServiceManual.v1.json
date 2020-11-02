@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ServiceManual",
+    "version": "1.0",
+    "contact": {
+      "name": "Kimmo Juusola",
+      "email": "c8juki00@students.oamk.fi"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login user",
+        "operationId": "post-login",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Username or password not found"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Basic",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Register new user",
+        "operationId": "post-register",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformation"
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/cars/{carId}": {
+      "get": {
+        "summary": "Get your car",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarInformation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-cars-carId",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "carId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Edit your car",
+        "operationId": "put-cars-carId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarInformation"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete your car",
+        "operationId": "delete-cars-carId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get personal information",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-users",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [],
+      "put": {
+        "summary": "Edit personal information",
+        "operationId": "put-user",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInformation"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "operationId": "delete-user",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      }
+    },
+    "/cars": {
+      "post": {
+        "summary": "Add new car",
+        "operationId": "post-cars",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarInformation"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all your cars",
+        "operationId": "get-cars",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarInformation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      }
+    },
+    "/services/{carId}": {
+      "get": {
+        "summary": "Get car services",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceInformation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-services-carId",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "carId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Add new service",
+        "operationId": "post-services-carId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceInformation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/{carId}/{serviceId}": {
+      "get": {
+        "summary": "Get service",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceInformation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-services-carId-serviceId",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "carId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "serviceId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Edit service",
+        "operationId": "put-services-carId-serviceId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceInformation"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete service",
+        "operationId": "delete-services-carId-serviceId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CarInformation": {
+        "title": "CarInformation",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "yearModel": {
+            "type": "string"
+          },
+          "motor": {
+            "type": "string"
+          },
+          "licenseNumber": {
+            "type": "string"
+          },
+          "dateOfAddition": {
+            "type": "string",
+            "description": "YYYY-MM-DD / ISO 8601"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "brand",
+          "model",
+          "yearModel",
+          "licenseNumber",
+          "dateOfAddition",
+          "userId"
+        ]
+      },
+      "UserInformation": {
+        "title": "UserInformation",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phonenumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "required": [
+              "street",
+              "city",
+              "postcode",
+              "country"
+            ],
+            "properties": {
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string",
+                "description": "ISO 3166"
+              }
+            }
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "firstname",
+          "lastname",
+          "email",
+          "phonenumber",
+          "address"
+        ]
+      },
+      "ErrorResponse": {
+        "title": "ErrorResponse",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ServiceInformation": {
+        "title": "ServiceInformation",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dateOfService": {
+            "type": "string",
+            "description": "YYYY-MM-DD / ISO 8601"
+          },
+          "mileAge": {
+            "type": "string"
+          },
+          "motorOilChange": {
+            "type": "object",
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "longLifeOilUsed": {
+                "type": "boolean"
+              }
+            }
+          },
+          "airConditioningService": {
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "dryer": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalServices": {
+            "type": "object",
+            "properties": {
+              "sparkPlugReplacement": {
+                "type": "boolean"
+              },
+              "airFilterReplacement": {
+                "type": "boolean"
+              },
+              "cleanAirReplacement": {
+                "type": "boolean"
+              },
+              "fuelFilterReplacement": {
+                "type": "boolean"
+              },
+              "brakeFluidReplacement": {
+                "type": "boolean"
+              },
+              "gearBoxOilReplacement": {
+                "type": "boolean"
+              },
+              "powerSteeringOilReplacement": {
+                "type": "boolean"
+              },
+              "timingBeltReplacement": {
+                "type": "boolean"
+              },
+              "waterPumpReplacement": {
+                "type": "boolean"
+              },
+              "dieselParticulateFilterReplacement": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalInformation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "dateOfService",
+          "mileAge"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "HTTP-Bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
