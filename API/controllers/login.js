@@ -1,8 +1,26 @@
 const express = require('express');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+const jwtSecret = require('../jwt-secret.json');
+
 router.post('/', (req, res) => {
-    res.sendStatus(200);
+    const user = req.user;
+    const body = {
+        username: user.email,
+        id: user.idUsers
+    };
+
+    const payload = {
+        user: body
+    };
+
+    const options = {
+        expiresIn: '20s'
+    }
+
+    const token = jwt.sign(payload, jwtSecret.secret, options);
+    return res.json({ token });
 });
 
 module.exports = router;
