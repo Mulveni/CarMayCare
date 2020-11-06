@@ -16,6 +16,15 @@ const utils = {
                 reject(error);
             });
         });
+    },
+    getUserInfo: (userId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM users WHERE idUsers = ?', [userId]).then(results => {
+                resolve(results[0]);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
 
