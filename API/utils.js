@@ -34,6 +34,26 @@ const utils = {
                 reject(error);
             });
         });
+    },
+    updateUser: (updateUser, userId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('UPDATE users SET firstName = ?, lastName = ?, email = ?, phonenumber = ?, street = ?, city = ?, postcode = ?, country = ? WHERE idUsers = ?',
+                [updateUser.firstname, updateUser.lastname, updateUser.email, updateUser.phonenumber, updateUser.address.street, updateUser.address.city, updateUser.address.postcode, updateUser.address.country, userId]).then(results => {
+                    resolve(results);
+                }).catch(error => {
+                    reject(error);
+                });
+        });
+    },
+    updatePassword: (password, userId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('UPDATE users SET password = ? WHERE idUsers = ?',
+                [password, userId]).then(results => {
+                    resolve(results);
+                }).catch(error => {
+                    reject(error);
+                });
+        });
     }
 }
 

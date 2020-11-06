@@ -16,6 +16,21 @@ const models = {
             password: userInfo.password
         }
         return newUserModel;
+    },
+    updateModel: () => {
+        const updateModel = {
+            firstname: "string",
+            lastname: "string",
+            email: "string",
+            phonenumber: "string",
+            address: {
+                street: "string",
+                city: "string",
+                postcode: "string",
+                country: "string"
+            }
+        }
+        return updateModel;
     }
 
 }
