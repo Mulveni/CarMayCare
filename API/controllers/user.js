@@ -22,4 +22,20 @@ router.put('/', (req, res) => {
     res.sendStatus(201);
 });
 
+router.delete('/', async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const result = await utils.deleteUser(userId);
+        if (result.affectedRows > 0) {
+            res.sendStatus(201);
+        } else {
+            res.status(400).send({ message: "User doesn't exist." })
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Error while trying to delete user." });
+    }
+});
+
 module.exports = router;

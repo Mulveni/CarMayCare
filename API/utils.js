@@ -25,6 +25,15 @@ const utils = {
                 reject(error);
             });
         });
+    },
+    deleteUser: (userId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('DELETE FROM users WHERE idUsers = ?', [userId]).then(results => {
+                resolve(results);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
 
