@@ -50,10 +50,8 @@ router.post('/', [
 
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
     const errorArray = errors.array();
-    console.log(errors);
 
     if (!errors.isEmpty()) {
-        console.log("eka errori");
       res.status(400).json({message: errorArray[0].msg});
       return;
     }
@@ -69,8 +67,6 @@ router.post('/', [
     result = await utils.addUser(firstname,lastname,email,phonenumber,street,city,postcode,country,password);
     res.sendStatus(201);
 } catch (error) {
-    console.log(error);
-    console.log("toka errori");
     return res.status(400).json({ message: errorArray[0].msg});
 }
 })
