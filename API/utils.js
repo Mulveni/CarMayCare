@@ -17,7 +17,21 @@ const utils = {
             });
         });
     },
-    getUserInfo: (userId) => {
+
+
+    addUser: (firstname,lastname,email,phonenumber,street,city,postcode,country,password) => {
+        return new Promise(function (resolve, reject) {
+            db.query("INSERT INTO users(firstname, lastname, email, phonenumber, street, city, postcode, country, password) VALUES(?,?,?,?,?,?,?,?,?)",
+            [firstname,lastname,email,phonenumber,street,city,postcode,country,password]).then(results =>{
+            resolve(results);
+
+            }).catch(error =>{
+                reject(error);
+            });
+        });
+    },
+
+     getUserInfo: (userId) => {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM users WHERE idUsers = ?', [userId]).then(results => {
                 resolve(results[0]);
@@ -54,7 +68,21 @@ const utils = {
                     reject(error);
                 });
         });
+    },
+    checkEmailAvailability: (email) => {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM users WHERE email = ?',[email]).then(results => {
+                if(results.length > 0){ 
+                resolve (true);
+                }
+                else{
+                resolve (false);
+                }                 
+            }).catch(error =>{
+                reject(error);
+                
+            });
+         })
+        }
     }
-}
-
 module.exports = utils;
