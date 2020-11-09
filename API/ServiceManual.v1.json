@@ -641,7 +641,7 @@
     },
     "/notes/{carId}": {
       "get": {
-        "summary": "Get notes",
+        "summary": "Create new note",
         "tags": [],
         "responses": {
           "200": {
@@ -692,7 +692,49 @@
           "in": "path",
           "required": true
         }
-      ]
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "post-notes-carId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Create new note for car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
