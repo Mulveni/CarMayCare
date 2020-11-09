@@ -561,6 +561,138 @@
           }
         }
       }
+    },
+    "/notes/{noteId}": {
+      "put": {
+        "summary": "Update note",
+        "operationId": "put-notes",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Update note of car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete note",
+        "operationId": "delete-notes",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Delete note of car"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "noteId",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/notes/{carId}": {
+      "get": {
+        "summary": "Get notes",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notes": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-notes",
+        "description": "Get all notes of car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "carId",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "components": {
@@ -581,7 +713,10 @@
           "yearModel": {
             "type": "string"
           },
-          "motor": {
+          "powerType": {
+            "type": "string"
+          },
+          "engineSize": {
             "type": "string"
           },
           "licenseNumber": {
@@ -593,12 +728,6 @@
           },
           "userId": {
             "type": "string"
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         },
         "required": [
@@ -606,6 +735,8 @@
           "brand",
           "model",
           "yearModel",
+          "powerType",
+          "engineSize",
           "licenseNumber",
           "dateOfAddition",
           "userId"
