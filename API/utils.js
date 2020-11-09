@@ -24,14 +24,14 @@ const utils = {
             db.query("INSERT INTO users(firstname, lastname, email, phonenumber, street, city, postcode, country, password) VALUES(?,?,?,?,?,?,?,?,?)",
             [firstname,lastname,email,phonenumber,street,city,postcode,country,password]).then(results =>{
             resolve(results);
-              
+
             }).catch(error =>{
                 reject(error);
             });
         });
     },
 
-    getUserInfo: (userId) => {
+     getUserInfo: (userId) => {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM users WHERE idUsers = ?', [userId]).then(results => {
                 resolve(results[0]);
@@ -68,14 +68,10 @@ const utils = {
                     reject(error);
                 });
         });
-    }
-}
-
+    },
     checkEmailAvailability: (email) => {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE email = ?',[email]).then(results => {
-                console.log(results.length);
-               // console.log("EMAIL COUNT : "+results[0].length);
                 resolve(results.length);
                 if(results.length > 0){ 
                 resolve (true);
@@ -89,6 +85,6 @@ const utils = {
                 
             });
          })
-}
-}  
+        }
+    }
 module.exports = utils;

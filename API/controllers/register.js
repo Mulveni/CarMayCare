@@ -15,7 +15,7 @@ router.post('/', [
     body('lastname','Lastname cannot be left blank')
     .isLength({ min: 2 }),
 
-    body('email')
+    body('email',"Email cannot be left blank")
     .isLength({ min: 6, max: 100 })
     .isEmail()
     .normalizeEmail()
@@ -53,7 +53,8 @@ router.post('/', [
     console.log(errors);
 
     if (!errors.isEmpty()) {
-      res.status(422).json({message: errorArray[0].msg});
+        console.log("eka errori");
+      res.status(400).json({message: errorArray[0].msg});
       return;
     }
     const firstname = req.body.firstname;
@@ -69,6 +70,7 @@ router.post('/', [
     res.sendStatus(201);
 } catch (error) {
     console.log(error);
+    console.log("toka errori");
     return res.status(400).json({ message: errorArray[0].msg});
 }
 })
