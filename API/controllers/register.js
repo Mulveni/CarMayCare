@@ -45,7 +45,6 @@ router.post('/', [
     body('password')
     .isLength({ min: 5 }).withMessage('Password must be at least 5 chars long')
   ],async (req, res) => {
-    var result = [];
     try {
 
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -64,8 +63,12 @@ router.post('/', [
     const postcode = req.body.address.postcode;
     const country = req.body.address.country;
     const password = bcrypt.hashSync(req.body.password, 5);
-    result = await utils.addUser(firstname,lastname,email,phonenumber,street,city,postcode,country,password);
-    res.sendStatus(201);
+    try {
+      await utils.addUser(firstname,lastname,email,phonenumber,street,city,postcode,country,password);
+      res.sendStatus(201);
+    } catch (error) {
+      res.sendStatus(500);
+    }    
 } catch (error) {
     return res.status(400).json({ message: errorArray[0].msg});
 }
