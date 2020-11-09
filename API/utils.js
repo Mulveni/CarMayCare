@@ -72,7 +72,6 @@ const utils = {
     checkEmailAvailability: (email) => {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE email = ?',[email]).then(results => {
-                resolve(results.length);
                 if(results.length > 0){ 
                 resolve (true);
                 }
@@ -80,7 +79,6 @@ const utils = {
                 resolve (false);
                 }                 
             }).catch(error =>{
-                console.log("error:"+ error);
                 reject(error);
                 
             });
