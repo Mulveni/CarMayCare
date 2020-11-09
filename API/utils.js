@@ -18,19 +18,11 @@ const utils = {
         });
     },
 
-    addUser: (userInfo) => {
+    addUser: (firstname,lastname,email,phonenumber,street,city,postcode,country,password) => {
         return new Promise(function (resolve, reject) {
-            db.query("INSERT INTO users(firstname, lastname, email, phonenumber, street, city, postcode, country, password) VALUES(?,?,?,?,?,?,?,?,?)"),
-            [userInfo.firstname, 
-            userInfo.lastname, 
-            userInfo.email, 
-            userInfo.phonenumber, 
-            userInfo.address.street, 
-            userInfo.address.city, 
-            userInfo.address.postcode, 
-            userInfo.address.country, 
-            userInfo.password].then(results =>{
-            resolve(results[i]);
+            db.query("INSERT INTO users(firstname, lastname, email, phonenumber, street, city, postcode, country, password) VALUES(?,?,?,?,?,?,?,?,?)",
+            [firstname,lastname,email,phonenumber,street,city,postcode,country,password]).then(results =>{
+            resolve(results);
 
             }).catch(error =>{
                 reject(error);
@@ -39,14 +31,21 @@ const utils = {
     },
     checkEmailAvailability: (email) => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * AS total FROM users WHERE email = ?', [email], function (error, results, fields) {
-                if(!error){
-                    console.log("EMAIL COUNT : "+results[0].total);
-                    return resolve(results[0].total > 0);
-                } else {
-                    return reject(new Error('Database error!!'));
+            db.query('SELECT * FROM users WHERE email = ?',[email]).then(results => {
+                console.log(results.length);
+               // console.log("EMAIL COUNT : "+results[0].length);
+                resolve(results.length);
+                if(results.length > 0){ 
+                resolve (true);
                 }
-            })
+                else{
+                resolve (false);
+                }                 
+            }).catch(error =>{
+                console.log("error:"+ error);
+                reject(error);
+                
+            });
          })
 }
 }  

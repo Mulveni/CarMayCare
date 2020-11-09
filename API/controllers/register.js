@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const utils = require('../utils');
 const { body, validationResult } = require('express-validator');
-const bcryptRounds = 5;
+
 
 router.post('/', [
     
@@ -19,13 +19,7 @@ router.post('/', [
     .isLength({ min: 6, max: 100 })
     .isEmail()
     .normalizeEmail()
-    .trim()
-    /*.custom(async email => {
-        const value = await utils.checkEmailAvailability(email);
-        if (value) {
-            throw new Error('Email is already exists!!!');
-        }
-    })*/,
+    .trim(),
 
     body("phonenumber").isMobilePhone(),
 
@@ -43,28 +37,34 @@ router.post('/', [
 
     body('password')
     .isLength({ min: 5 }).withMessage('Password must be at least 5 chars long')
-  ], (req, res) => {
-      
+  ],async (req, res) => {
+    var result = [];
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const email = req.body.email;
+    const phonenumber = req.body.phonenumber;
+    const street = req.body.address.street;
+    const city = req.body.address.city;
+    const postcode = req.body.address.postcode;
+    const country = req.body.address.country;
+    const password = bcrypt.hashSync(req.body.password, 5);
     // Finds the validation errors in this request and wraps them in an object with handy functions
-    const {user_name, user_pass, user_email} = req.body;
     const validation_result = validationResult(req);
     const errors = validationResult(req);
+    const errorArray = errors.array();
+    const value = await utils.checkEmailAvailability(email);
+    if (value) {
+        return res.status(400).json({ message:"Email already exists"});
+    }
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errorArray[0].msg});
     } else {
-        console.log("----->START USER REGISTRATION");
-        const firstname = req.body.firstname;
-        const lastname = req.body.mentionName;
-        const email = req.body.email;
-        const phonenumber = req.body.phonenumber;
-        const street = req.body.address.street
-        const city = req.body.address.city;
-        const postcode = req.body.address.postcode;
-        const country = req.body.address.country;
-        const password = req.body.password;
-        bcrypt.hash(password, bcryptRounds, function(err, hash) {
-            console.log("HASH PASS : "+hash);
-        });
+        try {          
+            result = await utils.addUser(firstname,lastname,email,phonenumber,street,city,postcode,country,password);
+            res.sendStatus(201);           
+        } catch (error) {
+            res.sendStatus(500);
+        }
     }
 })
 module.exports = router;
