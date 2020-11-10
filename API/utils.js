@@ -18,12 +18,208 @@ const utils = {
         });
     },
 
+    getCars: (userId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ?', userId).then(results => {
+
+                if(results.length !== 0){
+                    resolve(results);
+                    return;
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    getCar: (userId, carId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?',[userId,carId]).then(results => {
+                
+                if(results.length !== 0){
+                    resolve(results);
+                    return;
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    deleteCar: (userId, carId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('DELETE FROM cars WHERE idCars = ? AND idUsers = ?',[carId,userId]).then(results => {
+
+                resolve(results);
+
+            }).catch(error => {
+                console.log(error);
+                reject(error);
+            });
+        });
+    },
+
+    postCar: (car) => {
+        return new Promise(function (resolve, reject) {
+            db.query('INSERT INTO cars (brand, model, yearModel, powerType, engineSize, licenseNumber, idUsers) VALUES(?,?,?,?,?,?,?)',
+            [car.brand, car.model, car.yearModel, car.powerType, car.engineSize, car.licenseNumber, car.userId]).then(results => {
+                console.log(results);
+                resolve(results);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    updateCar: (userId, carId, car) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idCars = ? AND idUsers = ?',[carId,userId]).then(result => {
+
+                if(result.length !== 0){
+                    if(car.brand === null){ 
+                        car.brand = result[0].brand;
+                    }
+                    if(car.model === null){
+                        car.model = result[0].model;
+                    }
+                    if(car.yearModel === null){
+                        car.yearModel = result[0].yearModel;
+                    }
+                    if(car.powerType === null){
+                        car.powerType = result[0].powerType;
+                    }
+                    if(car.engineSize === null){
+                        car.engineSize = result[0].engineSize;
+                    }
+                    if(car.licenseNumber === null){
+                        car.licenseNumber = result[0].licenseNumber;
+                    }
+                    
+                    resolve(db.query('UPDATE cars SET brand = ?, model= ?, yearModel = ?, powerType = ?, engineSize = ?, licenseNumber = ? WHERE idCars = ? AND idUsers = ?',
+                    [car.brand, car.model, car.yearModel, car.powerType, car.engineSize, car.licenseNumber, carId, userId]));
+                }
+
+                else{
+                    resolve(false);
+                }
+
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    postNote: (userId, carId, note) => {
+        return new Promise(function (resolve, reject) {
+        
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [userId,carId]).then(results => {
+
+                if(results.length !== 0){
+                    resolve(db.query('INSERT INTO notes (note, idCars) VALUES(?,?)', [note, carId]));
+                    return;
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    getNotes: (userId, carId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [userId,carId]).then(results => {
+
+                if(results.length !== 0){
+                    resolve(db.query('SELECT * FROM notes WHERE idCars = ?', carId));
+                    return;
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    updateNote: (userId, noteId, note) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM notes WHERE idNotes = ?', noteId).then(results => {
+                if(results.length !== 0){
+
+                    if(db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [userId,results[0].idCars]).length !== 0)
+                    {
+                        resolve(db.query('UPDATE notes SET note = ? WHERE idNotes = ?',[note, noteId]));
+                        return;
+                    }
+                    
+                    else{
+                        resolve(false);
+                        return;
+                    }
+                    
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    deleteNote: (userId, noteId) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM notes WHERE idNotes = ?', noteId).then(results => {
+                if(results.length !== 0){
+
+                    if(db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [userId,results[0].idCars]).length !== 0)
+                    {
+                        resolve(db.query('DELETE FROM notes WHERE idCars = ? AND idNotes = ?',[results[0].idCars,noteId]));
+                        return;
+                    }
+                    
+                    else{
+                        resolve(false);
+                        return;
+                    }
+                    
+                }
+                else{
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
 
     addUser: (firstname,lastname,email,phonenumber,street,city,postcode,country,password) => {
         return new Promise(function (resolve, reject) {
             db.query("INSERT INTO users(firstname, lastname, email, phonenumber, street, city, postcode, country, password) VALUES(?,?,?,?,?,?,?,?,?)",
             [firstname,lastname,email,phonenumber,street,city,postcode,country,password]).then(results =>{
             resolve(results);
+
 
             }).catch(error =>{
                 reject(error);
@@ -83,6 +279,6 @@ const utils = {
                 
             });
          })
-        }
     }
+}
 module.exports = utils;

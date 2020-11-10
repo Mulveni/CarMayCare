@@ -19,6 +19,7 @@ const loginController = require('./controllers/login');
 const userController = require('./controllers/user');
 const carsController = require('./controllers/cars');
 const servicesController = require('./controllers/services');
+const notesController = require('./controllers/notes');
 
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy, ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -65,6 +66,7 @@ app.use('/register', registerController);
 app.use('/login', passport.authenticate('basic', { session: false }), loginController);
 app.use('/user', passport.authenticate('jwt', { session: false }), userController);
 app.use('/cars', passport.authenticate('jwt', { session: false }), carsController);
+app.use('/notes', passport.authenticate('jwt', { session: false }), notesController);
 app.use('/services', passport.authenticate('jwt', { session: false }), servicesController);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
