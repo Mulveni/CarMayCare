@@ -3,13 +3,20 @@ const router = express.Router();
 const utils = require('../utils');
 
 router.post('/:carId', async(req, res) => {
+
+    if('note' in req.body == false || req.body.note == "") {
+        res.status(400);
+        res.json({message: "Missing note from body"})
+        return;
+    }
+
     try{
         noteResult = await utils.postNote(req.user.id ,req.params.carId, req.body.note);
 
         if(noteResult === false){
             // No results
             res.status(404);
-            res.json({message: "Note not found"})
+            res.json({message: "Car not found"})
             return;       
         }
         else{
@@ -26,7 +33,6 @@ router.post('/:carId', async(req, res) => {
     }
 
 });
-
 
 router.get('/:carId', async(req, res) => {
 
@@ -55,6 +61,13 @@ router.get('/:carId', async(req, res) => {
 });
 
 router.put('/:noteId', async(req, res) => {
+
+    if('note' in req.body == false || req.body.note == "") {
+        res.status(400);
+        res.json({message: "Missing note from body"})
+        return;
+    }
+
     try {
         noteResult = await utils.updateNote(req.user.id ,req.params.noteId, req.body.note);
         if(noteResult === false){
@@ -97,7 +110,6 @@ router.delete('/:noteId', async(req, res) => {
         return;
     }
 });
-
 
 
 module.exports = router;

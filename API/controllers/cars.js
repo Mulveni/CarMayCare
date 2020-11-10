@@ -93,7 +93,7 @@ router.post('/', async(req, res) => {
                 return;       
             }
             else{
-                res.status(200);
+                res.status(201);
                 res.json(carsResult); 
                 return;
             }
@@ -189,7 +189,7 @@ router.delete('/:carId', async(req, res) => {
             
         }
         else{
-            res.status(200);
+            res.status(201);
             res.json({message: "Car has been deleted"})
             return;
         }
@@ -200,6 +200,5 @@ router.delete('/:carId', async(req, res) => {
         return;
     }
 });
-
 
 module.exports = router;
