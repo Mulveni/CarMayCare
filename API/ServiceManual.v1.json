@@ -170,7 +170,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CarInformation"
+                "$ref": "#/components/schemas/UpdateUser"
               }
             }
           }
@@ -304,7 +304,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CarInformation"
+                "$ref": "#/components/schemas/UpdateCar"
               }
             }
           }
@@ -419,7 +419,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceInformation"
+                "$ref": "#/components/schemas/UpdateService"
               }
             }
           }
@@ -497,7 +497,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceInformation"
+                "$ref": "#/components/schemas/UpdateService"
               }
             }
           }
@@ -565,7 +565,7 @@
     "/notes/{noteId}": {
       "put": {
         "summary": "Update note",
-        "operationId": "put-notes",
+        "operationId": "put-notes-noteid",
         "responses": {
           "201": {
             "description": "Created"
@@ -607,7 +607,7 @@
       },
       "delete": {
         "summary": "Delete note",
-        "operationId": "delete-notes",
+        "operationId": "delete-notes-noteid",
         "responses": {
           "201": {
             "description": "Created"
@@ -694,7 +694,7 @@
         }
       ],
       "post": {
-        "summary": "",
+        "summary": "Create new note",
         "operationId": "post-notes-carId",
         "responses": {
           "201": {
@@ -871,6 +871,10 @@
           },
           "motorOilChange": {
             "type": "object",
+            "required": [
+              "done",
+              "longLifeOilUsed"
+            ],
             "properties": {
               "done": {
                 "type": "boolean"
@@ -881,6 +885,172 @@
             }
           },
           "airConditioningService": {
+            "type": "object",
+            "required": [
+              "done",
+              "dryer"
+            ],
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "dryer": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalServices": {
+            "type": "object",
+            "required": [
+              "sparkPlugReplacement",
+              "airFilterReplacement",
+              "cleanAirReplacement",
+              "fuelFilterReplacement",
+              "brakeFluidReplacement",
+              "gearBoxOilReplacement",
+              "powerSteeringOilReplacement",
+              "timingBeltReplacement",
+              "waterPumpReplacement",
+              "dieselParticulateFilterReplacement"
+            ],
+            "properties": {
+              "sparkPlugReplacement": {
+                "type": "boolean"
+              },
+              "airFilterReplacement": {
+                "type": "boolean"
+              },
+              "cleanAirReplacement": {
+                "type": "boolean"
+              },
+              "fuelFilterReplacement": {
+                "type": "boolean"
+              },
+              "brakeFluidReplacement": {
+                "type": "boolean"
+              },
+              "gearBoxOilReplacement": {
+                "type": "boolean"
+              },
+              "powerSteeringOilReplacement": {
+                "type": "boolean"
+              },
+              "timingBeltReplacement": {
+                "type": "boolean"
+              },
+              "waterPumpReplacement": {
+                "type": "boolean"
+              },
+              "dieselParticulateFilterReplacement": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalInformation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "dateOfService",
+          "mileAge",
+          "motorOilChange",
+          "airConditioningService",
+          "additionalServices",
+          "additionalInformation"
+        ]
+      },
+      "UpdateUser": {
+        "title": "UpdateUser",
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phonenumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "UpdateCar": {
+        "title": "UpdateCar",
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "yearModel": {
+            "type": "string"
+          },
+          "powerType": {
+            "type": "string"
+          },
+          "engineSize": {
+            "type": "string"
+          },
+          "licenseNumber": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brand",
+          "model",
+          "yearModel",
+          "powerType",
+          "engineSize",
+          "licenseNumber"
+        ]
+      },
+      "UpdateService": {
+        "title": "UpdateService",
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "mileAge": {
+            "type": "string"
+          },
+          "motorOilChange": {
+            "type": "object",
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "longLifeOilUsed": {
+                "type": "boolean"
+              }
+            }
+          },
+          "airConditioningService": {
+            "type": "object",
             "properties": {
               "done": {
                 "type": "boolean"
@@ -927,46 +1097,6 @@
           },
           "additionalInformation": {
             "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "dateOfService",
-          "mileAge"
-        ]
-      },
-      "UpdateUser": {
-        "title": "UpdateUser",
-        "type": "object",
-        "properties": {
-          "firstname": {
-            "type": "string"
-          },
-          "lastname": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "phonenumber": {
-            "type": "string"
-          },
-          "address": {
-            "type": "object",
-            "properties": {
-              "street": {
-                "type": "string"
-              },
-              "city": {
-                "type": "string"
-              },
-              "postcode": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              }
-            }
           }
         }
       }
