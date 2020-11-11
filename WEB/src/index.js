@@ -1,10 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import App from './App';
 
-const App = () => (
-  <div>
-    <p>Car Service Manual</p>
-  </div>
-)
 
 ReactDOM.render(<App />, document.getElementById('root'))
