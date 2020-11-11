@@ -4,6 +4,7 @@ import { AccountBox, Close, DriveEta } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
@@ -33,9 +34,9 @@ const Navigation = () => {
 
     const { t } = useTranslation();
     const classes = useStyles();
+    const navButtons = useSelector(state => state.navButtonsReducer);
 
     const handleLeftMenuOpening = () => {
-        console.log("left_menu");
         if (leftMenuOpen === true) {
             setLeftMenuOpen(false);
         } else {
@@ -44,7 +45,6 @@ const Navigation = () => {
     }
 
     const handleRightMenuOpening = (event) => {
-        console.log("right_menu");
         setRightMenuOpen(event.currentTarget);
     }
 
@@ -64,8 +64,8 @@ const Navigation = () => {
             <AppBar position="static" style={{ background: "blue" }}>
                 <Toolbar>
                     <Grid item>
-                        <IconButton onClick={handleLeftMenuOpening}>
-                            <MenuIcon />
+                        <IconButton disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
+                            <MenuIcon visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
 
@@ -90,8 +90,8 @@ const Navigation = () => {
 
                     </Grid>
                     <Grid item>
-                        <IconButton>
-                            <AccountBox onClick={handleRightMenuOpening} />
+                        <IconButton disabled={navButtons.disabled}>
+                            <AccountBox visibility={navButtons.visibility} onClick={handleRightMenuOpening} />
                         </IconButton>
                     </Grid>
                 </Toolbar>
