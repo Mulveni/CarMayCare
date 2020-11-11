@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { IconButton, Grid, makeStyles, AppBar, Toolbar, Button, Drawer, List, ListItem, MenuItem, Menu } from '@material-ui/core';
 import { AccountBox, Close, DriveEta } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
+import i18n from '../i18n';
+import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
@@ -29,6 +31,7 @@ const Navigation = () => {
     const [leftMenuOpen, setLeftMenuOpen] = useState(false);
     const [rightMenuOpen, setRightMenuOpen] = useState(null);
 
+    const { t } = useTranslation();
     const classes = useStyles();
 
     const handleLeftMenuOpening = () => {
@@ -48,7 +51,14 @@ const Navigation = () => {
     const handleClose = (e) => {
         console.log(e.target.id);
         setRightMenuOpen(null);
-    };
+    }
+
+    const changeLanguage = (lng) => {
+        console.log(lng);
+        i18n.changeLanguage(lng);
+    }
+
+
     return (
         <div>
             <AppBar position="static" style={{ background: "blue" }}>
@@ -64,17 +74,17 @@ const Navigation = () => {
                     </Grid>
                     <Grid container justify={"center"}>
                         <div>
-                            <h1>APP_NAME</h1>
+                            <h1>{t('app_name')}</h1>
 
-                            <h2>HEADER</h2>
+                            <h2>{t('header')}</h2>
                         </div>
 
                     </Grid>
                     <Grid item>
-                        <Button size="small">fi</Button>
+                        <Button size="small" onClick={() => changeLanguage('fi')}>fi</Button>
                     </Grid>
                     <Grid item>
-                        <Button size="small">en</Button>
+                        <Button size="small" onClick={() => changeLanguage('en')}>en</Button>
                     </Grid>
                     <Grid item md={1}>
 
@@ -106,7 +116,7 @@ const Navigation = () => {
                     <ListItem button>
                         <IconButton className={classes.menuItem} disableRipple={true}>
                             <DriveEta />
-                            OWN_CARS
+                            {t('menu_own_cars')}
                         </IconButton>
                     </ListItem>
                 </List>
@@ -119,9 +129,9 @@ const Navigation = () => {
                 open={Boolean(rightMenuOpen)}
                 onClose={handleClose}
             >
-                <MenuItem id="profile" onClick={(e) => handleClose(e)}>Profile</MenuItem>
-                <MenuItem id="settings" onClick={(e) => handleClose(e)}>Settings</MenuItem>
-                <MenuItem id="logout" onClick={(e) => handleClose(e)}>Logout</MenuItem>
+                <MenuItem id="profile" onClick={(e) => handleClose(e)}>{t('profile')}</MenuItem>
+                <MenuItem id="settings" onClick={(e) => handleClose(e)}>{t('settings')}</MenuItem>
+                <MenuItem id="logout" onClick={(e) => handleClose(e)}>{t('logout')}</MenuItem>
             </Menu>
         </div>
     )
