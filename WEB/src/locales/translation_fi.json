@@ -4,5 +4,7 @@
     "menu_own_cars": "Omat autot",
     "profile": "Profiili",
     "settings": "Asetukset",
-    "logout": "Kirjaudu ulos"
+    "logout": "Kirjaudu ulos",
+    "login": "Kirjaudu sisään",
+    "empty_field": "Kenttä ei voi olla tyhjä."
 }

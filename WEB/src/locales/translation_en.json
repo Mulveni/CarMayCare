@@ -4,5 +4,7 @@
     "menu_own_cars": "Own cars",
     "profile": "Profile",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "login": "Login",
+    "empty_field": "Field cannot be empty."
 }
