@@ -69,26 +69,27 @@ const Navigation = () => {
                         </IconButton>
                     </Grid>
 
-                    <Grid item md={1}>
+                    <Grid container item md={2} />
+                    <Grid item md={1} />
 
-                    </Grid>
                     <Grid container justify={"center"}>
                         <div>
                             <h1>{t('app_name')}</h1>
 
                             <h2>{t('header')}</h2>
                         </div>
+                    </Grid>
 
+                    <Grid container item md={2}>
+                        <Grid item>
+                            <Button size="small" onClick={() => changeLanguage('fi')}>fi</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button size="small" onClick={() => changeLanguage('en')}>en</Button>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Button size="small" onClick={() => changeLanguage('fi')}>fi</Button>
-                    </Grid>
-                    <Grid item>
-                        <Button size="small" onClick={() => changeLanguage('en')}>en</Button>
-                    </Grid>
-                    <Grid item md={1}>
+                    <Grid item md={1} />
 
-                    </Grid>
                     <Grid item>
                         <IconButton disabled={navButtons.disabled}>
                             <AccountBox visibility={navButtons.visibility} onClick={handleRightMenuOpening} />
