@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
-import Grid from "@material-ui/core/Grid"
+import Grid from "@material-ui/core/Grid";
 
 const currencies = [
     {
@@ -30,6 +30,7 @@ const useStyles = makeStyles({
     root: {
         '& .MuiTextField-root': {
           width: '25ch',
+          marginTop: "50"
         },
     center:{
         marginLeft:"auto",
@@ -55,12 +56,12 @@ const Register = () => {
     }, []);
 
     return (
+      <div className={classes.root}> 
         <Grid container justify={"center"}>
-        <form className={classes.root} noValidate autoComplete="off">
-        <div>      
-        <div>
+        <form className={classes.root} noValidate autoComplete="off"> 
+        <Grid>
         <TextField
-          id="standard-full-width"
+          id="tf-email"
           label=""
           style={{ margin: 8 }}
           placeholder="Sähköpostiosoite"
@@ -70,9 +71,10 @@ const Register = () => {
             shrink: true,
           }}
         />
-        <div>
+        </Grid>
+        <Grid>
         <TextField
-          id="standard-full-width"
+          id="tf-password"
           label=""
           style={{ margin: 8 }}
           placeholder="Salasana"
@@ -82,9 +84,24 @@ const Register = () => {
             shrink: true,
           }}
         />
-        </div>
+        </Grid>
+        <Grid>
         <TextField
-          id="etunimi"
+          id="tf-email-again"
+          label=""
+          style={{ margin: 8 }}
+          placeholder="Syötä salasana uudelleen"
+          margin="normal"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        </Grid>
+
+        <Grid>
+        <TextField
+          id="tf-firstname"
           label=""
           required
           style={{ margin: 8 }}
@@ -96,9 +113,8 @@ const Register = () => {
           }}
           />
           <TextField
-          id="standard-full-width"
+          id="tf-lastname"
           label=""
-
           style={{ margin: 8 }}
           placeholder="Sukunimi"
           margin="normal"
@@ -107,10 +123,11 @@ const Register = () => {
             shrink: true,
           }}
         />
-      </div>
-        <div>
+      </Grid>
+
+        <Grid>
         <TextField
-          id="standard-full-width"
+          id="tf-phonenumber"
           label=""
           style={{ margin: 8 }}
           placeholder="Puhelinnumero"
@@ -120,10 +137,11 @@ const Register = () => {
             shrink: true,
           }}
         />
-        </div>
-        <div>        
+        </Grid>
+
+        <Grid>        
         <TextField
-          id="standard-select-currency"
+          id="tf-country"
           select
           style={{ margin: 8 }}
           label="Select country"
@@ -138,10 +156,11 @@ const Register = () => {
             </MenuItem>
           ))}
         </TextField>
-        </div>
-        <div>
+        </Grid>
+
+        <Grid>
         <TextField
-          id="standard-full-width"
+          id="tf-address"
           label=""
           style={{ margin: 8 }}
           placeholder="Osoite"
@@ -151,9 +170,10 @@ const Register = () => {
             shrink: true,
           }}
         />
-        </div>
+        </Grid>
+        <Grid>
         <TextField
-          id="standard-full-width"
+          id="tf-postcode"
           label=""
           style={{ margin: 8 }}
           placeholder="Postinumero"
@@ -164,7 +184,7 @@ const Register = () => {
           }}
         />       
         <TextField
-          id="standard-full-width"
+          id="tf-city"
           label=""
           style={{ margin: 8 }}
           placeholder="Postitoimipaikka"
@@ -173,10 +193,11 @@ const Register = () => {
           InputLabelProps={{
             shrink: true,
           }}
-        />      
-        </div >
+        />
+        </Grid>     
         </form>
         </Grid>
+        </div> 
     );
 }
 
