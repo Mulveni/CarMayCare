@@ -37,10 +37,6 @@ const Login = () => {
         dispatch(hideNavButtons());
     }, []);
 
-    const loginUser = () => {
-        dispatch(logIn());
-    }
-
     const handleEmailChange = (e) => {
         setLoginInfo({ email: e.target.value, password: loginInfo.password });
     }
@@ -66,7 +62,6 @@ const Login = () => {
                     password: loginInfo.password
                 }
             }).then(response => {
-                console.log(response.data.token);
                 dispatch(logIn());
                 history.push("/");
             }).catch(error => {
