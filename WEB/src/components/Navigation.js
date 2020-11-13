@@ -8,6 +8,10 @@ import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
+    header: {
+        background: "blue",
+        position: "static"
+    },
     menuItem: {
         fontSize: 20,
         borderRadius: "0%",
@@ -61,7 +65,7 @@ const Navigation = () => {
 
     return (
         <div>
-            <AppBar position="static" style={{ background: "blue" }}>
+            <AppBar className={classes.header}>
                 <Toolbar>
                     <Grid item>
                         <IconButton disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
