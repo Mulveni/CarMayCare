@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         minWidth: 300,
         marginTop: 50
     },
-    forgotPasswordLink: {
+    link: {
         display: "flex",
         justifyContent: "center",
         marginTop: 25
@@ -107,7 +107,8 @@ const Login = () => {
                         style={{ marginTop: 50 }}>
                         {t('login')}
                     </Button>
-                    <Link className={classes.forgotPasswordLink} to="/forgotpassword" >{t('forgot_password')}</Link>
+                    <Link className={classes.link} to="/forgotpassword" >{t('forgot_password')}</Link>
+                    <Link className={classes.link} to="/register" >{t('register_here')}</Link>
                 </div>
             </Grid>
 

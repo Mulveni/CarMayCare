@@ -11,5 +11,6 @@
     "empty_field": "Field cannot be empty.",
     "incorrect_login": "Incorrect username or password.",
     "unknown_reason": "Unknown reason.",
-    "forgot_password": "Forgot password?"
+    "forgot_password": "Forgot password?",
+    "register_here": "Register here."
 }

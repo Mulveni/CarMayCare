@@ -11,5 +11,6 @@
     "empty_field": "Kenttä ei voi olla tyhjä.",
     "incorrect_login": "Väärä käyttäjä tai salasana.",
     "unknown_reason": "Tuntematon syy.",
-    "forgot_password": "Unohtuiko salasana?"
+    "forgot_password": "Unohtuiko salasana?",
+    "register_here": "Tee käyttäjä tästä."
 }
