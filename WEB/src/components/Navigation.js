@@ -91,8 +91,8 @@ const Navigation = () => {
                     <Grid item md={1} />
 
                     <Grid item>
-                        <IconButton disabled={navButtons.disabled}>
-                            <AccountBox visibility={navButtons.visibility} onClick={handleRightMenuOpening} />
+                        <IconButton disabled={navButtons.disabled} onClick={handleRightMenuOpening}>
+                            <AccountBox visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
                 </Toolbar>
@@ -108,8 +108,8 @@ const Navigation = () => {
                 }}
             >
                 <div className={classes.menuHeader}>
-                    <IconButton>
-                        <Close onClick={handleLeftMenuOpening} />
+                    <IconButton onClick={handleLeftMenuOpening}>
+                        <Close />
                     </IconButton>
                 </div>
 
