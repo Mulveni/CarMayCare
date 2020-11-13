@@ -6,5 +6,10 @@
     "settings": "Settings",
     "logout": "Logout",
     "login": "Login",
-    "empty_field": "Field cannot be empty."
+    "email": "Email",
+    "password": "Password",
+    "empty_field": "Field cannot be empty.",
+    "incorrect_login": "Incorrect username or password.",
+    "unknown_reason": "Unknown reason.",
+    "forgot_password": "Forgot password?"
 }

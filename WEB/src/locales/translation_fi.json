@@ -6,5 +6,10 @@
     "settings": "Asetukset",
     "logout": "Kirjaudu ulos",
     "login": "Kirjaudu sisään",
-    "empty_field": "Kenttä ei voi olla tyhjä."
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "empty_field": "Kenttä ei voi olla tyhjä.",
+    "incorrect_login": "Väärä käyttäjä tai salasana.",
+    "unknown_reason": "Tuntematon syy.",
+    "forgot_password": "Unohtuiko salasana?"
 }
