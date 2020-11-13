@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { hideNavButtons, logIn } from '../actions';
+import { hideNavButtons, logIn, addToken } from '../actions';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import baseApiUrl from '../api_url.json';
+
 
 const useStyles = makeStyles({
     loginGrid: {
@@ -31,6 +32,7 @@ const Login = () => {
     const classes = useStyles();
 
     const apiUrl = baseApiUrl.url;
+
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -63,6 +65,7 @@ const Login = () => {
                 }
             }).then(response => {
                 dispatch(logIn());
+                dispatch(addToken(response.data.token));
                 history.push("/");
             }).catch(error => {
                 if (error.response.data === "Unauthorized") {
