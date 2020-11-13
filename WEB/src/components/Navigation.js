@@ -8,6 +8,10 @@ import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
+    header: {
+        background: "blue",
+        position: "static"
+    },
     menuItem: {
         fontSize: 20,
         borderRadius: "0%",
@@ -61,7 +65,7 @@ const Navigation = () => {
 
     return (
         <div>
-            <AppBar position="static" style={{ background: "blue" }}>
+            <AppBar className={classes.header}>
                 <Toolbar>
                     <Grid item>
                         <IconButton disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
@@ -91,8 +95,8 @@ const Navigation = () => {
                     <Grid item md={1} />
 
                     <Grid item>
-                        <IconButton disabled={navButtons.disabled}>
-                            <AccountBox visibility={navButtons.visibility} onClick={handleRightMenuOpening} />
+                        <IconButton disabled={navButtons.disabled} onClick={handleRightMenuOpening}>
+                            <AccountBox visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
                 </Toolbar>
@@ -108,8 +112,8 @@ const Navigation = () => {
                 }}
             >
                 <div className={classes.menuHeader}>
-                    <IconButton>
-                        <Close onClick={handleLeftMenuOpening} />
+                    <IconButton onClick={handleLeftMenuOpening}>
+                        <Close />
                     </IconButton>
                 </div>
 
