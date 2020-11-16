@@ -2,51 +2,62 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
+import { useForm, Controller } from "react-hook-form";
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
-import Grid from "@material-ui/core/Grid";
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 
-const currencies = [
-    {
-      value: 'Finland',
-      label: 'FI',
-    },
-    {
-      value: 'Sweden',
-      label: 'SWE',
-    },
-    {
-      value: 'Norway',
-      label: 'NO',
-    },
-    {
-      value: 'Denmark',
-      label: 'DK',
-    },
-  ];
-
-const useStyles = makeStyles({
-    root: {
-        '& .MuiTextField-root': {
-          width: '25ch',
-          marginTop: "50"
-        },
-    center:{
-        marginLeft:"auto",
-        marginRight:"auto"
-        }
-    },
-  });
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const emailIsUnique = async (email: string) => {
+  await sleep(1000);
+  return email !== "someone@somewhere.com";
+};
 
 const Register = () => {
-   
-    const classes = useStyles();
-    const [currency, setCurrency] = React.useState('EUR');
 
+    const [countries, setCountry] = React.useState('');
     const handleChange = (event) => {
-        setCurrency(event.target.value);
-      };
+    setCountry(event.target.value);
+    };
+  
+    const classes = useStyles();
+    const { register, handleSubmit, errors, setError, control } = useForm();
+    
+    const onSubmit = async data => {
+      await sleep(2000);
+      if (errors !== null) {
+        alert(JSON.stringify(data));
+      } else {
+        console.log(errors);
+        alert('There is error');
+      }
+    };
+  
 
     const { t } = useTranslation();
 
@@ -56,149 +67,137 @@ const Register = () => {
     }, []);
 
     return (
-      <div className={classes.root}> 
-        <Grid container justify={"center"}>
-        <form className={classes.root} noValidate autoComplete="off"> 
-        <Grid>
-        <TextField
-          id="tf-email"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Sähköpostiosoite"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
-        <Grid>
-        <TextField
-          id="tf-password"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Salasana"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
-        <Grid>
-        <TextField
-          id="tf-email-again"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Syötä salasana uudelleen"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Register
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+              required: "required", 
+              minLength: 2,
+              validate: emailIsUnique
+              })}
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoFocus
+            />
+            {errors.email && "Email is not in correct form or is already in use"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 5,
+              })}
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+            />
+            {errors.password && "Password is required and must be 5 chars long"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
+              fullWidth
+              name="etunimi"
+              label="Etunimi"
+              type="etunimi"
+              id="etunimi"
+            />
+            {errors.etunimi && "Firstname is required"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
+              fullWidth
+              name="sukunimi"
+              label="Sukunimi"
+              type="sukunimi"
+              id="sukunimi"
+            />
+            {errors.sukunimi && "Lastname is required"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
+              fullWidth
+              name="osoite"
+              label="Osoite"
+              type="osoite"
+              id="osoite"
+            />
+            {errors.osoite && "Address is required"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
+              fullWidth
+              name="postinumero"
+              label="Postinumero"
+              type="postinumero"
+              id="postinumero"
+            />
+            {errors.postinumero && "Postcode is required"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
+              fullWidth
+              name="postitoimipaikka"
+              label="Postitoimipaikka"
+              type="postitoimipaikka"
+              id="postitoimipaikka"
+            />
+            {errors.postitoimipaikka && "Post office is required"}
 
-        <Grid>
-        <TextField
-          id="tf-firstname"
-          label=""
-          required
-          style={{ margin: 8 }}
-          placeholder="Etunimi"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          />
-          <TextField
-          id="tf-lastname"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Sukunimi"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </Grid>
-
-        <Grid>
-        <TextField
-          id="tf-phonenumber"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Puhelinnumero"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
-
-        <Grid>        
-        <TextField
-          id="tf-country"
-          select
-          style={{ margin: 8 }}
-          label="Select country"
-          margin="normal"
-          value={currency}
-          onChange={handleChange}
-          variant="outlined"
+            <InputLabel id="countries-label">Maa</InputLabel>
+            <Select
+              labelId="countries-label"
+              id="countries-select"
+              value={countries}
+              onChange={handleChange}
         >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        </Grid>
-
-        <Grid>
-        <TextField
-          id="tf-address"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Osoite"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
-        <Grid>
-        <TextField
-          id="tf-postcode"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Postinumero"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />       
-        <TextField
-          id="tf-city"
-          label=""
-          style={{ margin: 8 }}
-          placeholder="Postitoimipaikka"
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>     
-        </form>
-        </Grid>
-        </div> 
+          <MenuItem value={1}>Finland</MenuItem>
+          <MenuItem value={2}>Sweden</MenuItem>
+          <MenuItem value={3}>Norway</MenuItem>
+          <MenuItem value={4}>Denmark</MenuItem>
+        </Select>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Container>
     );
-}
-
+  }
 export default Register;
