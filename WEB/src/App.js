@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import NotFound from './components/NotFound';
+import ForgotPassword from './components/ForgotPassword';
 
 const App = () => {
     const isLoggedin = useSelector(state => state.loginReducer);
@@ -21,6 +22,7 @@ const App = () => {
 
                     <Route path="/register" component={Register} />
                     <Route path="/login" exact component={Login} />
+                    <Route path="/forgotpassword" exact component={ForgotPassword} />
                     <Route component={NotFound} />
                 </Switch>
 

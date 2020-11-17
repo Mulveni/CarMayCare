@@ -21,3 +21,16 @@ export const logOut = () => {
         type: "LOGOUT"
     }
 }
+
+export const addToken = (token) => {
+    return {
+        type: "ADD_TOKEN",
+        token: token
+    }
+}
+
+export const removeToken = () => {
+    return {
+        type: "REMOVE_TOKEN"
+    }
+}

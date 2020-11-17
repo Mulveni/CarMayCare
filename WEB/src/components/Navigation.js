@@ -4,10 +4,16 @@ import { AccountBox, Close, DriveEta } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut, removeToken } from '../actions';
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
+    header: {
+        background: "blue",
+        position: "static"
+    },
     menuItem: {
         fontSize: 20,
         borderRadius: "0%",
@@ -35,6 +41,7 @@ const Navigation = () => {
     const { t } = useTranslation();
     const classes = useStyles();
     const navButtons = useSelector(state => state.navButtonsReducer);
+    const dispatch = useDispatch();
 
     const handleLeftMenuOpening = () => {
         if (leftMenuOpen === true) {
@@ -49,7 +56,10 @@ const Navigation = () => {
     }
 
     const handleClose = (e) => {
-        console.log(e.target.id);
+        if (e.target.id === "logout") {
+            dispatch(logOut());
+            dispatch(removeToken());
+        }
         setRightMenuOpen(null);
     }
 
@@ -61,7 +71,7 @@ const Navigation = () => {
 
     return (
         <div>
-            <AppBar position="static" style={{ background: "blue" }}>
+            <AppBar className={classes.header}>
                 <Toolbar>
                     <Grid item>
                         <IconButton disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
@@ -91,8 +101,8 @@ const Navigation = () => {
                     <Grid item md={1} />
 
                     <Grid item>
-                        <IconButton disabled={navButtons.disabled}>
-                            <AccountBox visibility={navButtons.visibility} onClick={handleRightMenuOpening} />
+                        <IconButton disabled={navButtons.disabled} onClick={handleRightMenuOpening}>
+                            <AccountBox visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
                 </Toolbar>
@@ -108,8 +118,8 @@ const Navigation = () => {
                 }}
             >
                 <div className={classes.menuHeader}>
-                    <IconButton>
-                        <Close onClick={handleLeftMenuOpening} />
+                    <IconButton onClick={handleLeftMenuOpening}>
+                        <Close />
                     </IconButton>
                 </div>
 
