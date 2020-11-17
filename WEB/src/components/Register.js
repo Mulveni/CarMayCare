@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const emailIsUnique = async (email: string) => {
   await sleep(1000);
   return email !== "someone@somewhere.com";
@@ -40,7 +41,7 @@ const emailIsUnique = async (email: string) => {
 
 const Register = () => {
 
-    const [countries, setCountry] = React.useState('');
+    const [countries, setCountry] = React.useState('Maa');
     const handleChange = (event) => {
     setCountry(event.target.value);
     };
@@ -58,7 +59,6 @@ const Register = () => {
       }
     };
   
-
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
@@ -174,10 +174,12 @@ const Register = () => {
             />
             {errors.postitoimipaikka && "Post office is required"}
 
-            <InputLabel id="countries-label">Maa</InputLabel>
             <Select
               labelId="countries-label"
               id="countries-select"
+              variant="outlined"
+              fullWidth
+              
               value={countries}
               onChange={handleChange}
         >
