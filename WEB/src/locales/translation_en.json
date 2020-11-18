@@ -12,5 +12,9 @@
     "incorrect_login": "Incorrect username or password.",
     "unknown_reason": "Unknown reason.",
     "forgot_password": "Forgot password?",
-    "register_here": "Register here."
+    "register_here": "Register here.",
+    "forgot_password_header": "Forgot password",
+    "send": "Send",
+    "invalid_email": "Invalid email.",
+    "forgot_password_sent_message": "A password reset link has been sent to the email if there is an account."
 }
