@@ -71,7 +71,7 @@ const Login = () => {
                 if (error.response.data === "Unauthorized") {
                     setloginText(t('incorrect_login'));
                 } else {
-                    setloginText(t('unknown_reason'));
+                    setloginText(t('internal_server_error'));
                 }
 
             });
