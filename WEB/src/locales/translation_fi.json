@@ -15,10 +15,15 @@
     "register_here": "Tee käyttäjä tästä.",
     "firstname": "Etunimi",
     "lastname": "Sukunimi",
+    "phonenumber":"Puhelinnumero",
     "street": "Osoite",
     "city": "Postitoimipaikka",
     "postcode": "Postinumero",
-    "country": "Maa"
+    "country": "Maa",
+    "finland": "Suomi",
+    "sweden": "Ruotsi",
+    "submit": "Lähetä"
+
 
 
     

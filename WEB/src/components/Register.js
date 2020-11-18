@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +12,10 @@ import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import baseApiUrl from '../api_url.json';
-import Axios from 'axios';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,25 +44,27 @@ const emailIsUnique = async (email: string) => {
 };
 
 const Register = () => {
-    const apiUrl = baseApiUrl;
 
-    const [countries, setCountry] = React.useState('Maa');
-    const handleChange = (event) => {
-    setCountry(event.target.value);
-    };
-  
+ 
+  const apiUrl = baseApiUrl.url;
+    const [countries, setCountry]= useState("");
+
     const classes = useStyles();
-    const { register, handleSubmit, errors, setError, control } = useForm();
-    
-    const onSubmit = async data => {
-      if (errors !== null) {
-        Axios
-        .post(`${apiUrl}/register`, data)
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
-      } 
+    const { register, errors, handleSubmit } = useForm({
+      mode: "onBlur",
+    });
+    const onSubmit = data => {
+      alert(JSON.stringify(data));
+
+      axios.post(`${apiUrl}/register`, data, {
+      })
+      .then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });
     };
-  
+    const onError = (errors, e) => console.log(errors, e);
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
@@ -75,16 +79,21 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit, onError)}>
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
               required: "required", 
+              pattern: {
+                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message: 'Invalid email address',
+              },
               minLength: 2,
               validate: emailIsUnique
               })}
               fullWidth
+
               id="email"
               label={t('email')}
               name="email"
@@ -105,6 +114,20 @@ const Register = () => {
               id="password"
             />
             {errors.password && "Password is required and must be 5 chars long"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 5,
+              })}
+              fullWidth
+              name="phonenumber"
+              label={t('phonenumber')}
+              type="phonenumber"
+              id="phonenumber"
+            />
+            {errors.phonenumber && "phonenumber is required and must be 5 chars long"}
             <TextField
               variant="outlined"
               margin="normal"
@@ -141,7 +164,7 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="street"
+              name="address.street"
               label={t('street')}
               type="osoite"
               id="street"
@@ -155,7 +178,7 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="city"
+              name="address.city"
               label={t('city')}
               type="postinumero"
               id="city"
@@ -169,35 +192,33 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="postcode"
+              name="address.postcode"
               label={t('postcode')}
               type="postitoimipaikka"
               id="postcode"
             />
             {errors.postitoimipaikka && "Post office is required"}
-
-            <Select
-              labelId="countries-label"
-              id="countries-select"
+            <TextField
               variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: "required", 
+                minLength: 2,
+              })}
               fullWidth
-              
-              value={countries}
-              onChange={handleChange}
-        >
-          <MenuItem value={1}>Finland</MenuItem>
-          <MenuItem value={2}>Sweden</MenuItem>
-          <MenuItem value={3}>Norway</MenuItem>
-          <MenuItem value={4}>Denmark</MenuItem>
-        </Select>
+              name="address.country"
+              label={t('country')}
+              type="country"
+              id="country"
+            />
+            {errors.country && "Country is required"}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
             >
-              Submit
+              {t('submit')}
             </Button>
           </form>
         </div>

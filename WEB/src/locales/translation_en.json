@@ -13,10 +13,13 @@
     "unknown_reason": "Unknown reason.",
     "forgot_password": "Forgot password?",
     "register_here": "Register here.",
+    "phonenumber":"Phonenumber",
     "firstname": "Firstname",
     "lastname": "Lastname",
     "street": "Street",
     "city": "City",
     "postcode": "Postcode",
-    "country": "Coutry"
+    "country": "Coutry",
+    "submit": "Submit",
+    "register":"Register"
 }
