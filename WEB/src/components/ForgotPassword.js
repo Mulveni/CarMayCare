@@ -30,6 +30,8 @@ const ForgotPassword = () => {
         dispatch(hideNavButtons());
     }, []);
 
+    console.log(localStorage.getItem('i18nextLng'));
+
 
     const MessageSent = () => {
         return (
@@ -70,7 +72,12 @@ const ForgotPassword = () => {
                     }
                 }).then(response => {
                     axios.post(`${apiUrl}/email`, {
-                        email: email
+                        email: email,
+                        lng: localStorage.getItem('i18nextLng')
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${response.data.token}`
+                        }
                     }).then(response => {
                         if (response.status === 201) {
                             setSent(true);
