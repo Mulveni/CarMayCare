@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import axios from 'axios';
+import baseApiUrl from '../api_url.json';
+import adminUser from '../admin_user.json';
 
 const useStyles = makeStyles({
     forgotPasswordGrid: {
@@ -19,6 +22,8 @@ const ForgotPassword = () => {
 
     const { t } = useTranslation();
     const classes = useStyles();
+
+    const apiUrl = baseApiUrl.url;
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -58,9 +63,34 @@ const ForgotPassword = () => {
             else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
                 setForgotPasswordText(t('invalid_email'));
             } else {
-                setSent(true);
+                axios.post(`${apiUrl}/login`, null, {
+                    auth: {
+                        username: adminUser.email,
+                        password: adminUser.password
+                    }
+                }).then(response => {
+                    axios.post(`${apiUrl}/email`, {
+                        email: email
+                    }).then(response => {
+                        if (response.status === 201) {
+                            setSent(true);
+                        } else {
+                            setForgotPasswordText(t('unknown_reason'));
+                        }
+                    }).catch(error => {
+                        if (error.response.status === 400 && error.response.data.message === "User already has valid link.") {
+                            setForgotPasswordText(t('already_has_reset_link'));
+                        } else {
+                            setForgotPasswordText(t('internal_server_error'));
+                        }
+                    });
+                }).catch(error => {
+                    setForgotPasswordText(t('internal_server_error'));
+                });
             }
         }
+
+
         return (
             <div>
                 <Grid container justify="center">
