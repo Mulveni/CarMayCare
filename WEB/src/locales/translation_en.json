@@ -12,5 +12,11 @@
     "incorrect_login": "Incorrect username or password.",
     "unknown_reason": "Unknown reason.",
     "forgot_password": "Forgot password?",
-    "register_here": "Register here."
+    "register_here": "Register here.",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "street": "Street",
+    "city": "City",
+    "postcode": "Postcode",
+    "country": "Coutry"
 }

@@ -12,5 +12,14 @@
     "incorrect_login": "Väärä käyttäjä tai salasana.",
     "unknown_reason": "Tuntematon syy.",
     "forgot_password": "Unohtuiko salasana?",
-    "register_here": "Tee käyttäjä tästä."
+    "register_here": "Tee käyttäjä tästä.",
+    "firstname": "Etunimi",
+    "lastname": "Sukunimi",
+    "street": "Osoite",
+    "city": "Postitoimipaikka",
+    "postcode": "Postinumero",
+    "country": "Maa"
+
+
+    
 }

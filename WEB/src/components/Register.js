@@ -12,6 +12,8 @@ import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import baseApiUrl from '../api_url.json';
+import Axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,6 +42,7 @@ const emailIsUnique = async (email: string) => {
 };
 
 const Register = () => {
+    const apiUrl = baseApiUrl;
 
     const [countries, setCountry] = React.useState('Maa');
     const handleChange = (event) => {
@@ -50,13 +53,12 @@ const Register = () => {
     const { register, handleSubmit, errors, setError, control } = useForm();
     
     const onSubmit = async data => {
-      await sleep(2000);
       if (errors !== null) {
-        alert(JSON.stringify(data));
-      } else {
-        console.log(errors);
-        alert('There is error');
-      }
+        Axios
+        .post(`${apiUrl}/register`, data)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+      } 
     };
   
     const { t } = useTranslation();
@@ -84,7 +86,7 @@ const Register = () => {
               })}
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('email')}
               name="email"
               autoFocus
             />
@@ -98,7 +100,7 @@ const Register = () => {
               })}
               fullWidth
               name="password"
-              label="Password"
+              label={t('password')}
               type="password"
               id="password"
             />
@@ -111,10 +113,10 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="etunimi"
-              label="Etunimi"
+              name="firstname"
+              label={t('firstname')}
               type="etunimi"
-              id="etunimi"
+              id="firstname"
             />
             {errors.etunimi && "Firstname is required"}
             <TextField
@@ -125,10 +127,10 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="sukunimi"
-              label="Sukunimi"
+              name="lastname"
+              label={t('lastname')}
               type="sukunimi"
-              id="sukunimi"
+              id="lastname"
             />
             {errors.sukunimi && "Lastname is required"}
             <TextField
@@ -139,10 +141,10 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="osoite"
-              label="Osoite"
+              name="street"
+              label={t('street')}
               type="osoite"
-              id="osoite"
+              id="street"
             />
             {errors.osoite && "Address is required"}
             <TextField
@@ -153,10 +155,10 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="postinumero"
-              label="Postinumero"
+              name="city"
+              label={t('city')}
               type="postinumero"
-              id="postinumero"
+              id="city"
             />
             {errors.postinumero && "Postcode is required"}
             <TextField
@@ -167,10 +169,10 @@ const Register = () => {
                 minLength: 2,
               })}
               fullWidth
-              name="postitoimipaikka"
-              label="Postitoimipaikka"
+              name="postcode"
+              label={t('postcode')}
               type="postitoimipaikka"
-              id="postitoimipaikka"
+              id="postcode"
             />
             {errors.postitoimipaikka && "Post office is required"}
 
