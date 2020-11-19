@@ -8,7 +8,6 @@ import Profile from './components/Profile';
 import NotFound from './components/NotFound';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
-import Error from './components/Error';
 
 const App = () => {
     const isLoggedin = useSelector(state => state.loginReducer);
@@ -26,7 +25,6 @@ const App = () => {
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
                     <Route path="/resetpassword/:id" exact component={ResetPassword} />
-                    <Route path="/error" exact component={Error} />
                     <Route component={NotFound} />
                 </Switch>
 
