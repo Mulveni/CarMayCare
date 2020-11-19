@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 const Login = () => {
     const [loginText, setloginText] = useState(null);
-    const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
 
@@ -39,7 +38,6 @@ const Login = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
-        setLoginInfo({ email: "2", password: "" });
     }, []);
 
     const pressKey = (e) => {
