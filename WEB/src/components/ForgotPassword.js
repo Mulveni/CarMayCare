@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
@@ -45,11 +45,7 @@ const ForgotPassword = () => {
 
     const ForgotPasswordForm = () => {
         const [forgotPasswordText, setForgotPasswordText] = useState(null);
-        const [email, setEmail] = useState("");
-
-        const handleEmailChange = (e) => {
-            setEmail(e.target.value);
-        }
+        const emailInput = useRef(null);
 
         const pressKey = (e) => {
             if (e.code === "Enter") {
@@ -59,10 +55,10 @@ const ForgotPassword = () => {
 
         const handleSubmit = () => {
             setForgotPasswordText(null);
-            if (email.length < 1) {
+            if (emailInput.current.value.length < 1) {
                 setForgotPasswordText(t('empty_field'));
             }
-            else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
+            else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.current.value) === false) {
                 setForgotPasswordText(t('invalid_email'));
             } else {
                 axios.post(`${apiUrl}/login`, null, {
@@ -72,7 +68,7 @@ const ForgotPassword = () => {
                     }
                 }).then(response => {
                     axios.post(`${apiUrl}/email`, {
-                        email: email,
+                        email: emailInput.current.value,
                         lng: localStorage.getItem('i18nextLng')
                     }, {
                         headers: {
@@ -104,12 +100,12 @@ const ForgotPassword = () => {
                     <div className={classes.forgotPasswordGrid}>
                         <h1>{t('forgot_password_header')}</h1>
                         <TextField
-                            onChange={handleEmailChange}
                             onKeyDown={pressKey}
                             id="email"
                             label={t('email')}
                             variant="outlined"
                             margin="normal"
+                            inputRef={emailInput}
                         />
                         <p>{forgotPasswordText}</p>
                         <Button
