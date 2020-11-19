@@ -115,7 +115,7 @@ router.post('/', async (req, res) => {
         }
         try {
             if (await utils.checkEmailAvailability(req.body.email) === false) {
-                res.sendStatus(404);
+                res.status(404).send({ message: "No user for this email." });
             } else {
                 const d = new Date().getTime();
                 const link = uuidv4();

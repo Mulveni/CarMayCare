@@ -30,9 +30,6 @@ const ForgotPassword = () => {
         dispatch(hideNavButtons());
     }, []);
 
-    console.log(localStorage.getItem('i18nextLng'));
-
-
     const MessageSent = () => {
         return (
             <div style={{ marginTop: 50 }}>
@@ -83,6 +80,9 @@ const ForgotPassword = () => {
                     }).catch(error => {
                         if (error.response.status === 400 && error.response.data.message === "User already has valid link.") {
                             setForgotPasswordText(t('already_has_reset_link'));
+                        }
+                        else if (error.response.status === 404 && error.response.data.message === "No user for this email.") {
+                            setSent(true);
                         } else {
                             setForgotPasswordText(t('internal_server_error'));
                         }
