@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Grid, Button, makeStyles } from '@material-ui/core';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
-import { useHistory } from 'react-router-dom';
+import Error from './Error';
 
 const useStyles = makeStyles({
     resetPasswordGrid: {
@@ -22,10 +22,10 @@ const useStyles = makeStyles({
 const ResetPassword = () => {
     const [idValid, setIdValid] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    const [serverError, setServerError] = useState(false);
     const { id } = useParams();
     const { t } = useTranslation();
     const classes = useStyles();
-    const history = useHistory();
 
     const apiUrl = baseApiUrl.url;
 
@@ -61,8 +61,7 @@ const ResetPassword = () => {
                 setLoading(false);
             });
         }).catch(error => {
-            console.log(error.response);
-            history.push("/error");
+            setServerError(true);
         });
     }
 
@@ -129,6 +128,10 @@ const ResetPassword = () => {
                 }
             </div>
         )
+    }
+
+    if (serverError) {
+        return <Error />;
     }
 
     if (isLoading) {
