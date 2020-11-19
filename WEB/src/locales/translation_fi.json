@@ -12,5 +12,12 @@
     "incorrect_login": "Väärä käyttäjä tai salasana.",
     "unknown_reason": "Tuntematon syy.",
     "forgot_password": "Unohtuiko salasana?",
-    "register_here": "Tee käyttäjä tästä."
+    "register_here": "Tee käyttäjä tästä.",
+
+    "car_brand": "Merkki",
+    "car_model": "Malli",
+    "car_yearmodel": "Vuosimalli",
+    "car_powertype": "Käyttövoima",
+    "car_enginesize": "Moottorin koko",
+    "car_license": "Rekisterinumero"
 }
