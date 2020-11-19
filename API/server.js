@@ -4,6 +4,7 @@ require('dotenv').config();
 port = process.env.API_PORT;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('./forgotPasswordCleaningRun');
 
 app.use(bodyParser.json());
 app.use(cors());

@@ -381,6 +381,26 @@ const utils = {
                 reject(error);
             });
         });
+    },
+    forgotPasswordCleaningRun: () => {
+        const d = new Date().getTime();
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM forgotpasswords').then(results => {
+                for (let i = 0; i < results.length; i++) {
+                    if (parseInt(results[i].expireAt, 10) < d) {
+                        db.query('DELETE FROM forgotpasswords WHERE idForgotpasswords = ?', [results[i].idForgotpasswords]).then(results2 => {
+                            console.log("Removed expired forgot password link.");
+                        }).catch(error2 => {
+                            reject(error2);
+                        });
+
+                    }
+                }
+                resolve(true);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
 module.exports = utils;
