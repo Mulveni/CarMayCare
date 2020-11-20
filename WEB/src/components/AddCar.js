@@ -2,53 +2,41 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { showNavButtons } from '../actions';
+import { useHistory } from 'react-router-dom'
+
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 
+import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import tokenReducer from '../reducers/tokenReducer';
-
-const apiUrl = baseApiUrl.url;
-
 
 const AddCar = () => {
+  const apiUrl = baseApiUrl.url;
+  const history = useHistory();
+  const { register, handleSubmit, watch, errors } = useForm();
 
-  //const isLoggedin = useSelector(state => state.loginReducer);
-  //const isLoggedin = useSelector(state => state.token);
-  //console.log(useSelector(state => state.tokenReducer));
-  
-  /*
-  const header = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("token")}`
-  }*/
+  const onSubmit = data => {
+    axios.post(`${apiUrl}/cars`, data, {
+    }).then((response) => {
+      
+      console.log(response);
+      history.push("/mycars");
 
+    }, (error) => {
+
+      console.log(error);
+
+    }); 
+  };
   const myToken = useSelector(state => state.tokenReducer);
   
   axios.defaults.headers.common = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     'Authorization': `Bearer ${myToken}`}
-
-  var data = {
-    brand: 'Testi',
-    model: 'Testityyppi',
-    yearModel: '1900',
-    powerType: 'sähkö',
-    engineSize: 'pieni',
-    licenseNumber: 'ABC-123'
-}
-console.log(data);
-  axios.post(`${apiUrl}/cars`, data, {
-    }).then((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    }); 
 
     const { t } = useTranslation();
 
@@ -58,15 +46,19 @@ console.log(data);
     }, []);
 
     return (
-        <div style={{margin: 'auto', maxWidth: 650 }}>
-
+        <div style={{margin: 'auto', maxWidth: "xs" }}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container item xs={12}>            
 
                 <Grid container item xs ={12} direction = "row">  
                     <TextField
-                    id="tf-brand"
+                    name="brand"
                     style={{ margin: 8 }}
                     placeholder={t('car_brand')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 1,
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -75,9 +67,13 @@ console.log(data);
                     />
                 
                     <TextField
-                    id="tf-model"
+                    name="model"
                     style={{ margin: 8}}
                     placeholder={t('car_model')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 1,
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -86,9 +82,20 @@ console.log(data);
                     />
 
                     <TextField
-                    id="tf-yearmodel"
+                    name="yearModel"
                     style={{ margin: 8}}
                     placeholder={t('car_yearmodel')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 4,
+                      maxLength: 4,
+                      min: '1900',
+                      max: '2100',
+                      pattern: {
+                        value: /[0-9]/,
+                        message: 'Invalid email address',
+                      }
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -101,9 +108,13 @@ console.log(data);
                 <Grid container item xs={12} direction="row">
 
                     <TextField
-                    id="tf-powertype"
+                    name="powerType"
                     style={{ margin: 8 }}
                     placeholder={t('car_powertype')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 1,
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -112,9 +123,13 @@ console.log(data);
                     />
 
                     <TextField
-                    id="tf-enginesize"
+                    name="engineSize"
                     style={{ margin: 8 }}
                     placeholder={t('car_enginesize')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 1,
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -126,21 +141,27 @@ console.log(data);
 
                 <Grid container item xs ={12} direction = "row"> 
                     <TextField
-                    id="tf-license"
+                    name="licenseNumber"
                     style={{ margin: 8 }}
                     placeholder={t('car_license')}
+                    inputRef={register({
+                      required: "required", 
+                      minLength: 1,
+                    })}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
                     shrink: true,
                     }}
                     />
-                    <Button variant = "outlined"  onClick={() => {/* */}}>Send</Button>
+                    <Button 
+                    variant = "outlined"   
+                    type="submit">Send</Button>
 
                 </Grid>
 
             </Grid>
-
+          </form>
         </div>
       
         )

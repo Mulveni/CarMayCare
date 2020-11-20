@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import NotFound from './components/NotFound';
 import AddCar from './components/AddCar';
+import MyCars from './components/MyCars';
 import ForgotPassword from './components/ForgotPassword';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
+                    <Route path="/mycars" component={MyCars} />
                     <Route path="/addcar" component={AddCar} />
                     <Route component={NotFound} />
                 </Switch>
