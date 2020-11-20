@@ -18,7 +18,6 @@
     "invalid_email": "Invalid email.",
     "forgot_password_sent_message": "A password reset link has been sent to the email if there is an account.",
     "password_reseted_and_sent": "Password has been reset and sent to your email.",
-    "already_has_reset_link": "There is already valid reset link for this email.",
     "internal_server_error": "Internal server error.",
     "reset_password": "Reset password",
     "link_expired": "Link expired."

@@ -18,7 +18,6 @@
     "invalid_email": "Virheellinen sähköposti.",
     "forgot_password_sent_message": "Salasanan nollauslinkki on lähetetty sähköpostiin, jos sillä löytyi tunnus.",
     "password_reseted_and_sent": "Salasana on nyt nollattu ja lähetetty sähköpostiisi.",
-    "already_has_reset_link": "Sähköpostilla on voimassa oleva nollauslinkki.",
     "internal_server_error": "Palvelinvirhe.",
     "reset_password": "Nollaa salasana",
     "link_expired": "Linkki on vanhentunut."

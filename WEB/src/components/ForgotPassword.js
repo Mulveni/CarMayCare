@@ -79,7 +79,7 @@ const ForgotPassword = () => {
                         }
                     }).catch(error => {
                         if (error.response.status === 400 && error.response.data.message === "User already has valid link.") {
-                            setForgotPasswordText(t('already_has_reset_link'));
+                            setSent(true);
                         }
                         else if (error.response.status === 404 && error.response.data.message === "No user for this email.") {
                             setSent(true);
