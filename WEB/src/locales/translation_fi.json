@@ -12,5 +12,13 @@
     "incorrect_login": "Väärä käyttäjä tai salasana.",
     "unknown_reason": "Tuntematon syy.",
     "forgot_password": "Unohtuiko salasana?",
-    "register_here": "Tee käyttäjä tästä."
+    "register_here": "Tee käyttäjä tästä.",
+    "forgot_password_header": "Unohtunut salasana",
+    "send": "Lähetä",
+    "invalid_email": "Virheellinen sähköposti.",
+    "forgot_password_sent_message": "Salasanan nollauslinkki on lähetetty sähköpostiin, jos sillä löytyi tunnus.",
+    "password_reseted_and_sent": "Salasana on nyt nollattu ja lähetetty sähköpostiisi.",
+    "internal_server_error": "Palvelinvirhe.",
+    "reset_password": "Nollaa salasana",
+    "link_expired": "Linkki on vanhentunut."
 }

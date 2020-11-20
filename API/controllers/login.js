@@ -8,7 +8,8 @@ router.post('/', (req, res) => {
     const user = req.user;
     const body = {
         username: user.email,
-        id: user.idUsers
+        id: user.idUsers,
+        isAdmin: user.isAdmin
     };
 
     const payload = {

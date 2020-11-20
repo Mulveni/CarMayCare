@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons, logIn, addToken } from '../actions';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,8 @@ const useStyles = makeStyles({
 
 const Login = () => {
     const [loginText, setloginText] = useState(null);
-    const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
+    const emailInput = useRef(null);
+    const passwordInput = useRef(null);
 
     const { t } = useTranslation();
     const history = useHistory();
@@ -39,41 +40,43 @@ const Login = () => {
         dispatch(hideNavButtons());
     }, []);
 
-    const handleEmailChange = (e) => {
-        setLoginInfo({ email: e.target.value, password: loginInfo.password });
-    }
-
-    const handlePasswordChange = (e) => {
-        setLoginInfo({ email: loginInfo.email, password: e.target.value });
-    }
-
     const pressKey = (e) => {
         if (e.code === "Enter") {
             handleLogin();
         }
     }
 
+    const clearInputs = () => {
+        emailInput.current.value = null;
+        passwordInput.current.value = null;
+    }
+
     const handleLogin = () => {
         setloginText(null);
-        if (loginInfo.email.length < 1 || loginInfo.password.length < 1) {
+        if (emailInput.current.value.length < 1 || passwordInput.current.value.length < 1) {
             setloginText(t('empty_field'));
         } else {
             axios.post(`${apiUrl}/login`, null, {
                 auth: {
-                    username: loginInfo.email,
-                    password: loginInfo.password
+                    username: emailInput.current.value,
+                    password: passwordInput.current.value
                 }
             }).then(response => {
+                clearInputs();
                 dispatch(logIn());
                 dispatch(addToken(response.data.token));
                 history.push("/");
             }).catch(error => {
-                if (error.response.data === "Unauthorized") {
-                    setloginText(t('incorrect_login'));
+                clearInputs();
+                if (error.response === undefined) {
+                    setloginText(t('internal_server_error'));
                 } else {
-                    setloginText(t('unknown_reason'));
+                    if (error.response.data === "Unauthorized") {
+                        setloginText(t('incorrect_login'));
+                    } else {
+                        setloginText(t('internal_server_error'));
+                    }
                 }
-
             });
         }
     }
@@ -84,21 +87,21 @@ const Login = () => {
             <Grid container justify="center">
                 <div className={classes.loginGrid}>
                     <TextField
-                        onChange={handleEmailChange}
                         onKeyDown={pressKey}
                         id="email"
                         label={t('email')}
                         variant="outlined"
                         margin="normal"
+                        inputRef={emailInput}
                     />
                     <TextField
-                        onChange={handlePasswordChange}
                         onKeyDown={pressKey}
                         id="password"
                         label={t('password')}
                         type="password"
                         variant="outlined"
                         margin="normal"
+                        inputRef={passwordInput}
                     />
                     <p>{loginText}</p>
                     <Button
