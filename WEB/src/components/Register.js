@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
-
-
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from'@material-ui/core/MenuItem';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -29,32 +29,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const Register = () => {
 
- 
-  const apiUrl = baseApiUrl.url;
+  const countries = [
+    { value: "finland", text: "Finland" },
+    { value: "sweden", text: "Sweden" },
+    { value: "norway", text: "Norway" },
+  ];
+  const defaultValue = {};
+
+    const apiUrl = baseApiUrl.url;
 
     const classes = useStyles();
-    const { register, errors, handleSubmit } = useForm({
+    //const [countries, setCountry] = React.useState('');
+    const { register, errors, control, handleSubmit, reset } = useForm({ 
+      defaultValue,
       mode: "onBlur",
     });
+    const [data, setData] = useState(null);
     const onSubmit = data => {
 
       axios.post(`${apiUrl}/register`, data, {
       })
       .then((response) => {
-
+        console.log(response);
       }, (error) => {
         console.log(error);
       });
     };
     const onError = (errors, e) => console.log(errors, e);
     const { t } = useTranslation();
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
     }, []);
+    
 
     return (
       <Container component="main" maxWidth="xs">
@@ -179,23 +190,38 @@ const Register = () => {
               id="postcode"
             />
             {errors.postcode && "Postcode is required"}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: 2,
-              })}
-              fullWidth
+              <FormControl>
+                
+              <Controller
+              as={
+                <Select>
+                  <MenuItem value="finland">
+                    {t('finland')}
+                  </MenuItem>
+                  <MenuItem value="sweden">
+                  {t('sweden')}
+                  </MenuItem>
+                  <MenuItem value="norway">
+                  {t('norway')}
+                  </MenuItem>
+                  <MenuItem value="denmark">
+                  {t('denmark')}
+                  </MenuItem>
+                </Select>
+              }
               name="address.country"
-              label={t('country')}
-              type="country"
-              id="country"
+              margin="normal"
+              rules={{ required: "this is required" }}
+              control={control}
+              fullWidth
+              defaultValue=""
             />
+              </FormControl>
             {errors.country && "Country is required"}
             <Button
               type="submit"
               fullWidth
+              margin="normal"
               variant="contained"
               color="primary"
             >

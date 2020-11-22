@@ -21,5 +21,9 @@
     "postcode": "Postcode",
     "country": "Coutry",
     "submit": "Submit",
-    "register":"Register"
+    "register":"Register",
+    "finland": "Finland",
+    "sweden": "Sweden",
+    "norway": "Norway",
+    "denmark": "Denmark"
 }
