@@ -215,7 +215,7 @@ const Register = () => {
               defaultValue=""
             />
               <FormHelperText>
-              {errors.address && errors.address.country.message}
+              {errors.address && <p>{t('country_required')}</p>}
             </FormHelperText>
               </FormControl>
               {errors.country && <p>{t('country_required')}</p>}
