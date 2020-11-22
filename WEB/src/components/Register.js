@@ -13,6 +13,8 @@ import axios from 'axios';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from'@material-ui/core/MenuItem';
+import InputLabel from'@material-ui/core/InputLabel';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -33,11 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
 
-  const countries = [
-    { value: "finland", text: "Finland" },
-    { value: "sweden", text: "Sweden" },
-    { value: "norway", text: "Norway" },
-  ];
   const defaultValue = {};
 
     const apiUrl = baseApiUrl.url;
@@ -55,9 +52,11 @@ const Register = () => {
       })
       .then((response) => {
         console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
+        }, (error) => {
+        console.log(error.response.data);
+        if (error.response.data = {"message":"E-mail already in use"}) {
+          alert("Email already in use");
+        }});
     };
     const onError = (errors, e) => console.log(errors, e);
     const { t } = useTranslation();
@@ -190,8 +189,14 @@ const Register = () => {
               id="postcode"
             />
             {errors.postcode && "Postcode is required"}
-              <FormControl>
-                
+              <FormControl
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              >
+              <InputLabel id="countries-label">
+              {t('country')}
+            </InputLabel>
               <Controller
               as={
                 <Select>
@@ -210,7 +215,6 @@ const Register = () => {
                 </Select>
               }
               name="address.country"
-              margin="normal"
               rules={{ required: "this is required" }}
               control={control}
               fullWidth
