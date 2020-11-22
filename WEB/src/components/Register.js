@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from'@material-ui/core/MenuItem';
 import InputLabel from'@material-ui/core/InputLabel';
-
+import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
 
-  const defaultValue = {};
-
+    const defaultValue = {};
+    const history = useHistory();
     const apiUrl = baseApiUrl.url;
 
     const classes = useStyles();
@@ -44,7 +44,9 @@ const Register = () => {
     const { register, errors, control, handleSubmit, reset } = useForm({ 
       defaultValue,
       mode: "onBlur",
-    });
+    });    
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
     const [data, setData] = useState(null);
     const onSubmit = data => {
 
@@ -52,6 +54,8 @@ const Register = () => {
       })
       .then((response) => {
         console.log(response);
+        history.push("/");
+        alert("Account successfully registered");
         }, (error) => {
         console.log(error.response.data);
         if (error.response.data = {"message":"E-mail already in use"}) {
@@ -59,8 +63,7 @@ const Register = () => {
         }});
     };
     const onError = (errors, e) => console.log(errors, e);
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(hideNavButtons());
     }, []);
