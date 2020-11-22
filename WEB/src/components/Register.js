@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from "react-hook-form";
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from'@material-ui/core/MenuItem';
-import InputLabel from'@material-ui/core/InputLabel';
-import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+Container,
+Button,
+TextField, 
+Typography, 
+Select, 
+FormControl, 
+MenuItem, 
+InputLabel,
+FormHelperText
+} from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -88,10 +92,8 @@ const Register = () => {
               minLength: 2,
               })}
               fullWidth
-              id="email"
               label={t('email')}
               name="email"
-              autoFocus
             />
             {errors.email && <p>{t('email_required')}</p>}
             <TextField
@@ -104,8 +106,6 @@ const Register = () => {
               fullWidth
               name="password"
               label={t('password')}
-              type="password"
-              id="password"
             />
             {errors.password && <p>{t('password_required')}</p>}
             <TextField
@@ -118,8 +118,6 @@ const Register = () => {
               fullWidth
               name="phonenumber"
               label={t('phonenumber')}
-              type="phonenumber"
-              id="phonenumber"
             />
             {errors.phonenumber && <p>{t('phonenumber_required')}</p>}
             <TextField
@@ -132,8 +130,6 @@ const Register = () => {
               fullWidth
               name="firstname"
               label={t('firstname')}
-              type="etunimi"
-              id="firstname"
             />
             {errors.firstname && <p>{t('firstname_required')}</p>}
             <TextField
@@ -146,8 +142,6 @@ const Register = () => {
               fullWidth
               name="lastname"
               label={t('lastname')}
-              type="sukunimi"
-              id="lastname"
             />
             {errors.lastname && <p>{t('lastname_required')}</p>}
             <TextField
@@ -160,10 +154,8 @@ const Register = () => {
               fullWidth
               name="address.street"
               label={t('street')}
-              type="osoite"
-              id="street"
             />
-
+            {errors.address && <p>{t('street_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -174,28 +166,27 @@ const Register = () => {
               fullWidth
               name="address.city"
               label={t('city')}
-              type="postinumero"
-              id="city"
             />
-
+            {errors.address && <p>{t('city_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
+                
                 required: true,
                 minLength: {value: 2,message:t('postcode_required') }
               })}
               fullWidth
               name="address.postcode"
               label={t('postcode')}
-              type="postitoimipaikka"
-              id="postcode"
-            />
 
+            />
+            {errors.address && <p>{t('postcode_required')}</p>}
               <FormControl
               variant="outlined"
               margin="normal"
               fullWidth
+              helperText={Boolean(errors.address)}
               >
               <InputLabel id="countries-label">
               {t('country')}
@@ -223,8 +214,11 @@ const Register = () => {
               fullWidth
               defaultValue=""
             />
+              <FormHelperText>
+              {errors.address && errors.address.country.message}
+            </FormHelperText>
               </FormControl>
-
+              {errors.country && <p>{t('country_required')}</p>}
             <Button
               type="submit"
               fullWidth
