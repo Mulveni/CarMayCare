@@ -25,5 +25,15 @@
     "finland": "Finland",
     "sweden": "Sweden",
     "norway": "Norway",
-    "denmark": "Denmark"
+    "denmark": "Denmark",
+    "successfull_register":"Successfully registered an account",
+    "email_required": "Enter valid email",
+    "password_required":"Password needs to be atleast 5 chars long",
+    "phonenumber_required":"Phonenumber needs to be valid phonenumber",
+    "firstname_required":"Firstname is required",
+    "lastname_required":"Lastname is required",
+    "street_required": "Street is required",
+    "city_required": "City is required",
+    "postcode_required": "Postcode is required",
+    "country_required": "Country is required"
 }

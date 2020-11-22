@@ -83,7 +83,7 @@ const Register = () => {
                 required: true,
               pattern: {
                 value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: 'Invalid email address',
+                message: t('email_required'),
               },
               minLength: 2,
               })}
@@ -93,7 +93,7 @@ const Register = () => {
               name="email"
               autoFocus
             />
-            {errors.email && "Email is not in correct form or is already in use"}
+            {errors.email && <p>{t('email_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -107,7 +107,7 @@ const Register = () => {
               type="password"
               id="password"
             />
-            {errors.password && "Password is required and must be 5 chars long"}
+            {errors.password && <p>{t('password_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -121,7 +121,7 @@ const Register = () => {
               type="phonenumber"
               id="phonenumber"
             />
-            {errors.phonenumber && "Phonenumber is required and must be 5 chars long"}
+            {errors.phonenumber && <p>{t('phonenumber_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -135,7 +135,7 @@ const Register = () => {
               type="etunimi"
               id="firstname"
             />
-            {errors.firstname && "Firstname is required"}
+            {errors.firstname && <p>{t('firstname_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -149,13 +149,13 @@ const Register = () => {
               type="sukunimi"
               id="lastname"
             />
-            {errors.lastname && "Lastname is required"}
+            {errors.lastname && <p>{t('lastname_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
                 required: true, 
-                minLength: 2,
+                minLength: {value: 2,message:t('street_required') }
               })}
               fullWidth
               name="address.street"
@@ -163,13 +163,13 @@ const Register = () => {
               type="osoite"
               id="street"
             />
-            {errors.street && "Street is required"}
+
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
                 required: true,
-                minLength: 2,
+                minLength: {value: 2,message:t('city_required') }
               })}
               fullWidth
               name="address.city"
@@ -177,13 +177,13 @@ const Register = () => {
               type="postinumero"
               id="city"
             />
-            {errors.city && "City is required"}
+
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
                 required: true,
-                minLength: 2,
+                minLength: {value: 2,message:t('postcode_required') }
               })}
               fullWidth
               name="address.postcode"
@@ -191,7 +191,7 @@ const Register = () => {
               type="postitoimipaikka"
               id="postcode"
             />
-            {errors.postcode && "Postcode is required"}
+
               <FormControl
               variant="outlined"
               margin="normal"
@@ -218,13 +218,13 @@ const Register = () => {
                 </Select>
               }
               name="address.country"
-              rules={{ required: "this is required" }}
+              rules={{ required: t('country_required') }}
               control={control}
               fullWidth
               defaultValue=""
             />
               </FormControl>
-            {errors.country && "Country is required"}
+
             <Button
               type="submit"
               fullWidth
