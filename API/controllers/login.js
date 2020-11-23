@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
     };
 
     const options = {
-        expiresIn: '30m'
+        expiresIn: '5m'
     }
 
     const token = jwt.sign(payload, jwtSecret.secret, options);
