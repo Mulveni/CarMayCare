@@ -60,8 +60,9 @@ const Register = () => {
         console.log(error.response.data);
         if (error.response.data.message === "E-mail already in use") {
           setErrorText(t('email_required'));
-        } else{
-          setErrorText(null);
+        }
+        else if(error.response.status === 404) {
+          setErrorText(t('api_not_found'))          
         }
         });
     };
