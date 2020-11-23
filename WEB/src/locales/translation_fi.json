@@ -29,6 +29,7 @@
     "error_number": "pitää olla luku väliltä",
     "error_inputs": "hyväksyy syöte arvot väliltä",
 
-    "button_submit": "Lähetä"
+    "button_submit": "Lähetä",
+    "unauthorized": "Ei käyttöoikeutta"
     
 }

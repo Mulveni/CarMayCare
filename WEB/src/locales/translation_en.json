@@ -29,6 +29,7 @@
     "error_number": "must be a number between",
     "error_inputs": "accepts input values between",
 
-    "button_submit": "Submit"
+    "button_submit": "Submit",
+    "unauthorized": "Unauthorized"
 
 }
