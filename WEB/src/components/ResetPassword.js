@@ -32,11 +32,7 @@ const ResetPassword = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
-    }, []);
-
-    useEffect(() => {
-        checkLinkParameter();
-    }, []);
+    }, [dispatch]);
 
     const checkLinkParameter = () => {
         axios.post(`${apiUrl}/login`, null, {
@@ -64,6 +60,8 @@ const ResetPassword = () => {
             setServerError(true);
         });
     }
+
+    useEffect(checkLinkParameter, []);
 
     const ResetPasswordContent = () => {
         const [sent, setSent] = useState(false);

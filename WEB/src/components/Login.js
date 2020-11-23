@@ -38,7 +38,7 @@ const Login = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
-    }, []);
+    }, [dispatch]);
 
     const pressKey = (e) => {
         if (e.code === "Enter") {

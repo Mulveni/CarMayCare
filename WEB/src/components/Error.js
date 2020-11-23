@@ -10,7 +10,7 @@ const NotFound = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
