@@ -27,7 +27,7 @@
     "submit": "Lähetä",
     "register":"Rekisteröidy",
     "successfull_register":"Tili luotu onnistuneesti",
-    "email_required": "Syötä olemassa oleva sähköposti",
+    "email_required": "Sähköposti on väärinkirjoitettu tai on jo käytössä",
     "password_required": "Salasanan pitää olla vähintään 5 merkkiä pitkä",
     "phonenumber_required":"Syötä olemassa oleva puhelinnumero",
     "firstname_required":"Syötä etunimi",

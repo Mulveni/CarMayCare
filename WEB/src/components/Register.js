@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import {
 Container,
 Button,
@@ -18,7 +19,6 @@ MenuItem,
 InputLabel,
 FormHelperText
 } from "@material-ui/core";
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -35,38 +35,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 const Register = () => {
 
+    const [errorText, setErrorText] = useState(null);
+    const [submitText, setSubmitText] = useState(null);
     const defaultValue = {};
-    const history = useHistory();
     const apiUrl = baseApiUrl.url;
 
     const classes = useStyles();
-    //const [countries, setCountry] = React.useState('');
-    const { register, errors, control, handleSubmit, reset } = useForm({ 
+    const { register, errors, control, handleSubmit } = useForm({ 
       defaultValue,
       mode: "onBlur",
     });    
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const [data, setData] = useState(null);
     const onSubmit = data => {
-
+      setSubmitText(null);
+      setErrorText(null);
       axios.post(`${apiUrl}/register`, data, {
       })
       .then((response) => {
-        console.log(response);
-        history.push("/");
-        alert("Account successfully registered");
+        setSubmitText(t("successfull_register"));
         }, (error) => {
         console.log(error.response.data);
-        if (error.response.data = {"message":"E-mail already in use"}) {
-          alert("Email already in use");
-        }});
+        if (error.response.data.message === "E-mail already in use") {
+          setErrorText(t('email_required'));
+        } else{
+          setErrorText(null);
+        }
+        });
     };
-    const onError = (errors, e) => console.log(errors, e);
+    const onError = (errors, e) => {
+      setErrorText(null);
+      if(errors.email != null){
+        setErrorText(errors.email.message);
+      }
+      if(errors.email == null){
+        setErrorText(null);
+      }
+    }
+
 
     useEffect(() => {
         dispatch(hideNavButtons());
@@ -95,7 +103,7 @@ const Register = () => {
               label={t('email')}
               name="email"
             />
-            {errors.email && <p>{t('email_required')}</p>}
+            <p>{errorText}</p>
             <TextField
               variant="outlined"
               margin="normal"
@@ -104,6 +112,8 @@ const Register = () => {
                 minLength: 5,
               })}
               fullWidth
+              id="password"
+              type="password"
               name="password"
               label={t('password')}
             />
@@ -116,6 +126,7 @@ const Register = () => {
                 minLength: 5,
               })}
               fullWidth
+
               name="phonenumber"
               label={t('phonenumber')}
             />
@@ -155,7 +166,7 @@ const Register = () => {
               name="address.street"
               label={t('street')}
             />
-            {errors.address && <p>{t('street_required')}</p>}
+            {errors?.address?.street && <p>{t('street_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
@@ -167,12 +178,11 @@ const Register = () => {
               name="address.city"
               label={t('city')}
             />
-            {errors.address && <p>{t('city_required')}</p>}
+            {errors?.address?.city && <p>{t('city_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
               inputRef={register({
-                
                 required: true,
                 minLength: {value: 2,message:t('postcode_required') }
               })}
@@ -181,12 +191,11 @@ const Register = () => {
               label={t('postcode')}
 
             />
-            {errors.address && <p>{t('postcode_required')}</p>}
+            {errors?.address?.postcode && <p>{t('postcode_required')}</p>}
               <FormControl
               variant="outlined"
               margin="normal"
               fullWidth
-              helperText={Boolean(errors.address)}
               >
               <InputLabel id="countries-label">
               {t('country')}
@@ -209,16 +218,17 @@ const Register = () => {
                 </Select>
               }
               name="address.country"
-              rules={{ required: t('country_required') }}
+              rules={{ required: true }}
               control={control}
               fullWidth
               defaultValue=""
             />
+              {errors?.address?.country && <p>{t('country_required')}</p>}
               <FormHelperText>
-              {errors.address && <p>{t('country_required')}</p>}
+              {errors?.address?.country && errors?.address?.country.message}
             </FormHelperText>
               </FormControl>
-              {errors.country && <p>{t('country_required')}</p>}
+
             <Button
               type="submit"
               fullWidth
@@ -228,6 +238,8 @@ const Register = () => {
             >
               {t('submit')}
             </Button>
+            <p>{submitText}</p>
+            <Link className={classes.link} to="/login" >{t('login')}</Link>
           </form>
         </div>
       </Container>

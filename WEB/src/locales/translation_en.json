@@ -27,7 +27,7 @@
     "norway": "Norway",
     "denmark": "Denmark",
     "successfull_register":"Successfully registered an account",
-    "email_required": "Enter valid email",
+    "email_required": "Email is in wrong format or is already in use",
     "password_required":"Password needs to be atleast 5 chars long",
     "phonenumber_required":"Phonenumber needs to be valid phonenumber",
     "firstname_required":"Firstname is required",
