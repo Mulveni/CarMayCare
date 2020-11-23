@@ -25,8 +25,15 @@ const App = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
-                    <Route path="/mycars" component={MyCars} />
-                    <Route path="/addcar" component={AddCar} />
+
+                    <Route exact path="/mycars">
+                        {!isLoggedin ? <Redirect to="/login" /> : <MyCars />}
+                    </Route>
+
+                    <Route exact path="/addcar">
+                        {!isLoggedin ? <Redirect to="/login" /> : <AddCar />}
+                    </Route>
+
                     <Route component={NotFound} />
                 </Switch>
 
