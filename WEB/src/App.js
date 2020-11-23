@@ -6,12 +6,14 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import NotFound from './components/NotFound';
+import AddCar from './components/AddCar';
+import MyCars from './components/MyCars';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 
 const App = () => {
     const isLoggedin = useSelector(state => state.loginReducer);
-
+    
     return (
         <div>
             <Router>
@@ -24,6 +26,15 @@ const App = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
+
+                    <Route exact path="/mycars">
+                        {!isLoggedin ? <Redirect to="/login" /> : <MyCars />}
+                    </Route>
+
+                    <Route exact path="/addcar">
+                        {!isLoggedin ? <Redirect to="/login" /> : <AddCar />}
+                    </Route>
+
                     <Route path="/resetpassword/:id" exact component={ResetPassword} />
                     <Route component={NotFound} />
                 </Switch>

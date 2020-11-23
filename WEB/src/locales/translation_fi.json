@@ -13,6 +13,7 @@
     "unknown_reason": "Tuntematon syy.",
     "forgot_password": "Unohtuiko salasana?",
     "register_here": "Tee käyttäjä tästä.",
+  
     "forgot_password_header": "Unohtunut salasana",
     "send": "Lähetä",
     "invalid_email": "Virheellinen sähköposti.",
@@ -20,5 +21,23 @@
     "password_reseted_and_sent": "Salasana on nyt nollattu ja lähetetty sähköpostiisi.",
     "internal_server_error": "Palvelinvirhe.",
     "reset_password": "Nollaa salasana",
-    "link_expired": "Linkki on vanhentunut."
+    "link_expired": "Linkki on vanhentunut.",
+
+    "car_addcar": "Lisää auto",
+    "car_brand": "Merkki",
+    "car_model": "Malli",
+    "car_yearmodel": "Vuosimalli",
+    "car_powertype": "Käyttövoima",
+    "car_enginesize": "Moottorin koko",
+    "car_license": "Rekisterinumero",
+
+    "error_shorter": "ei voi olla lyhyempi kuin",
+    "error_longer": "ei voi olla pidempi kuin",
+    "error_characters": "merkkiä",
+    "error_required": "on pakollinen kenttä",
+    "error_number": "pitää olla luku väliltä",
+    "error_inputs": "hyväksyy syöte arvot väliltä",
+
+    "button_submit": "Lähetä",
+    "unauthorized": "Ei käyttöoikeutta"
 }
