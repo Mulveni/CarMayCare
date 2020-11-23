@@ -31,6 +31,6 @@
 
     "button_submit": "Submit",
     "unauthorized": "Unauthorized",
-    "api_not_found": "API not responding"
+    "internal_server_error": "Internal server error"
 
 }

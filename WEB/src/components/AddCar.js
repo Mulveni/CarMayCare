@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { showNavButtons } from '../actions';
 import { useHistory } from 'react-router-dom'
 
 import { useSelector } from 'react-redux';
@@ -50,7 +48,7 @@ const AddCar = () => {
         setErrorText(t('unauthorized'));
       } 
       else if(error.response.status === 404) {
-        setErrorText(t('api_not_found'))
+        setErrorText(t('internal_server_error'))
       }
       else {
         setErrorText(t('unknown_reason'));
@@ -88,11 +86,6 @@ const AddCar = () => {
     'Authorization': `Bearer ${myToken}`}
 
     const { t } = useTranslation();
-
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(showNavButtons());
-    }, []);
 
     return (
       <div className={classes.formGrid}>

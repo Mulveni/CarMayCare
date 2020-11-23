@@ -31,6 +31,6 @@
 
     "button_submit": "Lähetä",
     "unauthorized": "Ei käyttöoikeutta",
-    "api_not_found": "API ei vastaa"
+    "internal_server_error": "Palvelinvirhe"
     
 }
