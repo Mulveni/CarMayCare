@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(hideNavButtons());
-    }, []);
+    }, [dispatch]);
 
     const MessageSent = () => {
         return (
