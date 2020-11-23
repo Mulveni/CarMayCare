@@ -39,18 +39,37 @@ const utils = {
         });
     },
 
-    addNewService: (idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation) => {
+    addNewService: (service, idUsers, idCars) => {
         return new Promise(function (resolve, reject) {
-            db.query("INSERT INTO services(idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            [idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation])
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
             .then(results => {
-                console.log(results);
-                resolve(results);
+                if(results !== 0){
+                    db.query("INSERT INTO services(idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    [service.idCars, service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
+                        service.airConditioningService.done, service.airConditioningService.dryer, service.additionalServices.sparkPlugReplacement, 
+                        service.additionalServices.airFilterReplacement, service.additionalServices.cleanAirReplacement, 
+                        service.additionalServices.fuelFilterReplacement, service.additionalServices.brakeFluidReplacement, 
+                        service.additionalServices.gearBoxOilReplacement, service.additionalServices.powerSteeringOilReplacement, 
+                        service.additionalServices.timingBeltReplacement, service.additionalServices.waterPumpReplacement, 
+                        service.additionalServices.dieselParticulateFilterReplacement, service.additionalInformation])
+                    .then(results => {
+                        console.log(results);
+                        resolve(results);
 
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
+
+                } else {
+                    console.log("No results found");
+                    resolve(false);
+                }
             }).catch(error => {
                 console.log(error);
                 reject(error);
-            });
+            })
+
 
         });
     },
@@ -71,62 +90,50 @@ const utils = {
         });
     },
 
-    editService: (idCars, idServices, service) => {
-        return new Promise(function(resolve, reject) {
-            db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices]).then(results => {
+    editService: (idUsers, idCars, idServices, service) => {
+        return new Promise(function(resolve, rejetct) {
+
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
                 if (results.length !== 0){
-                    if (service.motorOilChangeDone === null){
-                        service.motorOilChangeDone = results[0].motorOilChangeDone;
-                    }
-                    if (service.motorOilChangelongLifeOilUsed === null){
-                        service.motorOilChangelongLifeOilUsed = results[0].motorOilChangelongLifeOilUsed;
-                    }
-                    if (results.airConditioningServiceDone === null){
-                        service.airConditioningServiceDone = results[0].airConditioningServiceDone;
-                    }
-                    if (results.airConditioningServiceDryer === null){
-                        service.airConditioningServiceDryer = results[0].airConditioningServiceDryer;
-                    }
-                    if (results.sparkPlugReplacement === null){
-                        service.sparkPlugReplacement = results[0].sparkPlugReplacement;
-                    }
-                    if (results.airFilterReplacement === null){
-                        service.airFilterReplacement = results[0].airFilterReplacement;
-                    }
-                    if (results.cleanAirReplacement === null){
-                        service.cleanAirReplacement = results[0].cleanAirReplacement;
-                    }
-                    if (results.fuelFilterReplacement === null){
-                        service.fuelFilterReplacement = results[0].fuelFilterReplacement;
-                    }
-                    if (results.brakeFluidReplacement === null){
-                        service.brakeFluidReplacement = results[0].brakeFluidReplacement;
-                    }
-                    if (results.gearBoxOilReplacement === null){
-                        service.gearBoxOilReplacement = results[0].gearBoxOilReplacement;
-                    }
-                    if (results.powerSteeringOilReplacement === null){
-                        service.powerSteeringOilReplacement = results[0].powerSteeringOilReplacement;
-                    }
-                    if (results.timingBeltReplacement === null){
-                        service.timingBeltReplacement = results[0].timingBeltReplacement;
-                    }
-                    if (results.waterPumpReplacement === null){
-                        service.waterPumpReplacement = results[0].waterPumpReplacement;
-                    }
-                    if (results.dieselParticulateFilterReplacement === null){
-                        service.dieselParticulateFilterReplacement = results[0].dieselParticulateFilterReplacement;
-                    }
-                    if (results.additionalInformation === null){
-                        service.additionalInformation = results[0].additionalInformation;
-                    }
-                    
-                    resolve(db.query('UPDATE services SET motorOilChangeDone = ?, motorOilChangelongLifeOilUsed = ?, airConditioningServiceDone = ?, airConditioningServiceDryer = ?, sparkPlugReplacement = ?, airFilterReplacement = ?, cleanAirReplacement = ?, fuelFilterReplacement = ?, brakeFluidReplacement = ?, gearBoxOilReplacement = ?, powerSteeringOilReplacement = ?, timingBeltReplacement = ?, waterPumpReplacement = ?, dieselParticulateFilterReplacement = ?, additionalInformation = ? WHERE idCars = ? AND idServices = ?',
-                    [service.motorOilChangeDone, service.motorOilChangelongLifeOilUsed, service.airConditioningServiceDone, service.airConditioningServiceDryer, service.sparkPlugReplacement, service.airFilterReplacement, service.cleanAirReplacement, service.fuelFilterReplacement, service.brakeFluidReplacement , service.gearBoxOilReplacement , service.powerSteeringOilReplacement, service.timingBeltReplacement , service.waterPumpReplacement, service.dieselParticulateFilterReplacement, service.additionalInformation, idCars, idServices]));
+
+                    db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices])
+                    .then(results => {
+                        if (results !== 0){
+
+                            db.query('UPDATE services SET description = ?, mileage = ?, motorOilChangeDone = ?, motorOilChangelongLifeOilUsed = ?, airConditioningServiceDone = ?, airConditioningServiceDryer = ?, sparkPlugReplacement = ?, airFilterReplacement = ?, cleanAirReplacement = ?, fuelFilterReplacement = ?, brakeFluidReplacement = ?, gearBoxOilReplacement = ?, powerSteeringOilReplacement = ?, timingBeltReplacement = ?, waterPumpReplacement = ?, dieselParticulateFilterReplacement = ?, additionalInformation = ? WHERE idCars = ? AND idServices = ?',
+                            [service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
+                                service.airConditioningService.done, service.airConditioningService.dryer, service.additionalServices.sparkPlugReplacement,
+                                service.additionalServices.airFilterReplacement, service.additionalServices.cleanAirReplacement, 
+                                service.additionalServices.fuelFilterReplacement, service.additionalServices.brakeFluidReplacement , 
+                                service.additionalServices.gearBoxOilReplacement , service.additionalServices.powerSteeringOilReplacement, 
+                                service.additionalServices.timingBeltReplacement , service.additionalServices.waterPumpReplacement, 
+                                service.additionalServices.dieselParticulateFilterReplacement, service.additionalInformation, idCars, idServices])
+                                .then(results => {
+
+                                    console.log(results);
+                                    resolve(results);
+                                }).catch (error => {
+
+                                    console.log(error);
+                                    reject(error);
+                                });
+                        } else {
+
+                            resolve(false);
+                        }
+                    }).catch(error => {
+
+                        console.log(error);
+                        resolve(error);
+                    });
                 } else {
+
                     resolve(false);
                 }
+                
             }).catch(error => {
+                
                 console.log(error);
                 reject(error);
             });
