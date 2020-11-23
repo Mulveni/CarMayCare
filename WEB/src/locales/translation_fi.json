@@ -27,7 +27,8 @@
     "submit": "Lähetä",
     "register":"Rekisteröidy",
     "successfull_register":"Tili luotu onnistuneesti",
-    "email_required": "Sähköposti on väärinkirjoitettu tai on jo käytössä",
+    "email_required": "Sähköposti on väärinkirjoitettu",
+    "email_already_in_use": "Sähköpostiosoite on jo käytössä",
     "password_required": "Salasanan pitää olla vähintään 5 merkkiä pitkä",
     "phonenumber_required":"Syötä olemassa oleva puhelinnumero",
     "firstname_required":"Syötä etunimi",
@@ -35,7 +36,8 @@
     "street_required": "Syötä katu",
     "city_required": "Syötä kaupunki",
     "postcode_required": "Syötä postinumero",
-    "country_required": "Syötä maa"
+    "country_required": "Syötä maa",
+    "internal_server_error":"Palvelin virhe"
 
 
 

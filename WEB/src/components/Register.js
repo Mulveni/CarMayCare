@@ -59,10 +59,10 @@ const Register = () => {
         }, (error) => {
         console.log(error.response.data);
         if (error.response.data.message === "E-mail already in use") {
-          setErrorText(t('email_required'));
+          setErrorText(t('email_already_in_use'));
         }
         else if(error.response.status === 404) {
-          setErrorText(t('api_not_found'))          
+          setErrorText(t("internal_server_error"))          
         }
         });
     };

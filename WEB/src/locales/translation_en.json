@@ -27,7 +27,8 @@
     "norway": "Norway",
     "denmark": "Denmark",
     "successfull_register":"Successfully registered an account",
-    "email_required": "Email is in wrong format or is already in use",
+    "email_required": "Email is required",
+    "email_already_in_use": "Email already in use",
     "password_required":"Password needs to be atleast 5 chars long",
     "phonenumber_required":"Phonenumber needs to be valid phonenumber",
     "firstname_required":"Firstname is required",
@@ -35,5 +36,7 @@
     "street_required": "Street is required",
     "city_required": "City is required",
     "postcode_required": "Postcode is required",
-    "country_required": "Country is required"
+    "country_required": "Country is required",
+    "internal_server_error":"Internal Server Error"
+
 }
