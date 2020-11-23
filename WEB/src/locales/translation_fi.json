@@ -38,8 +38,12 @@
     "postcode_required": "Syötä postinumero",
     "country_required": "Syötä maa",
     "internal_server_error":"Palvelin virhe"
-
-
-
-    
+    "forgot_password_header": "Unohtunut salasana",
+    "send": "Lähetä",
+    "invalid_email": "Virheellinen sähköposti.",
+    "forgot_password_sent_message": "Salasanan nollauslinkki on lähetetty sähköpostiin, jos sillä löytyi tunnus.",
+    "password_reseted_and_sent": "Salasana on nyt nollattu ja lähetetty sähköpostiisi.",
+    "internal_server_error": "Palvelinvirhe.",
+    "reset_password": "Nollaa salasana",
+    "link_expired": "Linkki on vanhentunut."
 }

@@ -38,5 +38,12 @@
     "postcode_required": "Postcode is required",
     "country_required": "Country is required",
     "internal_server_error":"Internal Server Error"
-
+    "forgot_password_header": "Forgot password",
+    "send": "Send",
+    "invalid_email": "Invalid email.",
+    "forgot_password_sent_message": "A password reset link has been sent to the email if there is an account.",
+    "password_reseted_and_sent": "Password has been reset and sent to your email.",
+    "internal_server_error": "Internal server error.",
+    "reset_password": "Reset password",
+    "link_expired": "Link expired."
 }
