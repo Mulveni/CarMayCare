@@ -28,3 +28,9 @@ export const addToken = (token) => {
         token: token
     }
 }
+
+export const removeToken = () => {
+    return {
+        type: "REMOVE_TOKEN"
+    }
+}

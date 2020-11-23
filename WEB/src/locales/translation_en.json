@@ -14,6 +14,15 @@
     "forgot_password": "Forgot password?",
     "register_here": "Register here.",
 
+    "forgot_password_header": "Forgot password",
+    "send": "Send",
+    "invalid_email": "Invalid email.",
+    "forgot_password_sent_message": "A password reset link has been sent to the email if there is an account.",
+    "password_reseted_and_sent": "Password has been reset and sent to your email.",
+    "internal_server_error": "Internal server error.",
+    "reset_password": "Reset password",
+    "link_expired": "Link expired.",
+
     "car_addcar": "Add a car",
     "car_brand": "Brand",
     "car_model": "Model",
@@ -32,5 +41,4 @@
     "button_submit": "Submit",
     "unauthorized": "Unauthorized",
     "api_not_found": "API not responding"
-
 }

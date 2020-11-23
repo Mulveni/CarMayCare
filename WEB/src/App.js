@@ -9,6 +9,7 @@ import NotFound from './components/NotFound';
 import AddCar from './components/AddCar';
 import MyCars from './components/MyCars';
 import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 const App = () => {
     const isLoggedin = useSelector(state => state.loginReducer);
@@ -34,6 +35,7 @@ const App = () => {
                         {!isLoggedin ? <Redirect to="/login" /> : <AddCar />}
                     </Route>
 
+                    <Route path="/resetpassword/:id" exact component={ResetPassword} />
                     <Route component={NotFound} />
                 </Switch>
 
