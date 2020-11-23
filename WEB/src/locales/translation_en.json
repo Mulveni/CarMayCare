@@ -30,6 +30,7 @@
     "error_inputs": "accepts input values between",
 
     "button_submit": "Submit",
-    "unauthorized": "Unauthorized"
+    "unauthorized": "Unauthorized",
+    "api_not_found": "API not responding"
 
 }

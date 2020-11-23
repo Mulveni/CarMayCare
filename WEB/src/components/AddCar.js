@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 
 const AddCar = () => {
   const [errorText, setErrorText] = useState(null);
-
   const apiUrl = baseApiUrl.url;
   const history = useHistory();
   const classes = useStyles();
@@ -45,10 +44,14 @@ const AddCar = () => {
       history.push("/mycars");
 
     }, (error) => {
-
+      console.log(error.response.data);
+      console.log(error.response.status);
       if (error.response.data === "Unauthorized") {
         setErrorText(t('unauthorized'));
       } 
+      else if(error.response.status === 404) {
+        setErrorText(t('api_not_found'))
+      }
       else {
         setErrorText(t('unknown_reason'));
       }

@@ -7,11 +7,6 @@ const MyCars = () => {
 
     const { t } = useTranslation();
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(showNavButtons());
-    }, []);
-
     return (
         <div>
             MyCars
