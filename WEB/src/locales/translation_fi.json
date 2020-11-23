@@ -14,10 +14,21 @@
     "forgot_password": "Unohtuiko salasana?",
     "register_here": "Tee käyttäjä tästä.",
 
+    "car_addcar": "Lisää auto",
     "car_brand": "Merkki",
     "car_model": "Malli",
     "car_yearmodel": "Vuosimalli",
     "car_powertype": "Käyttövoima",
     "car_enginesize": "Moottorin koko",
-    "car_license": "Rekisterinumero"
+    "car_license": "Rekisterinumero",
+
+    "error_shorter": "ei voi olla lyhyempi kuin",
+    "error_longer": "ei voi olla pidempi kuin",
+    "error_characters": "merkkiä",
+    "error_required": "on pakollinen kenttä",
+    "error_number": "pitää olla luku väliltä",
+    "error_inputs": "hyväksyy syöte arvot väliltä",
+
+    "button_submit": "Lähetä"
+    
 }

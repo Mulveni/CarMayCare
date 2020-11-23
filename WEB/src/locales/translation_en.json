@@ -14,11 +14,21 @@
     "forgot_password": "Forgot password?",
     "register_here": "Register here.",
 
+    "car_addcar": "Add a car",
     "car_brand": "Brand",
     "car_model": "Model",
     "car_yearmodel": "Model year",
     "car_powertype": "Power type",
     "car_enginesize": "Engine size",
-    "car_license": "License number"
+    "car_license": "License number",
+
+    "error_shorter": "cant be shorter than",
+    "error_longer": "cant be longer than",
+    "error_characters": "characters",
+    "error_required": "is a required field",
+    "error_number": "must be a number between",
+    "error_inputs": "accepts input values between",
+
+    "button_submit": "Submit"
 
 }
