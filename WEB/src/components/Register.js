@@ -104,7 +104,7 @@ const Register = () => {
               label={t('email')}
               name="email"
             />
-            <p>{errorText}</p>
+            <p>{errorText}</p>{errors.email && <p>{t('email_required')}</p>}
             <TextField
               variant="outlined"
               margin="normal"
