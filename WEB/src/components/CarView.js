@@ -11,6 +11,7 @@ import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import { useSelector } from 'react-redux';
 import Error from './Error';
+import Loading from './Loading';
 import NotFound from './NotFound';
 
 const useStyles = makeStyles({
@@ -136,7 +137,7 @@ const CarView = (props) => {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
