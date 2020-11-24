@@ -12,7 +12,6 @@ import baseApiUrl from '../api_url.json';
 import { useSelector } from 'react-redux';
 import Error from './Error';
 import Loading from './Loading';
-import NotFound from './NotFound';
 
 const useStyles = makeStyles({
     carViewGrid: {
@@ -51,7 +50,6 @@ const useStyles = makeStyles({
 
 const CarView = (props) => {
     const [serverError, setServerError] = useState(false);
-    const [notFound, setNotFound] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
     const [carData, setCarData] = useState({});
@@ -80,8 +78,7 @@ const CarView = (props) => {
             }
         }).then(response => {
             if (response.data.message === "No results with given id") {
-                console.log("NO RESULTS");
-                setNotFound(true);
+                setServerError(true);
                 setLoading(false);
             } else {
                 setCarData(response.data[0]);
@@ -127,10 +124,6 @@ const CarView = (props) => {
 
     if (serverError) {
         return <Error />;
-    }
-
-    if (notFound) {
-        return <NotFound />;
     }
 
     if (isLoading) {
