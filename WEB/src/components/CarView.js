@@ -140,7 +140,7 @@ const CarView = (props) => {
                             <Button className={classes.tabActive}
                                 variant="contained"
                             >
-                                {t('edit')}
+                                {t('button_edit')}
                             </Button>
                         </div>
                         <div className={classes.carViewCard}>
