@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 
-const NotFound = () => {
+const Error = () => {
 
     const { t } = useTranslation();
 
@@ -19,4 +19,4 @@ const NotFound = () => {
     )
 }
 
-export default NotFound;
+export default Error;
