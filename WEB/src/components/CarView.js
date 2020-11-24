@@ -54,7 +54,6 @@ const CarView = (props) => {
     const [notFound, setNotFound] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
-    const [carId, setCarId] = useState("x");
     const [carData, setCarData] = useState({});
 
     const classes = useStyles();
@@ -68,22 +67,16 @@ const CarView = (props) => {
         dispatch(showNavButtons());
     }, [dispatch]);
 
-    const handleTabIndex = (event, index) => {
-        setTabIndex(index);
-    };
-
     const checkCarIdFromState = () => {
         if (props.location.state.carId === undefined) {
             setServerError(true);
-        } else {
-            setCarId(props.location.state.carId);
         }
     }
 
     const getCarInfo = () => {
-        axios.get(`${apiUrl}/cars/10`, {
+        axios.get(`${apiUrl}/cars/${props.location.state.carId}`, {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdEB0ZXN0LmZpIiwiaWQiOjEsImlzQWRtaW4iOjF9LCJpYXQiOjE2MDYyMjgyMDAsImV4cCI6MTYwNjIzMDAwMH0.F8_rLB64HkZIwrFFLXk4edgwKIe6TMpYf1hZwJICav4`
+                Authorization: `Bearer ${apiToken}`
             }
         }).then(response => {
             if (response.data.message === "No results with given id") {
@@ -104,6 +97,10 @@ const CarView = (props) => {
     }
     useEffect(checkCarIdFromState, []);
     useEffect(getCarInfo, []);
+
+    const handleTabIndex = (event, index) => {
+        setTabIndex(index);
+    };
 
     const CarTabs = () => {
         switch (tabIndex) {
