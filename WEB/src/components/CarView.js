@@ -122,7 +122,7 @@ const CarView = (props) => {
             default:
                 return (
                     <div>
-                        Error
+                        <Error />
                     </div>
                 )
         }
