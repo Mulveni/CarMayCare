@@ -7,6 +7,11 @@ import CarImage from '../images/car_placeholder.PNG';
 import MaintenanceHistory from '../components/MaintenanceHistory';
 import AddService from '../components/AddService';
 import Notes from '../components/Notes';
+import axios from 'axios';
+import baseApiUrl from '../api_url.json';
+import { useSelector } from 'react-redux';
+import Error from './Error';
+import NotFound from './NotFound';
 
 const useStyles = makeStyles({
     carViewGrid: {
@@ -43,12 +48,19 @@ const useStyles = makeStyles({
     }
 });
 
-const CarView = () => {
+const CarView = (props) => {
+    const [serverError, setServerError] = useState(false);
+    const [notFound, setNotFound] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
+    const [carId, setCarId] = useState("x");
+    const [carData, setCarData] = useState({});
 
     const classes = useStyles();
-
     const { t } = useTranslation();
+
+    const apiUrl = baseApiUrl.url;
+    const apiToken = useSelector(state => state.tokenReducer);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -59,8 +71,40 @@ const CarView = () => {
         setTabIndex(index);
     };
 
-    const TestTab = () => {
+    const checkCarIdFromState = () => {
+        if (props.location.state.carId === undefined) {
+            setServerError(true);
+        } else {
+            setCarId(props.location.state.carId);
+        }
+    }
 
+    const getCarInfo = () => {
+        axios.get(`${apiUrl}/cars/10`, {
+            headers: {
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdEB0ZXN0LmZpIiwiaWQiOjEsImlzQWRtaW4iOjF9LCJpYXQiOjE2MDYyMjgyMDAsImV4cCI6MTYwNjIzMDAwMH0.F8_rLB64HkZIwrFFLXk4edgwKIe6TMpYf1hZwJICav4`
+            }
+        }).then(response => {
+            if (response.data.message === "No results with given id") {
+                console.log("NO RESULTS");
+                setNotFound(true);
+                setLoading(false);
+            } else {
+                setCarData(response.data[0]);
+                setLoading(false);
+            }
+
+        }).catch(error => {
+            console.log(error);
+            setServerError(true);
+            setLoading(false);
+
+        });
+    }
+    useEffect(checkCarIdFromState, []);
+    useEffect(getCarInfo, []);
+
+    const CarTabs = () => {
         switch (tabIndex) {
             case 0:
                 return (
@@ -83,6 +127,18 @@ const CarView = () => {
         }
     }
 
+    if (serverError) {
+        return <Error />;
+    }
+
+    if (notFound) {
+        return <NotFound />;
+    }
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
             <Grid container direction="column" alignItems="center" style={{ marginTop: 50 }}>
@@ -103,12 +159,12 @@ const CarView = () => {
                                 title="Car Placeholder"
                             />
                             <div className={classes.carText}>
-                                <p>{t('car_brand')}: TestBrand</p>
-                                <p>{t('car_model')}: TestModel</p>
-                                <p>{t('car_yearmodel')}: TestYearModel</p>
-                                <p>{t('car_powertype')}: TestPowerType</p>
-                                <p>{t('car_enginesize')}: TestEngineSize</p>
-                                <p>{t('car_license')}: TestLicense</p>
+                                <p>{t('car_brand')}: {carData.brand}</p>
+                                <p>{t('car_model')}: {carData.model}</p>
+                                <p>{t('car_yearmodel')}: {carData.yearModel}</p>
+                                <p>{t('car_powertype')}: {carData.powerType}</p>
+                                <p>{t('car_enginesize')}: {carData.engineSize}</p>
+                                <p>{t('car_license')}: {carData.licenseNumber}</p>
                             </div>
 
                         </div>
@@ -128,7 +184,8 @@ const CarView = () => {
                                 <Tab label={t('button_notes')} className={tabIndex === 2 ? classes.tabActive : null} />
                             </Tabs>
                         </AppBar>
-                        <TestTab />
+
+                        <CarTabs />
                     </Card>
 
                 </div>
@@ -136,6 +193,7 @@ const CarView = () => {
 
             </Grid>
         </div >
+
     )
 }
 
