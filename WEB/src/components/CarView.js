@@ -4,7 +4,7 @@ import { showNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import { Grid, Button, makeStyles, Card, CardMedia, Tab, AppBar, Tabs } from '@material-ui/core';
 import CarImage from '../images/car_placeholder.PNG';
-import MaintenanceHistory from '../components/MaintenanceHistory';
+import ServiceHistory from './ServiceHistory';
 import AddService from '../components/AddService';
 import Notes from '../components/Notes';
 import axios from 'axios';
@@ -103,7 +103,7 @@ const CarView = (props) => {
         switch (tabIndex) {
             case 0:
                 return (
-                    <MaintenanceHistory />
+                    <ServiceHistory />
                 )
             case 1:
                 return (
