@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Navigation from './components/Navigation';
 import Register from './components/Register';
@@ -28,7 +28,9 @@ const App = () => {
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
 
-                    <Route path="/carview" exact component={CarView} />
+                    <Route exact path="/carview">
+                        {!isLoggedin ? <Redirect to="/login" /> : <CarView />}
+                    </Route>
 
                     <Route exact path="/mycars">
                         {!isLoggedin ? <Redirect to="/login" /> : <MyCars />}

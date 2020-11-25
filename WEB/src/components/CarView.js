@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { showNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
-import { Grid, Button, makeStyles, Card, CardMedia, Tab, AppBar, Tabs } from '@material-ui/core';
-import CarImage from '../images/car_placeholder.PNG';
+import { withRouter } from "react-router";
+import { Grid, Button, makeStyles, Card, Tab, AppBar, Tabs, Avatar } from '@material-ui/core';
 import ServiceHistory from './ServiceHistory';
 import AddService from '../components/AddService';
 import Notes from '../components/Notes';
@@ -20,20 +20,18 @@ const useStyles = makeStyles({
         maxWidth: 800,
         minWidth: 600
     },
-    image: {
-        width: 150,
-        height: 100
-    },
     carViewCard: {
         display: "flex",
-        padding: 10
+        flexDirection: "row",
+        padding: 25,
+        background: "#91BED4"
     },
-    carText: {
-        paddingLeft: 50
+    cardHeader: {
+        backgroundColor: "#91BED4",
     },
     editButton: {
-        float: "right",
-        padding: 10,
+        color: "white",
+        backgroundColor: "#F26101",
     },
     tabView: {
         backgroundColor: "#304269",
@@ -45,6 +43,11 @@ const useStyles = makeStyles({
     tabActive: {
         color: "white",
         backgroundColor: "#F26101"
+    },
+    avatar: {
+        backgroundColor: "#F26101",
+        width: 75,
+        height: 75
     }
 });
 
@@ -133,35 +136,38 @@ const CarView = (props) => {
     return (
         <div>
             <Grid container direction="column" alignItems="center" style={{ marginTop: 50 }}>
-
                 <div className={classes.carViewGrid}>
                     <Card>
-                        <div className={classes.editButton}>
-                            <Button className={classes.tabActive}
-                                variant="contained"
-                            >
-                                {t('button_edit')}
-                            </Button>
-                        </div>
                         <div className={classes.carViewCard}>
-                            <CardMedia
-                                className={classes.image}
-                                image={CarImage}
-                                title="Car Placeholder"
-                            />
-                            <div className={classes.carText}>
-                                <p>{t('car_brand')}: {carData.brand}</p>
-                                <p>{t('car_model')}: {carData.model}</p>
-                                <p>{t('car_yearmodel')}: {carData.yearModel}</p>
-                                <p>{t('car_powertype')}: {carData.powerType}</p>
-                                <p>{t('car_enginesize')}: {carData.engineSize}</p>
-                                <p>{t('car_license')}: {carData.licenseNumber}</p>
-                            </div>
-
+                            <Grid item md={1}>
+                                <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>
+                            </Grid>
+                            <Grid container justify="center">
+                                <Grid item>
+                                    <p>{t('car_brand')}:</p>
+                                    <p>{t('car_model')}:</p>
+                                    <p>{t('car_yearmodel')}:</p>
+                                    <p>{t('car_powertype')}:</p>
+                                    <p>{t('car_enginesize')}:</p>
+                                    <p>{t('car_license')}:</p>
+                                </Grid>
+                                <Grid item style={{ marginLeft: 10 }}>
+                                    <p>{carData.brand}</p>
+                                    <p>{carData.model}</p>
+                                    <p>{carData.yearModel}</p>
+                                    <p>{carData.powerType}</p>
+                                    <p>{carData.engineSize}</p>
+                                    <p>{carData.licenseNumber}</p>
+                                </Grid>
+                            </Grid>
+                            <Grid item md={1} style={{ marginRight: 20 }}>
+                                <Button className={classes.editButton}>
+                                    {t('button_edit')}
+                                </Button>
+                            </Grid>
                         </div>
                     </Card>
                 </div>
-
                 <div className={classes.carViewGrid}>
                     <Card>
 
@@ -178,14 +184,11 @@ const CarView = (props) => {
 
                         <CarTabs />
                     </Card>
-
                 </div>
-
-
             </Grid>
         </div >
 
     )
 }
 
-export default CarView;
+export default withRouter(CarView);
