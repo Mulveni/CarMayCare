@@ -19,20 +19,30 @@ const utils = {
         });
     },
 
-    getCarServices: (idCars) => {
+    getCarServices: (idUsers, idCars) => {
         return new Promise(function (resolve, reject) {
-            db.query('SELECT * FROM services WHERE idCars = ?', idCars).then(results => {
-                    if (results.length !== 0) {
-                        console.log(results);
-                        resolve(results);
-                        return;
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if(results.length !== 0){
+                    db.query('SELECT * FROM services WHERE idCars = ?', idCars)
+                    .then(results => {
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results);
+                        } else {
+                            resolve(false);
+                            return;
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
+                } else {
+                    resolve(false);
+                    return;
+                }
 
-                    } else {
-                        resolve(false);
-                        return;
-                    }
-
-            }).catch(error => {
+            }).catch(error =>{
                 console.log(error);
                 reject(error);
             });
@@ -43,9 +53,9 @@ const utils = {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
             .then(results => {
-                if(results !== 0){
+                if(results.length !== 0){
                     db.query("INSERT INTO services(idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                    [service.idCars, service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
+                    [idCars, service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
                         service.airConditioningService.done, service.airConditioningService.dryer, service.additionalServices.sparkPlugReplacement, 
                         service.additionalServices.airFilterReplacement, service.additionalServices.cleanAirReplacement, 
                         service.additionalServices.fuelFilterReplacement, service.additionalServices.brakeFluidReplacement, 
@@ -53,39 +63,59 @@ const utils = {
                         service.additionalServices.timingBeltReplacement, service.additionalServices.waterPumpReplacement, 
                         service.additionalServices.dieselParticulateFilterReplacement, service.additionalInformation])
                     .then(results => {
-                        console.log(results);
-                        resolve(results);
-
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results); 
+                        } else {
+                            resolve(false);
+                            return;
+                        }
                     }).catch(error => {
                         console.log(error);
                         reject(error);
                     });
 
                 } else {
-                    console.log("No results found");
                     resolve(false);
+                    return;
                 }
             }).catch(error => {
                 console.log(error);
                 reject(error);
-            })
-
-
+            });
         });
     },
 
-    getService: (idCars, idServices) => {
+    getService: (idUsers, idCars, idServices) => {
         return new Promise(function(resolve, reject) {
-            db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices]).then(results => {
-                if (results.length !== 0) {
-                    console.log(results);
-                    resolve(results);
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if (results.length !== 0){
+                    db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?',[idCars, idServices])
+                    .then(results => {
+                        if(results !== 0){
+                            console.log(results);
+                            resolve(results);
+                        } else {
+                            resolve(false);
+                            return;
+                        }
+
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                        return;
+                    });
+
                 } else {
                     resolve(false);
+                    return;
                 }
+
             }).catch(error => {
                 console.log(error);
                 reject(error);
+                return;
             });
         });
     },
@@ -99,7 +129,7 @@ const utils = {
 
                     db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices])
                     .then(results => {
-                        if (results !== 0){
+                        if (results.length !== 0){
 
                             db.query('UPDATE services SET description = ?, mileage = ?, motorOilChangeDone = ?, motorOilChangelongLifeOilUsed = ?, airConditioningServiceDone = ?, airConditioningServiceDryer = ?, sparkPlugReplacement = ?, airFilterReplacement = ?, cleanAirReplacement = ?, fuelFilterReplacement = ?, brakeFluidReplacement = ?, gearBoxOilReplacement = ?, powerSteeringOilReplacement = ?, timingBeltReplacement = ?, waterPumpReplacement = ?, dieselParticulateFilterReplacement = ?, additionalInformation = ? WHERE idCars = ? AND idServices = ?',
                             [service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
@@ -121,6 +151,7 @@ const utils = {
                         } else {
 
                             resolve(false);
+                            return;
                         }
                     }).catch(error => {
 
@@ -130,6 +161,7 @@ const utils = {
                 } else {
 
                     resolve(false);
+                    return;
                 }
                 
             }).catch(error => {
@@ -140,16 +172,35 @@ const utils = {
         });
     },
 
-    deleteService: (idCars, idServices) => {
+    deleteService: (idUsers, idCars, idServices) => {
         return new Promise(function(resolve, reject) {
-            db.query('DELETE FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices]).then(results => {
-                console.log("Results are: ");
-                console.log(results);
-                resolve(results);
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if (results.length !== 0){
+                    db.query('DELETE FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices])
+                    .then(results => {
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results); 
+                        } else {
+                            resolve(false);
+                            return;
+
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                        return;
+                    });
+                } else {
+                    resolve(false);
+                    return;
+                }
 
             }).catch(error => {
                 console.log(error);
                 reject(error);
+                return;
             });
         });
     }
