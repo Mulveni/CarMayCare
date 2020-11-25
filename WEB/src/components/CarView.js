@@ -69,8 +69,10 @@ const CarView = (props) => {
     }, [dispatch]);
 
     const checkCarIdFromState = () => {
-        if (props.location.state.carId === undefined) {
+        if (props.location.state === undefined) {
             setServerError(true);
+        } else {
+            getCarInfo();
         }
     }
 
@@ -96,7 +98,7 @@ const CarView = (props) => {
         });
     }
     useEffect(checkCarIdFromState, []);
-    useEffect(getCarInfo, []);
+    //useEffect(getCarInfo, []);
 
     const handleTabIndex = (event, index) => {
         setTabIndex(index);
