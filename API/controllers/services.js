@@ -17,8 +17,7 @@ router.get('/:carId', async (req, res) => {
 
         if (serviceList === false){
 
-            res.status(400);
-            res.json({message: 'No services for car with given ID'});
+            res.status(404);
             return;
 
 
@@ -34,8 +33,8 @@ router.get('/:carId', async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(404);
-        res.json({message: "NOT FOUND"});
+        res.status(400);
+        res.json({message: "Error in searching the services for the car of given id!"});
         return;
     }
 });
@@ -87,8 +86,6 @@ router.post('/:carId', async (req, res) => {
 
         try {
             servicePosting = await utils.addNewService(service, req.user.id, req.params.carId);
-            
-            //res.sendStatus(201);
 
             if (servicePosting === false){
 
@@ -120,8 +117,8 @@ router.get('/:carId/:serviceId', async (req, res) => {
 
         if (serviceList === false) {
 
-            res.status(400);
-            res.json({message: "No service found with the given id"});
+            res.status(404);
+
         } else {
 
             for (var i = 0; i < serviceList.length; i++){
@@ -135,7 +132,8 @@ router.get('/:carId/:serviceId', async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(404);
+        res.status(400);
+        res.json({message: "Error in searching the individual service appointed to the given car!"});
     }
 });
 
@@ -189,7 +187,6 @@ router.put('/:carId/:serviceId', async (req, res) => {
     for (const key in req.body.motorOilChange) {
         editable.motorOilChange[key] = req.body.motorOilChange[key];
     }
-    console.log(editable);
 
     //Looping the key values to inner elements (airConditioningService)
     for (const key in req.body.airConditioningService) {
@@ -298,19 +295,19 @@ router.delete('/:carId/:serviceId', async (req, res) => {
         deleteService = await utils.deleteService(req.user.id, req.params.carId, req.params.serviceId);
 
         if (deleteService.affectedRows > 0){
-            console.log("Deletion succesful!");
+
             res.status(201);
-            res.json({message: "Succesfully deleted the selected service!"});
+            res.json({message: "Delted"});
+
         } else {
-            console.log("Deletion failed!");
-            res.status(400);
-            res.json({message: "Deletion failed. Service doesn't exist or unauthorized!"});
+            res.status(404);
+            res.json({message: "Deletion failed! Service doesn't exist for your current vehicle!"});
         }
 
     } catch (error) {
         console.log(error);
         res.status(400);
-        res.json({message: "Failed to delete the service!"});
+        res.json({message: "Error in deletion request!"});
         return;
     }
 
