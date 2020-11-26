@@ -212,12 +212,24 @@ router.put('/:carId/:serviceId', async (req, res) => {
         editable.mileAge = comaparative[0].mileAge;
     }
 
+    console.log(comaparative);
+
+    if(req.body.motorOilChange === undefined){
+        res.status(400).send({message: "BAD REQUEST! Motor oil change information must be submitted!"});
+        return;
+    }
+
     if( req.body.motorOilChange.done === undefined || typeof req.body.motorOilChange.done === "string"){
         editable.motorOilChange.done = comaparative[0].motorOilChangeDone;
     }
 
     if( req.body.motorOilChange.longLifeOilUsed === undefined || typeof req.body.motorOilChange.longLifeOilUsed === "string"){
-        editable.motorOilChange.longLifeOilUsed = comaparative[0].longLifeOilUsedDone;
+        editable.motorOilChange.longLifeOilUsed = comaparative[0].motorOilChangelongLifeOilUsed;
+    }
+
+    if(req.body.airConditioningService === undefined){
+        res.status(400).send({message: "BAD REQUEST! Air conditioning information must be submitted!"});
+        return;
     }
 
     if( req.body.airConditioningService.done === undefined || typeof req.body.airConditioningService.done === "string"){
@@ -226,6 +238,11 @@ router.put('/:carId/:serviceId', async (req, res) => {
 
     if( req.body.airConditioningService.dryer === undefined || typeof req.body.airConditioningService.dryer === "string"){
         editable.airConditioningService.dryer = comaparative[0].airConditioningServiceDryer;
+    }
+
+    if(req.body.additionalServices === undefined){
+        res.status(400).send({message: "BAD REQUEST! Additional service information must be submitted!"});
+        return;
     }
 
     if( req.body.additionalServices.sparkPlugReplacement === undefined || typeof req.body.additionalServices.sparkPlugReplacement === "string"){
