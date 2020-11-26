@@ -146,7 +146,7 @@ router.put('/:carId/:serviceId', async (req, res) => {
 
     
     if (comaparative === false){
-        res.sendStatus(400);
+        res.status(400);
         res.json({message: "Unable to edit the service. Either the service doesn't exist or you don't have proper authorization!"});
         return;
     }

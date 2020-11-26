@@ -121,7 +121,7 @@ const utils = {
     },
 
     editService: (idUsers, idCars, idServices, service) => {
-        return new Promise(function(resolve, rejetct) {
+        return new Promise(function(resolve, reject) {
 
             db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
             .then(results => {
