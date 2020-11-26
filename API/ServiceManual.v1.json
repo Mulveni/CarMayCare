@@ -170,7 +170,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CarInformation"
+                "$ref": "#/components/schemas/UpdateUser"
               }
             }
           }
@@ -255,7 +255,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserInformation"
+                "$ref": "#/components/schemas/UpdateUser"
               }
             }
           }
@@ -304,7 +304,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CarInformation"
+                "$ref": "#/components/schemas/UpdateCar"
               }
             }
           }
@@ -419,7 +419,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceInformation"
+                "$ref": "#/components/schemas/UpdateService"
               }
             }
           }
@@ -497,7 +497,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ServiceInformation"
+                "$ref": "#/components/schemas/UpdateService"
               }
             }
           }
@@ -520,6 +520,221 @@
           }
         ]
       }
+    },
+    "/user/password": {
+      "put": {
+        "summary": "Update user password",
+        "operationId": "put-user-password",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Update password of user",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/{noteId}": {
+      "put": {
+        "summary": "Update note",
+        "operationId": "put-notes-noteid",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Update note of car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete note",
+        "operationId": "delete-notes-noteid",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Delete note of car"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "noteId",
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/notes/{carId}": {
+      "get": {
+        "summary": "Create new note",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notes": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-notes",
+        "description": "Get all notes of car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "carId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Create new note",
+        "operationId": "post-notes-carId",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Create new note for car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -540,7 +755,10 @@
           "yearModel": {
             "type": "string"
           },
-          "motor": {
+          "powerType": {
+            "type": "string"
+          },
+          "engineSize": {
             "type": "string"
           },
           "licenseNumber": {
@@ -552,12 +770,6 @@
           },
           "userId": {
             "type": "string"
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         },
         "required": [
@@ -565,6 +777,8 @@
           "brand",
           "model",
           "yearModel",
+          "powerType",
+          "engineSize",
           "licenseNumber",
           "dateOfAddition",
           "userId"
@@ -657,6 +871,10 @@
           },
           "motorOilChange": {
             "type": "object",
+            "required": [
+              "done",
+              "longLifeOilUsed"
+            ],
             "properties": {
               "done": {
                 "type": "boolean"
@@ -667,6 +885,172 @@
             }
           },
           "airConditioningService": {
+            "type": "object",
+            "required": [
+              "done",
+              "dryer"
+            ],
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "dryer": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalServices": {
+            "type": "object",
+            "required": [
+              "sparkPlugReplacement",
+              "airFilterReplacement",
+              "cleanAirReplacement",
+              "fuelFilterReplacement",
+              "brakeFluidReplacement",
+              "gearBoxOilReplacement",
+              "powerSteeringOilReplacement",
+              "timingBeltReplacement",
+              "waterPumpReplacement",
+              "dieselParticulateFilterReplacement"
+            ],
+            "properties": {
+              "sparkPlugReplacement": {
+                "type": "boolean"
+              },
+              "airFilterReplacement": {
+                "type": "boolean"
+              },
+              "cleanAirReplacement": {
+                "type": "boolean"
+              },
+              "fuelFilterReplacement": {
+                "type": "boolean"
+              },
+              "brakeFluidReplacement": {
+                "type": "boolean"
+              },
+              "gearBoxOilReplacement": {
+                "type": "boolean"
+              },
+              "powerSteeringOilReplacement": {
+                "type": "boolean"
+              },
+              "timingBeltReplacement": {
+                "type": "boolean"
+              },
+              "waterPumpReplacement": {
+                "type": "boolean"
+              },
+              "dieselParticulateFilterReplacement": {
+                "type": "boolean"
+              }
+            }
+          },
+          "additionalInformation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "dateOfService",
+          "mileAge",
+          "motorOilChange",
+          "airConditioningService",
+          "additionalServices",
+          "additionalInformation"
+        ]
+      },
+      "UpdateUser": {
+        "title": "UpdateUser",
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phonenumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "UpdateCar": {
+        "title": "UpdateCar",
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "yearModel": {
+            "type": "string"
+          },
+          "powerType": {
+            "type": "string"
+          },
+          "engineSize": {
+            "type": "string"
+          },
+          "licenseNumber": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brand",
+          "model",
+          "yearModel",
+          "powerType",
+          "engineSize",
+          "licenseNumber"
+        ]
+      },
+      "UpdateService": {
+        "title": "UpdateService",
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "mileAge": {
+            "type": "string"
+          },
+          "motorOilChange": {
+            "type": "object",
+            "properties": {
+              "done": {
+                "type": "boolean"
+              },
+              "longLifeOilUsed": {
+                "type": "boolean"
+              }
+            }
+          },
+          "airConditioningService": {
+            "type": "object",
             "properties": {
               "done": {
                 "type": "boolean"
@@ -714,12 +1098,7 @@
           "additionalInformation": {
             "type": "string"
           }
-        },
-        "required": [
-          "id",
-          "dateOfService",
-          "mileAge"
-        ]
+        }
       }
     },
     "securitySchemes": {
