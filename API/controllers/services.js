@@ -28,7 +28,7 @@ router.get('/:carId', async (req, res) => {
             }
 
             console.log(servModel);
-            res.status(200).send(servModel);
+            res.sendStatus(200).send(servModel);
             return;
         }
     } catch (error) {
@@ -126,7 +126,7 @@ router.get('/:carId/:serviceId', async (req, res) => {
             }
 
             res.json(servModel);
-            res.status(200);
+            res.sendStatus(200);
         }
 
 
