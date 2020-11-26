@@ -63,5 +63,6 @@
     "unauthorized": "Ei käyttöoikeutta",
     "button_service_history": "Huoltohistoria",
     "button_add_service": "Lisää huolto",
-    "button_notes": "Merkinnät"
+    "button_notes": "Merkinnät",
+    "try_to_login": "Yritä kirjautua uudelleen."
 }
