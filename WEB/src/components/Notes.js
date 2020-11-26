@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Error = () => {
+const Notes = () => {
 
     const { t } = useTranslation();
 
     return (
         <div>
-            Server error
+            Notes
         </div >
     )
 }
 
-export default Error;
+export default Notes;

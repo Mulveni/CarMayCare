@@ -9,6 +9,7 @@ import { Grid, Button, makeStyles } from '@material-ui/core';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
 import Error from './Error';
+import Loading from './Loading';
 
 const useStyles = makeStyles({
     resetPasswordGrid: {
@@ -133,7 +134,7 @@ const ResetPassword = () => {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (

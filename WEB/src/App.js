@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Navigation from './components/Navigation';
 import Register from './components/Register';
@@ -8,12 +8,13 @@ import Profile from './components/Profile';
 import NotFound from './components/NotFound';
 import AddCar from './components/AddCar';
 import MyCars from './components/MyCars';
+import CarView from './components/CarView';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 
 const App = () => {
     const isLoggedin = useSelector(state => state.loginReducer);
-    
+
     return (
         <div>
             <Router>
@@ -26,6 +27,10 @@ const App = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/login" exact component={Login} />
                     <Route path="/forgotpassword" exact component={ForgotPassword} />
+
+                    <Route exact path="/carview">
+                        {!isLoggedin ? <Redirect to="/login" /> : <CarView />}
+                    </Route>
 
                     <Route exact path="/mycars">
                         {!isLoggedin ? <Redirect to="/login" /> : <MyCars />}
