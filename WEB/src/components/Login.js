@@ -65,9 +65,7 @@ const Login = () => {
                 clearInputs();
                 dispatch(logIn());
                 dispatch(addToken(response.data.token));
-                history.push("/carview", {
-                    carId: 10
-                });
+                history.push("/");
             }).catch(error => {
                 clearInputs();
                 if (error.response === undefined) {
