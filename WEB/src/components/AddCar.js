@@ -25,7 +25,12 @@ const useStyles = makeStyles({
   button: {
     display: "flex", flexDirection: "column",
     marginTop: 8,
-    margin: 'auto'
+    margin: 'auto',
+    color: "white",
+    backgroundColor: "#304269",
+    '&:hover': {
+      backgroundColor: "#F26101"
+    }
   }
 });
 

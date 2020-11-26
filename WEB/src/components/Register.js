@@ -18,6 +18,7 @@ import {
   InputLabel,
   FormHelperText
 } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -32,6 +33,13 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  registerButton: {
+    color: "white",
+    backgroundColor: "#304269",
+    '&:hover': {
+      backgroundColor: "#F26101"
+    }
+  }
 }));
 
 const Register = () => {
@@ -230,6 +238,7 @@ const Register = () => {
           </FormControl>
 
           <Button
+            className={classes.registerButton}
             type="submit"
             fullWidth
             margin="normal"
