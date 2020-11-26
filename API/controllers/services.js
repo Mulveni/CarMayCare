@@ -1,9 +1,7 @@
-const { util } = require('chai');
 const express = require('express');
 const { getService, deleteService, editService } = require('../utils');
 const utils = require('../utils');
 const models = require('../models');
-const { compare } = require('bcryptjs');
 const router = express.Router();
 
 router.get('/:carId', async (req, res) => {
@@ -17,7 +15,7 @@ router.get('/:carId', async (req, res) => {
 
         if (serviceList === false){
 
-            res.status(404);
+            res.sendStatus(404);
             return;
 
 
@@ -27,8 +25,8 @@ router.get('/:carId', async (req, res) => {
                 servModel[i] = models.serviceModel(serviceList[i]);
             }
 
-            console.log(servModel);
-            res.sendStatus(200).send(servModel);
+            res.status(200);
+            res.json(servModel);
             return;
         }
     } catch (error) {
@@ -117,7 +115,7 @@ router.get('/:carId/:serviceId', async (req, res) => {
 
         if (serviceList === false) {
 
-            res.status(404);
+            res.sendStatus(404);
 
         } else {
 
@@ -126,7 +124,7 @@ router.get('/:carId/:serviceId', async (req, res) => {
             }
 
             res.json(servModel);
-            res.sendStatus(200);
+            res.status(200);
         }
 
 
@@ -314,7 +312,7 @@ router.delete('/:carId/:serviceId', async (req, res) => {
         if (deleteService.affectedRows > 0){
 
             res.status(201);
-            res.json({message: "Delted"});
+            res.json({message: "Deleted"});
 
         } else {
             res.status(404);
