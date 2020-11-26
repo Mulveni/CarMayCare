@@ -24,14 +24,14 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "row",
         padding: 25,
-        background: "#91BED4"
-    },
-    cardHeader: {
-        backgroundColor: "#91BED4",
+        background: "#D9E8F5"
     },
     editButton: {
         color: "white",
-        backgroundColor: "#F26101",
+        backgroundColor: "#304269",
+        '&:hover': {
+            backgroundColor: "#F26101"
+        }
     },
     tabView: {
         backgroundColor: "#304269",
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
         backgroundColor: "#F26101"
     },
     avatar: {
-        backgroundColor: "#F26101",
+        backgroundColor: "#304269",
         width: 75,
         height: 75
     }
@@ -98,7 +98,6 @@ const CarView = (props) => {
         });
     }
     useEffect(checkCarIdFromState, []);
-    //useEffect(getCarInfo, []);
 
     const handleTabIndex = (event, index) => {
         setTabIndex(index);
