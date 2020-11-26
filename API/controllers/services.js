@@ -16,6 +16,7 @@ router.get('/:carId', async (req, res) => {
         if (serviceList === false){
 
             res.sendStatus(404);
+            res.json({message: "No services found for the car. Either services are not there or you don't have proper authorization!"});
             return;
 
 
@@ -116,6 +117,7 @@ router.get('/:carId/:serviceId', async (req, res) => {
         if (serviceList === false) {
 
             res.sendStatus(404);
+            res.message({message: "Service not found for the given car. Either the service doesn't exist or you don't have proper authorization!"});
 
         } else {
 
@@ -145,6 +147,7 @@ router.put('/:carId/:serviceId', async (req, res) => {
     
     if (comaparative === false){
         res.sendStatus(400);
+        res.json({message: "Unable to edit the service. Either the service doesn't exist or you don't have proper authorization!"});
         return;
     }
 
