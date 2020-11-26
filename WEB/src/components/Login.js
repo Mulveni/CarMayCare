@@ -20,6 +20,19 @@ const useStyles = makeStyles({
         display: "flex",
         justifyContent: "center",
         marginTop: 25
+    },
+    loginButton: {
+        color: "white",
+        backgroundColor: "#304269",
+        '&:hover': {
+            backgroundColor: "#F26101"
+        }
+    },
+    infoText: {
+        color: "white",
+        backgroundColor: "#F26101",
+        borderRadius: 10,
+        paddingLeft: 10
     }
 });
 
@@ -103,8 +116,9 @@ const Login = () => {
                         margin="normal"
                         inputRef={passwordInput}
                     />
-                    <p>{loginText}</p>
+                    <p className={classes.infoText}>{loginText}</p>
                     <Button
+                        className={classes.loginButton}
                         onClick={handleLogin}
                         variant="contained"
                         style={{ marginTop: 50 }}>

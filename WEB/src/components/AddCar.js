@@ -25,7 +25,18 @@ const useStyles = makeStyles({
   button: {
     display: "flex", flexDirection: "column",
     marginTop: 8,
-    margin: 'auto'
+    margin: 'auto',
+    color: "white",
+    backgroundColor: "#304269",
+    '&:hover': {
+      backgroundColor: "#F26101"
+    }
+  },
+  infoText: {
+    color: "white",
+    backgroundColor: "#F26101",
+    borderRadius: 10,
+    paddingLeft: 10
   }
 });
 
@@ -212,7 +223,7 @@ const AddCar = () => {
           <Grid container item xs={12}>
 
             <Grid item xs={8}>
-              <p>{errorText}</p>
+              <p className={classes.infoText}>{errorText}</p>
             </Grid>
 
             <Grid item xs={4}>

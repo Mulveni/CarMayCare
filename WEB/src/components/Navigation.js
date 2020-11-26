@@ -11,7 +11,7 @@ import { logOut, removeToken } from '../actions';
 const drawerWidth = 240;
 const useStyles = makeStyles({
     header: {
-        background: "blue",
+        background: "#304269",
         position: "static"
     },
     menuItem: {
@@ -19,7 +19,8 @@ const useStyles = makeStyles({
         borderRadius: "0%",
         "&:hover": {
             backgroundColor: "transparent"
-        }
+        },
+        color: "white"
     },
     menuHeader: {
         display: 'flex',
@@ -31,6 +32,31 @@ const useStyles = makeStyles({
     },
     drawerPaper: {
         width: drawerWidth,
+        background: "#304269"
+    },
+    rightMenu: {
+        background: "#304269",
+        color: "white"
+    },
+    icons: {
+        color: "white",
+        '&:hover': {
+            backgroundColor: "#F26101"
+        }
+    },
+    lngButtons: {
+        color: "white",
+        '&:hover': {
+            backgroundColor: "#F26101"
+        },
+        fontWeight: "bold"
+    },
+    navLinks: {
+        '&:hover': {
+            backgroundColor: "#F26101"
+        },
+        marginRight: 5,
+        marginTop: 5
     }
 });
 
@@ -74,7 +100,7 @@ const Navigation = () => {
             <AppBar className={classes.header}>
                 <Toolbar>
                     <Grid item>
-                        <IconButton disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
+                        <IconButton className={classes.icons} disabled={navButtons.disabled} onClick={handleLeftMenuOpening}>
                             <MenuIcon visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
@@ -92,16 +118,16 @@ const Navigation = () => {
 
                     <Grid container item md={2}>
                         <Grid item>
-                            <Button size="small" onClick={() => changeLanguage('fi')}>fi</Button>
+                            <Button className={classes.lngButtons} size="small" onClick={() => changeLanguage('fi')}>fi</Button>
                         </Grid>
                         <Grid item>
-                            <Button size="small" onClick={() => changeLanguage('en')}>en</Button>
+                            <Button className={classes.lngButtons} size="small" onClick={() => changeLanguage('en')}>en</Button>
                         </Grid>
                     </Grid>
                     <Grid item md={1} />
 
                     <Grid item>
-                        <IconButton disabled={navButtons.disabled} onClick={handleRightMenuOpening}>
+                        <IconButton className={classes.icons} disabled={navButtons.disabled} onClick={handleRightMenuOpening}>
                             <AccountBox visibility={navButtons.visibility} />
                         </IconButton>
                     </Grid>
@@ -118,13 +144,13 @@ const Navigation = () => {
                 }}
             >
                 <div className={classes.menuHeader}>
-                    <IconButton onClick={handleLeftMenuOpening}>
-                        <Close />
+                    <IconButton className={classes.navLinks} onClick={handleLeftMenuOpening}>
+                        <Close className={classes.menuItem} />
                     </IconButton>
                 </div>
 
                 <List>
-                    <ListItem button>
+                    <ListItem button className={classes.navLinks}>
                         <IconButton className={classes.menuItem} disableRipple={true}>
                             <DriveEta />
                             {t('menu_own_cars')}
@@ -135,15 +161,17 @@ const Navigation = () => {
 
             <Menu
                 id="right-menu"
+                classes={{ paper: classes.rightMenu }}
                 anchorEl={rightMenuOpen}
                 keepMounted
                 open={Boolean(rightMenuOpen)}
                 onClose={handleClose}
             >
-                <MenuItem id="profile" onClick={(e) => handleClose(e)}>{t('profile')}</MenuItem>
-                <MenuItem id="settings" onClick={(e) => handleClose(e)}>{t('settings')}</MenuItem>
-                <MenuItem id="logout" onClick={(e) => handleClose(e)}>{t('logout')}</MenuItem>
+                <MenuItem className={classes.navLinks} id="profile" onClick={(e) => handleClose(e)}>{t('profile')}</MenuItem>
+                <MenuItem className={classes.navLinks} id="settings" onClick={(e) => handleClose(e)}>{t('settings')}</MenuItem>
+                <MenuItem className={classes.navLinks} id="logout" onClick={(e) => handleClose(e)}>{t('logout')}</MenuItem>
             </Menu>
+
         </div>
     )
 }

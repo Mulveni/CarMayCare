@@ -63,5 +63,6 @@
     "unauthorized": "Unauthorized",
     "button_service_history": "Service history",
     "button_add_service": "Add service",
-    "button_notes": "Notes"
+    "button_notes": "Notes",
+    "try_to_login": "Try to login again."
 }

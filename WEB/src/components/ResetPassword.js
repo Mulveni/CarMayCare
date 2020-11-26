@@ -17,6 +17,12 @@ const useStyles = makeStyles({
         maxWidth: 400,
         minWidth: 300,
         marginTop: 50
+    },
+    infoText: {
+        color: "white",
+        backgroundColor: "#F26101",
+        borderRadius: 10,
+        paddingLeft: 10
     }
 });
 
@@ -113,7 +119,7 @@ const ResetPassword = () => {
                                 style={{ marginTop: 50 }}>
                                 {t('reset_password')}
                             </Button>
-                            <p>{resetPasswordText}</p>
+                            <p className={classes.infoText}>{resetPasswordText}</p>
                         </div>
                     </Grid>
 

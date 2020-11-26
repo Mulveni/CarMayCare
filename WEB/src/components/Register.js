@@ -18,6 +18,7 @@ import {
   InputLabel,
   FormHelperText
 } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -32,6 +33,19 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  registerButton: {
+    color: "white",
+    backgroundColor: "#304269",
+    '&:hover': {
+      backgroundColor: "#F26101"
+    }
+  },
+  infoText: {
+    color: "white",
+    backgroundColor: "#F26101",
+    borderRadius: 10,
+    paddingLeft: 10
+  }
 }));
 
 const Register = () => {
@@ -84,9 +98,7 @@ const Register = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component="h6" variant="h6">
-          {t('register')}
-        </Typography>
+        <h1>{t('register')}</h1>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit, onError)}>
           <TextField
             variant="outlined"
@@ -103,7 +115,7 @@ const Register = () => {
             label={t('email')}
             name="email"
           />
-          <p>{errorText}</p>{errors.email && <p>{t('email_required')}</p>}
+          <p className={classes.infoText}>{errorText}</p>{errors.email && <p className={classes.infoText}>{t('email_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -117,7 +129,7 @@ const Register = () => {
             name="password"
             label={t('password')}
           />
-          {errors.password && <p>{t('password_required')}</p>}
+          {errors.password && <p className={classes.infoText}>{t('password_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -130,7 +142,7 @@ const Register = () => {
             name="phonenumber"
             label={t('phonenumber')}
           />
-          {errors.phonenumber && <p>{t('phonenumber_required')}</p>}
+          {errors.phonenumber && <p className={classes.infoText}>{t('phonenumber_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -142,7 +154,7 @@ const Register = () => {
             name="firstname"
             label={t('firstname')}
           />
-          {errors.firstname && <p>{t('firstname_required')}</p>}
+          {errors.firstname && <p className={classes.infoText}>{t('firstname_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -154,7 +166,7 @@ const Register = () => {
             name="lastname"
             label={t('lastname')}
           />
-          {errors.lastname && <p>{t('lastname_required')}</p>}
+          {errors.lastname && <p className={classes.infoText}>{t('lastname_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -166,7 +178,7 @@ const Register = () => {
             name="address.street"
             label={t('street')}
           />
-          {errors?.address?.street && <p>{t('street_required')}</p>}
+          {errors?.address?.street && <p className={classes.infoText}>{t('street_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -178,7 +190,7 @@ const Register = () => {
             name="address.city"
             label={t('city')}
           />
-          {errors?.address?.city && <p>{t('city_required')}</p>}
+          {errors?.address?.city && <p className={classes.infoText}>{t('city_required')}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -191,7 +203,7 @@ const Register = () => {
             label={t('postcode')}
 
           />
-          {errors?.address?.postcode && <p>{t('postcode_required')}</p>}
+          {errors?.address?.postcode && <p className={classes.infoText}>{t('postcode_required')}</p>}
           <FormControl
             variant="outlined"
             margin="normal"
@@ -223,13 +235,14 @@ const Register = () => {
               fullWidth
               defaultValue=""
             />
-            {errors?.address?.country && <p>{t('country_required')}</p>}
+            {errors?.address?.country && <p className={classes.infoText}>{t('country_required')}</p>}
             <FormHelperText>
               {errors?.address?.country && errors?.address?.country.message}
             </FormHelperText>
           </FormControl>
 
           <Button
+            className={classes.registerButton}
             type="submit"
             fullWidth
             margin="normal"
@@ -238,7 +251,7 @@ const Register = () => {
           >
             {t('submit')}
           </Button>
-          <p>{submitText}</p>
+          <p className={classes.infoText}>{submitText}</p>
           <Link className={classes.link} to="/login" >{t('login')}</Link>
         </form>
       </div>
