@@ -1,13 +1,22 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Grid, makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles({
+    loading: {
+        color: "#F26101"
+    }
+});
 
 const Loading = () => {
-
-    const { t } = useTranslation();
+    const classes = useStyles();
 
     return (
         <div>
-            Loading...
+            <Grid container justify="center" style={{ marginTop: 50 }}>
+                <CircularProgress size={300} className={classes.loading} />
+            </Grid>
+
         </div >
     )
 }
