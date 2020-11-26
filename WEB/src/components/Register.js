@@ -98,9 +98,7 @@ const Register = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component="h6" variant="h6">
-          {t('register')}
-        </Typography>
+        <h1>{t('register')}</h1>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit, onError)}>
           <TextField
             variant="outlined"
