@@ -31,6 +31,12 @@ const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: "#F26101"
     }
+  },
+  infoText: {
+    color: "white",
+    backgroundColor: "#F26101",
+    borderRadius: 10,
+    paddingLeft: 10
   }
 });
 
@@ -217,7 +223,7 @@ const AddCar = () => {
           <Grid container item xs={12}>
 
             <Grid item xs={8}>
-              <p>{errorText}</p>
+              <p className={classes.infoText}>{errorText}</p>
             </Grid>
 
             <Grid item xs={4}>

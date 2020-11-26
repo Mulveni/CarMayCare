@@ -13,6 +13,12 @@ const useStyles = makeStyles({
         maxWidth: 400,
         minWidth: 300,
         marginTop: 50
+    },
+    infoText: {
+        color: "white",
+        backgroundColor: "#F26101",
+        borderRadius: 10,
+        paddingLeft: 10
     }
 });
 
@@ -107,7 +113,7 @@ const ForgotPassword = () => {
                             margin="normal"
                             inputRef={emailInput}
                         />
-                        <p>{forgotPasswordText}</p>
+                        <p className={classes.infoText}>{forgotPasswordText}</p>
                         <Button
                             onClick={handleSubmit}
                             variant="contained"

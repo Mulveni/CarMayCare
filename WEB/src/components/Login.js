@@ -27,6 +27,12 @@ const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: "#F26101"
         }
+    },
+    infoText: {
+        color: "white",
+        backgroundColor: "#F26101",
+        borderRadius: 10,
+        paddingLeft: 10
     }
 });
 
@@ -110,7 +116,7 @@ const Login = () => {
                         margin="normal"
                         inputRef={passwordInput}
                     />
-                    <p>{loginText}</p>
+                    <p className={classes.infoText}>{loginText}</p>
                     <Button
                         className={classes.loginButton}
                         onClick={handleLogin}
