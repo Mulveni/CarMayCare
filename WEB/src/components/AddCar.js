@@ -10,7 +10,7 @@ import baseApiUrl from '../api_url.json';
 
 import { useForm } from 'react-hook-form';
 import { TextField, Grid, Button, makeStyles, Typography } from '@material-ui/core';
-import { infoText } from '../styles/classes';
+import { infoText, defaultButton } from '../styles/classes';
 
 // Onnistuneen lähetyksen jälkeen viesti käyttäjälle ennen siirtymää takaisin omat autot näkymään
 
@@ -23,16 +23,7 @@ const useStyles = makeStyles({
     marginTop: 50,
     margin: 'auto'
   },
-  button: {
-    display: "flex", flexDirection: "column",
-    marginTop: 8,
-    margin: 'auto',
-    color: "white",
-    backgroundColor: "#304269",
-    '&:hover': {
-      backgroundColor: "#F26101"
-    }
-  },
+  defaultButton: defaultButton,
   infoText: infoText
 });
 
@@ -226,7 +217,7 @@ const AddCar = () => {
 
             <Grid item xs={4}>
               <Button
-                className={classes.button}
+                className={classes.defaultButton}
                 variant="outlined"
                 type="submit">
                 {t('button_submit')}
