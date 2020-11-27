@@ -5,12 +5,12 @@ import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import NotFound from '../components/NotFound';
 import axios from 'axios';
-import { Grid, Button, makeStyles, Typography } from '@material-ui/core';
+import { Grid, Button, makeStyles, Typography, Card } from '@material-ui/core';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
 import Error from './Error';
 import Loading from './Loading';
-import { infoText, defaultButton } from '../styles/classes';
+import { infoText, defaultButton, background } from '../styles/classes';
 
 const useStyles = makeStyles({
     resetPasswordGrid: {
@@ -19,6 +19,7 @@ const useStyles = makeStyles({
         minWidth: 300,
         marginTop: 50
     },
+    background: background,
     infoText: infoText,
     defaultButton: defaultButton
 });
@@ -108,28 +109,29 @@ const ResetPassword = () => {
             <div>
                 {!sent ?
 
-                    <Grid container justify="center">
-                        <div className={classes.resetPasswordGrid}>
+                    <Card className={classes.background} style={{ marginTop: 50 }}>
+                        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+
                             <Button
                                 className={classes.defaultButton}
                                 onClick={handleSubmit}
                                 variant="contained"
-                                style={{ marginTop: 50 }}>
+                            >
                                 {t('reset_password')}
                             </Button>
-                            <p className={classes.infoText}>{resetPasswordText}</p>
-                        </div>
-                    </Grid>
+                            <Typography className={classes.infoText}>{resetPasswordText}</Typography>
+                        </Grid>
+                    </Card>
 
 
                     :
-                    <div style={{ marginTop: 50 }}>
-                        <Grid container justify="center" >
+                    <Card className={classes.background} style={{ marginTop: 50 }}>
+                        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
                             <Typography variant="h5">
                                 {t('password_reseted_and_sent')}
                             </Typography>
                         </Grid>
-                    </div>
+                    </Card>
                 }
             </div>
         )
