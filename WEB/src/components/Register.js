@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     minWidth: 400,
+    marginTop: 25,
     marginBottom: 50
   },
   background: background,
