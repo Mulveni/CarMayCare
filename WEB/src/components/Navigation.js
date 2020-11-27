@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Grid, makeStyles, AppBar, Toolbar, Button, Drawer, List, ListItem, MenuItem, Menu } from '@material-ui/core';
+import { IconButton, Grid, makeStyles, AppBar, Toolbar, Button, Drawer, List, ListItem, MenuItem, Menu, Typography } from '@material-ui/core';
 import { AccountBox, Close, DriveEta } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import i18n from '../i18n';
@@ -12,7 +12,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles({
     header: {
         background: "#304269",
-        position: "static"
+        position: "static",
+        padding: 20
     },
     menuItem: {
         fontSize: 20,
@@ -110,9 +111,12 @@ const Navigation = () => {
 
                     <Grid container justify={"center"}>
                         <div>
-                            <h1>{t('app_name')}</h1>
-
-                            <h2>{t('header')}</h2>
+                            <Typography variant="h4">
+                                {t('app_name')}
+                            </Typography>
+                            <Typography variant="h5">
+                                {t('header')}
+                            </Typography>
                         </div>
                     </Grid>
 
