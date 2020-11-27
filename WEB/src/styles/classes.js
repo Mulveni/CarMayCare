@@ -10,9 +10,6 @@ export const infoText = () => {
 
 export const defaultButton = () => {
     return {
-        display: "flex", flexDirection: "column",
-        marginTop: 8,
-        margin: 'auto',
         color: "white",
         backgroundColor: "#304269",
         '&:hover': {
@@ -26,5 +23,13 @@ export const defaultLink = () => {
         display: "flex",
         justifyContent: "center",
         marginTop: 25
+    }
+}
+
+export const background = () => {
+    return {
+        backgroundColor: "#D9E8F5",
+        margin: "auto",
+        maxWidth: 1024
     }
 }
