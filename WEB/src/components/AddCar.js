@@ -9,8 +9,8 @@ import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 
 import { useForm } from 'react-hook-form';
-import { TextField, Grid, Button, makeStyles, Typography } from '@material-ui/core';
-import { infoText, defaultButton } from '../styles/classes';
+import { TextField, Grid, Button, makeStyles, Typography, Card } from '@material-ui/core';
+import { infoText, defaultButton, background } from '../styles/classes';
 
 // Onnistuneen lähetyksen jälkeen viesti käyttäjälle ennen siirtymää takaisin omat autot näkymään
 
@@ -21,6 +21,13 @@ const useStyles = makeStyles({
     minWidth: 300,
     marginTop: 50
   },
+  addCarGrid: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 25,
+    marginBottom: 50
+  },
+  background: background,
   defaultButton: defaultButton,
   infoText: infoText
 });
@@ -93,16 +100,13 @@ const AddCar = () => {
 
   return (
     <div>
-
-      <Grid container direction="column" alignItems="center">
-        <div className={classes.formGrid}>
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
-            <Grid container item xs={12} direction="row">
-              <Typography variant="h5">
-                {t('car_addcar')}
-              </Typography>
-            </Grid>
-            <Grid container item xs={12} direction="row">
+      <Card className={classes.background} style={{ marginTop: 50 }}>
+        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+          <Typography variant="h5">
+            {t('car_addcar')}
+          </Typography>
+          <form className={classes.addCarGrid} onSubmit={handleSubmit(onSubmit, onError)}>
+            <Grid item direction="row" alignItems="center">
               <TextField
                 name="brand"
                 style={{ margin: 8 }}
@@ -117,7 +121,6 @@ const AddCar = () => {
                   shrink: true,
                 }}
               />
-
               <TextField
                 name="model"
                 style={{ margin: 8 }}
@@ -132,7 +135,6 @@ const AddCar = () => {
                   shrink: true,
                 }}
               />
-
               <TextField
                 name="yearModel"
                 style={{ margin: 8 }}
@@ -154,71 +156,63 @@ const AddCar = () => {
                   shrink: true,
                 }}
               />
+              <Grid item direction="row" alignItems="center">
+                <TextField
+                  name="powerType"
+                  style={{ margin: 8 }}
+                  placeholder={t('car_powertype')}
+                  inputRef={register({
+                    required: t('car_powertype') + " " + t('error_required'),
+                    minLength: { value: 2, message: t('car_powertype') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                  })}
+                  margin="normal"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  name="engineSize"
+                  style={{ margin: 8 }}
+                  placeholder={t('car_enginesize')}
+                  inputRef={register({
+                    required: t('car_enginesize') + " " + t('error_required'),
+                    minLength: { value: 2, message: t('car_enginesize') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                  })}
+                  margin="normal"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  name="licenseNumber"
+                  style={{ margin: 8 }}
+                  placeholder={t('car_license')}
+                  inputRef={register({
+                    required: t('car_license') + " " + t('error_required'),
+                    minLength: { value: 2, message: t('car_license') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                  })}
+                  margin="normal"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
             </Grid>
-
-            <Grid container item xs={12} direction="row">
-
-              <TextField
-                name="powerType"
-                style={{ margin: 8 }}
-                placeholder={t('car_powertype')}
-                inputRef={register({
-                  required: t('car_powertype') + " " + t('error_required'),
-                  minLength: { value: 2, message: t('car_powertype') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-                })}
-                margin="normal"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-
-              <TextField
-                name="engineSize"
-                style={{ margin: 8 }}
-                placeholder={t('car_enginesize')}
-                inputRef={register({
-                  required: t('car_enginesize') + " " + t('error_required'),
-                  minLength: { value: 2, message: t('car_enginesize') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-                })}
-                margin="normal"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-
-              <TextField
-                name="licenseNumber"
-                style={{ margin: 8 }}
-                placeholder={t('car_license')}
-                inputRef={register({
-                  required: t('car_license') + " " + t('error_required'),
-                  minLength: { value: 2, message: t('car_license') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-                })}
-                margin="normal"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item >
-              <Typography className={classes.infoText} variant="body1">
-                {errorText}
-              </Typography>
-            </Grid>
-            <Grid item >
-              <Button
-                className={classes.defaultButton}
-                style={{ marginTop: 25 }}
-                type="submit">
-                {t('button_submit')}
-              </Button>
-            </Grid>
+            <Typography className={classes.infoText} variant="body1">
+              {errorText}
+            </Typography>
+            <Button
+              className={classes.defaultButton}
+              style={{ margin: "auto", marginTop: 25 }}
+              type="submit">
+              {t('button_submit')}
+            </Button>
           </form>
-        </div>
-      </Grid>
+        </Grid>
+      </Card>
     </div>
   )
 }
