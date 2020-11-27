@@ -6,42 +6,19 @@ import { useForm, Controller } from "react-hook-form";
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Container,
-  Button,
-  TextField,
-  Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
-  Link
-} from "@material-ui/core";
-import { infoText, defaultLink } from '../styles/classes';
+import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
+import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  registerGrid: {
+    display: "flex",
+    flexDirection: "column",
+    minWidth: 400,
+    marginBottom: 50
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  registerButton: {
-    color: "white",
-    backgroundColor: "#304269",
-    '&:hover': {
-      backgroundColor: "#F26101"
-    }
-  },
+  background: background,
   infoText: infoText,
+  defaultButton: defaultButton,
   defaultLink: defaultLink
 }));
 
@@ -93,194 +70,181 @@ const Register = () => {
 
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Typography variant="h5">
-          {t('register')}
-        </Typography>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit, onError)}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              pattern: {
-                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: t('email_required'),
-              },
-              minLength: 2,
-            })}
-            fullWidth
-            label={t('email')}
-            name="email"
-          />
-          <Typography className={classes.infoText} variant="body1">
-            {errorText}
+    <div>
+      <Card className={classes.background} style={{ marginTop: 50 }}>
+        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+          <Typography variant="h5">
+            {t('register')}
           </Typography>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: 5,
-            })}
-            fullWidth
-            id="password"
-            type="password"
-            name="password"
-            label={t('password')}
-          />
-          {errors.password &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('password_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: 5,
-            })}
-            fullWidth
-
-            name="phonenumber"
-            label={t('phonenumber')}
-          />
-          {errors.phonenumber &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('phonenumber_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: 2,
-            })}
-            fullWidth
-            name="firstname"
-            label={t('firstname')}
-          />
-          {errors.firstname &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('firstname_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: 2,
-            })}
-            fullWidth
-            name="lastname"
-            label={t('lastname')}
-          />
-          {errors.lastname &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('lastname_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: { value: 2, message: t('street_required') }
-            })}
-            fullWidth
-            name="address.street"
-            label={t('street')}
-          />
-          {errors?.address?.street &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('street_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: { value: 2, message: t('city_required') }
-            })}
-            fullWidth
-            name="address.city"
-            label={t('city')}
-          />
-          {errors?.address?.city &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('city_required')}
-            </Typography>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({
-              required: true,
-              minLength: { value: 2, message: t('postcode_required') }
-            })}
-            fullWidth
-            name="address.postcode"
-            label={t('postcode')}
-
-          />
-          {errors?.address?.postcode &&
-            <Typography className={classes.infoText} variant="body1">
-              {t('postcode_required')}
-            </Typography>}
-          <FormControl
-            variant="outlined"
-            margin="normal"
-            fullWidth
-          >
-            <InputLabel id="countries-label">
-              {t('country')}
-            </InputLabel>
-            <Controller
-              as={
-                <Select>
-                  <MenuItem value="finland">
-                    {t('finland')}
-                  </MenuItem>
-                  <MenuItem value="sweden">
-                    {t('sweden')}
-                  </MenuItem>
-                  <MenuItem value="norway">
-                    {t('norway')}
-                  </MenuItem>
-                  <MenuItem value="denmark">
-                    {t('denmark')}
-                  </MenuItem>
-                </Select>
-              }
-              name="address.country"
-              rules={{ required: true }}
-              control={control}
-              fullWidth
-              defaultValue=""
+          <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                pattern: {
+                  value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  message: t('email_required'),
+                },
+                minLength: 2,
+              })}
+              label={t('email')}
+              name="email"
             />
-            {errors?.address?.country &&
+            <Typography className={classes.infoText} variant="body1">
+              {errorText}
+            </Typography>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: 5,
+              })}
+              id="password"
+              type="password"
+              name="password"
+              label={t('password')}
+            />
+            {errors.password &&
               <Typography className={classes.infoText} variant="body1">
-                {t('country_required')}
+                {t('password_required')}
               </Typography>}
-            <FormHelperText>
-              {errors?.address?.country && errors?.address?.country.message}
-            </FormHelperText>
-          </FormControl>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: 5,
+              })}
+              name="phonenumber"
+              label={t('phonenumber')}
+            />
+            {errors.phonenumber &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('phonenumber_required')}
+              </Typography>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: 2,
+              })}
+              name="firstname"
+              label={t('firstname')}
+            />
+            {errors.firstname &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('firstname_required')}
+              </Typography>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: 2,
+              })}
+              name="lastname"
+              label={t('lastname')}
+            />
+            {errors.lastname &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('lastname_required')}
+              </Typography>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('street_required') }
+              })}
+              name="address.street"
+              label={t('street')}
+            />
+            {errors?.address?.street &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('street_required')}
+              </Typography>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('city_required') }
+              })}
+              name="address.city"
+              label={t('city')}
+            />
+            {errors?.address?.city &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('city_required')}
+              </Typography>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('postcode_required') }
+              })}
+              name="address.postcode"
+              label={t('postcode')}
 
-          <Button
-            className={classes.registerButton}
-            type="submit"
-            fullWidth
-            margin="normal"
-            variant="contained"
-            color="primary"
-          >
-            {t('submit')}
-          </Button>
-          <p className={classes.infoText}>{submitText}</p>
-          <Link className={classes.defaultLink} href="/login" >{t('login')}</Link>
-        </form>
-      </div>
-    </Container>
+            />
+            {errors?.address?.postcode &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('postcode_required')}
+              </Typography>}
+            <FormControl
+              variant="outlined"
+              margin="normal"
+            >
+              <InputLabel id="countries-label">
+                {t('country')}
+              </InputLabel>
+              <Controller
+                as={
+                  <Select>
+                    <MenuItem value="finland">
+                      {t('finland')}
+                    </MenuItem>
+                    <MenuItem value="sweden">
+                      {t('sweden')}
+                    </MenuItem>
+                    <MenuItem value="norway">
+                      {t('norway')}
+                    </MenuItem>
+                    <MenuItem value="denmark">
+                      {t('denmark')}
+                    </MenuItem>
+                  </Select>
+                }
+                name="address.country"
+                rules={{ required: true }}
+                control={control}
+                defaultValue=""
+              />
+              {errors?.address?.country &&
+                <Typography className={classes.infoText} variant="body1">
+                  {t('country_required')}
+                </Typography>}
+              <FormHelperText>
+                {errors?.address?.country && errors?.address?.country.message}
+              </FormHelperText>
+            </FormControl>
+
+            <Button
+              className={classes.defaultButton}
+              type="submit"
+              style={{ marginTop: 50 }}>
+              {t('submit')}
+            </Button>
+            <Typography className={classes.infoText} variant="body1">{submitText}</Typography>
+            <Link className={classes.defaultLink} href="/login" >{t('login')}</Link>
+          </form>
+        </Grid>
+      </Card>
+    </div>
   );
 }
 export default Register;
