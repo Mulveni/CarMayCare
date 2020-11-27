@@ -12,27 +12,9 @@ import baseApiUrl from '../api_url.json';
 import { useSelector } from 'react-redux';
 import Error from './Error';
 import Loading from './Loading';
+import { defaultButton, background } from '../styles/classes';
 
 const useStyles = makeStyles({
-    carViewGrid: {
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: 800,
-        minWidth: 600
-    },
-    carViewCard: {
-        display: "flex",
-        flexDirection: "row",
-        padding: 25,
-        background: "#D9E8F5"
-    },
-    editButton: {
-        color: "white",
-        backgroundColor: "#304269",
-        '&:hover': {
-            backgroundColor: "#F26101"
-        }
-    },
     tabView: {
         backgroundColor: "#304269",
         color: "white"
@@ -48,7 +30,9 @@ const useStyles = makeStyles({
         backgroundColor: "#304269",
         width: 75,
         height: 75
-    }
+    },
+    background: background,
+    defaultButton: defaultButton
 });
 
 const CarView = (props) => {
@@ -136,59 +120,53 @@ const CarView = (props) => {
 
     return (
         <div>
-            <Grid container direction="column" alignItems="center" style={{ marginTop: 50 }}>
-                <div className={classes.carViewGrid}>
-                    <Card>
-                        <div className={classes.carViewCard}>
-                            <Grid item md={1}>
-                                <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>
-                            </Grid>
-                            <Grid container justify="center">
-                                <Grid item>
-                                    <Typography variant="body1">{t('car_brand')}:</Typography>
-                                    <Typography variant="body1">{t('car_model')}:</Typography>
-                                    <Typography variant="body1">{t('car_yearmodel')}:</Typography>
-                                    <Typography variant="body1">{t('car_powertype')}:</Typography>
-                                    <Typography variant="body1">{t('car_enginesize')}:</Typography>
-                                    <Typography variant="body1">{t('car_license')}:</Typography>
-                                </Grid>
-                                <Grid item style={{ marginLeft: 10 }}>
-                                    <Typography variant="body1">{carData.brand}</Typography>
-                                    <Typography variant="body1">{carData.model}</Typography>
-                                    <Typography variant="body1">{carData.yearModel}</Typography>
-                                    <Typography variant="body1">{carData.powerType}</Typography>
-                                    <Typography variant="body1">{carData.engineSize}</Typography>
-                                    <Typography variant="body1">{carData.licenseNumber}</Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item md={1} style={{ marginRight: 20 }}>
-                                <Button className={classes.editButton}>
-                                    {t('button_edit')}
-                                </Button>
-                            </Grid>
-                        </div>
-                    </Card>
-                </div>
-                <div className={classes.carViewGrid}>
-                    <Card>
+            <Card className={classes.background} style={{ marginTop: 50 }}>
+                <Grid container >
+                    <Grid container xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25 }} >
+                        <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>
+                    </Grid>
+                    <Grid container xs={4} justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }} >
+                        <Grid item>
+                            <Typography variant="body1">{t('car_brand')}:</Typography>
+                            <Typography variant="body1">{t('car_model')}:</Typography>
+                            <Typography variant="body1">{t('car_yearmodel')}:</Typography>
+                            <Typography variant="body1">{t('car_powertype')}:</Typography>
+                            <Typography variant="body1">{t('car_enginesize')}:</Typography>
+                            <Typography variant="body1">{t('car_license')}:</Typography>
+                        </Grid>
+                        <Grid item style={{ marginLeft: 10 }}>
+                            <Typography variant="body1">{carData.brand}</Typography>
+                            <Typography variant="body1">{carData.model}</Typography>
+                            <Typography variant="body1">{carData.yearModel}</Typography>
+                            <Typography variant="body1">{carData.powerType}</Typography>
+                            <Typography variant="body1">{carData.engineSize}</Typography>
+                            <Typography variant="body1">{carData.licenseNumber}</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
+                        <Button className={classes.defaultButton}>
+                            {t('button_edit')}
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Card>
 
-                        <AppBar position="static" color="default">
-                            <Tabs value={tabIndex} onChange={handleTabIndex}
-                                className={classes.tabView}
-                                classes={{ indicator: classes.indicatorColor }}
-                            >
-                                <Tab label={t('button_service_history')} className={tabIndex === 0 ? classes.tabActive : null} />
-                                <Tab label={t('button_add_service')} className={tabIndex === 1 ? classes.tabActive : null} />
-                                <Tab label={t('button_notes')} className={tabIndex === 2 ? classes.tabActive : null} />
-                            </Tabs>
-                        </AppBar>
+            <Card className={classes.background}>
 
-                        <CarTabs />
-                    </Card>
-                </div>
-            </Grid>
-        </div >
+                <AppBar position="static" color="default">
+                    <Tabs centered value={tabIndex} onChange={handleTabIndex}
+                        className={classes.tabView}
+                        classes={{ indicator: classes.indicatorColor }}
+                    >
+                        <Tab label={t('button_service_history')} className={tabIndex === 0 ? classes.tabActive : null} />
+                        <Tab label={t('button_add_service')} className={tabIndex === 1 ? classes.tabActive : null} />
+                        <Tab label={t('button_notes')} className={tabIndex === 2 ? classes.tabActive : null} />
+                    </Tabs>
+                </AppBar>
 
+                <CarTabs />
+            </Card>
+        </div>
     )
 }
 

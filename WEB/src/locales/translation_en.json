@@ -1,6 +1,6 @@
 {
-    "app_name": "APP_NAME_EN",
-    "header": "Car ServiceManual",
+    "app_name": "Car May Care",
+    "header": "Car service manual",
     "menu_own_cars": "Own cars",
     "profile": "Profile",
     "settings": "Settings",
@@ -64,5 +64,7 @@
     "button_service_history": "Service history",
     "button_add_service": "Add service",
     "button_notes": "Notes",
-    "try_to_login": "Try to login again."
+    "try_to_login": "Try to login again.",
+    "page_not_found": "Page not found.",
+    "back_to_main_page": "Back to main page."
 }

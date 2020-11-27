@@ -1,5 +1,5 @@
 {
-    "app_name": "APP_NAME_FI",
+    "app_name": "Car May Care",
     "header": "Auton huoltokirja",
     "menu_own_cars": "Omat autot",
     "profile": "Profiili",
@@ -64,5 +64,7 @@
     "button_service_history": "Huoltohistoria",
     "button_add_service": "Lisää huolto",
     "button_notes": "Merkinnät",
-    "try_to_login": "Yritä kirjautua uudelleen."
+    "try_to_login": "Yritä kirjautua uudelleen.",
+    "page_not_found": "Sivua ei löydy.",
+    "back_to_main_page": "Takaisin etusivulle."
 }
