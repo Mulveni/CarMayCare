@@ -5,7 +5,7 @@ import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import NotFound from '../components/NotFound';
 import axios from 'axios';
-import { Grid, Button, makeStyles } from '@material-ui/core';
+import { Grid, Button, makeStyles, Typography } from '@material-ui/core';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
 import Error from './Error';
@@ -125,7 +125,9 @@ const ResetPassword = () => {
                     :
                     <div style={{ marginTop: 50 }}>
                         <Grid container justify="center" >
-                            <h1>{t('password_reseted_and_sent')}</h1>
+                            <Typography variant="h5">
+                                {t('password_reseted_and_sent')}
+                            </Typography>
                         </Grid>
                     </div>
                 }

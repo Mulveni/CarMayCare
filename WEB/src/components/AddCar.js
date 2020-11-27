@@ -9,7 +9,7 @@ import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 
 import { useForm } from 'react-hook-form';
-import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Typography } from '@material-ui/core';
 import { infoText } from '../styles/classes';
 
 // Onnistuneen lähetyksen jälkeen viesti käyttäjälle ennen siirtymää takaisin omat autot näkymään
@@ -219,7 +219,9 @@ const AddCar = () => {
           <Grid container item xs={12}>
 
             <Grid item xs={8}>
-              <p className={classes.infoText}>{errorText}</p>
+              <Typography className={classes.infoText} variant="body1">
+                {errorText}
+              </Typography>
             </Grid>
 
             <Grid item xs={4}>

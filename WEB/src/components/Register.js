@@ -6,7 +6,6 @@ import { useForm, Controller } from "react-hook-form";
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import {
   Container,
   Button,
@@ -16,7 +15,8 @@ import {
   FormControl,
   MenuItem,
   InputLabel,
-  FormHelperText
+  FormHelperText,
+  Link
 } from "@material-ui/core";
 import { infoText, defaultLink } from '../styles/classes';
 
@@ -95,7 +95,9 @@ const Register = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <h1>{t('register')}</h1>
+        <Typography variant="h5">
+          {t('register')}
+        </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit, onError)}>
           <TextField
             variant="outlined"
@@ -112,7 +114,9 @@ const Register = () => {
             label={t('email')}
             name="email"
           />
-          <p className={classes.infoText}>{errorText}</p>
+          <Typography className={classes.infoText} variant="body1">
+            {errorText}
+          </Typography>
           <TextField
             variant="outlined"
             margin="normal"
@@ -126,7 +130,10 @@ const Register = () => {
             name="password"
             label={t('password')}
           />
-          {errors.password && <p className={classes.infoText}>{t('password_required')}</p>}
+          {errors.password &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('password_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -139,7 +146,10 @@ const Register = () => {
             name="phonenumber"
             label={t('phonenumber')}
           />
-          {errors.phonenumber && <p className={classes.infoText}>{t('phonenumber_required')}</p>}
+          {errors.phonenumber &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('phonenumber_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -151,7 +161,10 @@ const Register = () => {
             name="firstname"
             label={t('firstname')}
           />
-          {errors.firstname && <p className={classes.infoText}>{t('firstname_required')}</p>}
+          {errors.firstname &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('firstname_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -163,7 +176,10 @@ const Register = () => {
             name="lastname"
             label={t('lastname')}
           />
-          {errors.lastname && <p className={classes.infoText}>{t('lastname_required')}</p>}
+          {errors.lastname &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('lastname_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -175,7 +191,10 @@ const Register = () => {
             name="address.street"
             label={t('street')}
           />
-          {errors?.address?.street && <p className={classes.infoText}>{t('street_required')}</p>}
+          {errors?.address?.street &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('street_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -187,7 +206,10 @@ const Register = () => {
             name="address.city"
             label={t('city')}
           />
-          {errors?.address?.city && <p className={classes.infoText}>{t('city_required')}</p>}
+          {errors?.address?.city &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('city_required')}
+            </Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -200,7 +222,10 @@ const Register = () => {
             label={t('postcode')}
 
           />
-          {errors?.address?.postcode && <p className={classes.infoText}>{t('postcode_required')}</p>}
+          {errors?.address?.postcode &&
+            <Typography className={classes.infoText} variant="body1">
+              {t('postcode_required')}
+            </Typography>}
           <FormControl
             variant="outlined"
             margin="normal"
@@ -232,7 +257,10 @@ const Register = () => {
               fullWidth
               defaultValue=""
             />
-            {errors?.address?.country && <p className={classes.infoText}>{t('country_required')}</p>}
+            {errors?.address?.country &&
+              <Typography className={classes.infoText} variant="body1">
+                {t('country_required')}
+              </Typography>}
             <FormHelperText>
               {errors?.address?.country && errors?.address?.country.message}
             </FormHelperText>
@@ -249,7 +277,7 @@ const Register = () => {
             {t('submit')}
           </Button>
           <p className={classes.infoText}>{submitText}</p>
-          <Link className={classes.defaultLink} to="/login" >{t('login')}</Link>
+          <Link className={classes.defaultLink} href="/login" >{t('login')}</Link>
         </form>
       </div>
     </Container>
