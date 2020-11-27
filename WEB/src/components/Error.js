@@ -1,14 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, makeStyles } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Grid, makeStyles, Link, Typography } from '@material-ui/core';
+import { defaultLink } from '../styles/classes';
 
 const useStyles = makeStyles({
-    link: {
-        display: "flex",
-        justifyContent: "center",
-        marginTop: 25
-    }
+    defaulLink: defaultLink
 });
 
 const Error = () => {
@@ -18,8 +14,10 @@ const Error = () => {
     return (
         <div>
             <Grid container justify="center" direction="column" alignItems="center" style={{ marginTop: 50 }}>
-                <h1>{t('internal_server_error')}</h1>
-                <Link className={classes.link} to="/login" >{t('try_to_login')}</Link>
+                <Typography variant="h5">
+                    {t('internal_server_error')}
+                </Typography>
+                <Link className={classes.defaultLink} href="/login" >{t('try_to_login')}</Link>
             </Grid>
         </div >
     )

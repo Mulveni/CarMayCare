@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons, logIn, addToken } from '../actions';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Link, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import baseApiUrl from '../api_url.json';
+import { infoText, defaultButton, defaultLink } from '../styles/classes';
 
 
 const useStyles = makeStyles({
@@ -16,24 +16,9 @@ const useStyles = makeStyles({
         minWidth: 300,
         marginTop: 50
     },
-    link: {
-        display: "flex",
-        justifyContent: "center",
-        marginTop: 25
-    },
-    loginButton: {
-        color: "white",
-        backgroundColor: "#304269",
-        '&:hover': {
-            backgroundColor: "#F26101"
-        }
-    },
-    infoText: {
-        color: "white",
-        backgroundColor: "#F26101",
-        borderRadius: 10,
-        paddingLeft: 10
-    }
+    defaultLink: defaultLink,
+    defaultButton: defaultButton,
+    infoText: infoText
 });
 
 const Login = () => {
@@ -116,16 +101,18 @@ const Login = () => {
                         margin="normal"
                         inputRef={passwordInput}
                     />
-                    <p className={classes.infoText}>{loginText}</p>
+                    <Typography className={classes.infoText} variant="body1">
+                        {loginText}
+                    </Typography>
                     <Button
-                        className={classes.loginButton}
+                        className={classes.defaultButton}
                         onClick={handleLogin}
                         variant="contained"
                         style={{ marginTop: 50 }}>
                         {t('login')}
                     </Button>
-                    <Link className={classes.link} to="/forgotpassword" >{t('forgot_password')}</Link>
-                    <Link className={classes.link} to="/register" >{t('register_here')}</Link>
+                    <Link className={classes.defaultLink} href="/forgotpassword" >{t('forgot_password')}</Link>
+                    <Link className={classes.defaultLink} href="/register" >{t('register_here')}</Link>
                 </div>
             </Grid>
 
