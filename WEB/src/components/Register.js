@@ -18,6 +18,7 @@ import {
   InputLabel,
   FormHelperText
 } from "@material-ui/core";
+import { infoText, defaultLink } from '../styles/classes';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,12 +41,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#F26101"
     }
   },
-  infoText: {
-    color: "white",
-    backgroundColor: "#F26101",
-    borderRadius: 10,
-    paddingLeft: 10
-  }
+  infoText: infoText,
+  defaultLink: defaultLink
 }));
 
 const Register = () => {
@@ -252,7 +249,7 @@ const Register = () => {
             {t('submit')}
           </Button>
           <p className={classes.infoText}>{submitText}</p>
-          <Link className={classes.link} to="/login" >{t('login')}</Link>
+          <Link className={classes.defaultLink} to="/login" >{t('login')}</Link>
         </form>
       </div>
     </Container>

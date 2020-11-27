@@ -10,6 +10,7 @@ import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
 import Error from './Error';
 import Loading from './Loading';
+import { infoText, defaultButton } from '../styles/classes';
 
 const useStyles = makeStyles({
     resetPasswordGrid: {
@@ -18,12 +19,8 @@ const useStyles = makeStyles({
         minWidth: 300,
         marginTop: 50
     },
-    infoText: {
-        color: "white",
-        backgroundColor: "#F26101",
-        borderRadius: 10,
-        paddingLeft: 10
-    }
+    infoText: infoText,
+    defaultButton: defaultButton
 });
 
 const ResetPassword = () => {
@@ -114,6 +111,7 @@ const ResetPassword = () => {
                     <Grid container justify="center">
                         <div className={classes.resetPasswordGrid}>
                             <Button
+                                className={classes.defaultButton}
                                 onClick={handleSubmit}
                                 variant="contained"
                                 style={{ marginTop: 50 }}>

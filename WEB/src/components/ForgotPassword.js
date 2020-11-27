@@ -6,6 +6,7 @@ import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
+import { infoText, defaultButton } from '../styles/classes';
 
 const useStyles = makeStyles({
     forgotPasswordGrid: {
@@ -14,12 +15,8 @@ const useStyles = makeStyles({
         minWidth: 300,
         marginTop: 50
     },
-    infoText: {
-        color: "white",
-        backgroundColor: "#F26101",
-        borderRadius: 10,
-        paddingLeft: 10
-    }
+    infoText: infoText,
+    defaultButton: defaultButton
 });
 
 const ForgotPassword = () => {
@@ -115,6 +112,7 @@ const ForgotPassword = () => {
                         />
                         <p className={classes.infoText}>{forgotPasswordText}</p>
                         <Button
+                            className={classes.defaultButton}
                             onClick={handleSubmit}
                             variant="contained"
                             style={{ marginTop: 50 }}>

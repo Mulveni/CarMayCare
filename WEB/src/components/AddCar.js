@@ -10,6 +10,7 @@ import baseApiUrl from '../api_url.json';
 
 import { useForm } from 'react-hook-form';
 import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import { infoText } from '../styles/classes';
 
 // Onnistuneen lähetyksen jälkeen viesti käyttäjälle ennen siirtymää takaisin omat autot näkymään
 
@@ -32,12 +33,7 @@ const useStyles = makeStyles({
       backgroundColor: "#F26101"
     }
   },
-  infoText: {
-    color: "white",
-    backgroundColor: "#F26101",
-    borderRadius: 10,
-    paddingLeft: 10
-  }
+  infoText: infoText
 });
 
 const AddCar = () => {
