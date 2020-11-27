@@ -115,7 +115,7 @@ const Register = () => {
             label={t('email')}
             name="email"
           />
-          <p className={classes.infoText}>{errorText}
+          <p className={classes.infoText}>{errorText}</p>
           <TextField
             variant="outlined"
             margin="normal"
