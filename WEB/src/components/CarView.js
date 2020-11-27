@@ -15,19 +15,6 @@ import Loading from './Loading';
 import { defaultButton, background } from '../styles/classes';
 
 const useStyles = makeStyles({
-    carViewGrid: {
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: 800,
-        minWidth: 600
-    },
-    carViewCard: {
-        display: "flex",
-        flexDirection: "row",
-        padding: 25,
-        background: "#D9E8F5"
-    },
-    defaultButton: defaultButton,
     tabView: {
         backgroundColor: "#304269",
         color: "white"
@@ -44,7 +31,8 @@ const useStyles = makeStyles({
         width: 75,
         height: 75
     },
-    background: background
+    background: background,
+    defaultButton: defaultButton
 });
 
 const CarView = (props) => {
