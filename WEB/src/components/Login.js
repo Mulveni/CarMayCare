@@ -107,7 +107,6 @@ const Login = () => {
                         <Button
                             className={classes.defaultButton}
                             onClick={handleLogin}
-                            variant="contained"
                             style={{ marginTop: 50 }}>
                             {t('login')}
                         </Button>
