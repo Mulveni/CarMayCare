@@ -35,11 +35,15 @@ const ForgotPassword = () => {
 
     const MessageSent = () => {
         return (
-            <div style={{ marginTop: 50 }}>
-                <Grid container justify="center">
-                    <h1>{t('forgot_password_sent_message')}</h1>
-                </Grid>
-            </div>
+            <div>
+                <Card className={classes.background} style={{ marginTop: 50 }}>
+                    <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
+                        <Typography variant="h5">
+                            {t('forgot_password_sent_message')}
+                        </Typography>
+                    </Grid>
+                </Card>
+            </div >
         )
     }
 
