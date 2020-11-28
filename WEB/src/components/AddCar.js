@@ -15,12 +15,6 @@ import { infoText, defaultButton, background } from '../styles/classes';
 // Onnistuneen lähetyksen jälkeen viesti käyttäjälle ennen siirtymää takaisin omat autot näkymään
 
 const useStyles = makeStyles({
-  formGrid: {
-    display: "flex", flexDirection: "column",
-    maxWidth: 1000,
-    minWidth: 300,
-    marginTop: 50
-  },
   addCarGrid: {
     display: "flex",
     flexDirection: "column",
