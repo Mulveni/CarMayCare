@@ -6,12 +6,13 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, removeToken } from '../actions';
+import Colors from '../styles/colors';
 
 
 const drawerWidth = 240;
 const useStyles = makeStyles({
     header: {
-        background: "#304269",
+        background: Colors.blue1,
         position: "static",
         padding: 20
     },
@@ -33,28 +34,28 @@ const useStyles = makeStyles({
     },
     drawerPaper: {
         width: drawerWidth,
-        background: "#304269"
+        background: Colors.blue1
     },
     rightMenu: {
-        background: "#304269",
+        background: Colors.blue1,
         color: "white"
     },
     icons: {
         color: "white",
         '&:hover': {
-            backgroundColor: "#F26101"
+            backgroundColor: Colors.orange
         }
     },
     lngButtons: {
         color: "white",
         '&:hover': {
-            backgroundColor: "#F26101"
+            backgroundColor: Colors.orange
         },
         fontWeight: "bold"
     },
     navLinks: {
         '&:hover': {
-            backgroundColor: "#F26101"
+            backgroundColor: Colors.orange
         },
         marginRight: 5,
         marginTop: 5

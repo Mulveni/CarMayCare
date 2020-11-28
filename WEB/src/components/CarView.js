@@ -13,21 +13,22 @@ import { useSelector } from 'react-redux';
 import Error from './Error';
 import Loading from './Loading';
 import { defaultButton, background } from '../styles/classes';
+import Colors from '../styles/colors';
 
 const useStyles = makeStyles({
     tabView: {
-        backgroundColor: "#304269",
+        backgroundColor: Colors.blue1,
         color: "white"
     },
     indicatorColor: {
-        backgroundColor: "#F26101"
+        backgroundColor: Colors.orange
     },
     tabActive: {
         color: "white",
-        backgroundColor: "#F26101"
+        backgroundColor: Colors.orange
     },
     avatar: {
-        backgroundColor: "#304269",
+        backgroundColor: Colors.blue1,
         width: 75,
         height: 75
     },
@@ -122,10 +123,10 @@ const CarView = (props) => {
         <div>
             <Card className={classes.background} style={{ marginTop: 50 }}>
                 <Grid container >
-                    <Grid container xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25 }} >
+                    <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25 }} >
                         <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>
                     </Grid>
-                    <Grid container xs={4} justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }} >
+                    <Grid container item xs={4} justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }} >
                         <Grid item>
                             <Typography variant="body1">{t('car_brand')}:</Typography>
                             <Typography variant="body1">{t('car_model')}:</Typography>
@@ -143,7 +144,7 @@ const CarView = (props) => {
                             <Typography variant="body1">{carData.licenseNumber}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid container xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
+                    <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
                         <Button className={classes.defaultButton}>
                             {t('button_edit')}
                         </Button>
