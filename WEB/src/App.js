@@ -24,6 +24,11 @@ const App = () => {
                     fontFamily: 'Quicksand',
                     color: "#304269"
                 },
+            },
+            MuiTextField: {
+                root: {
+                    backgroundColor: "#91BED4"
+                }
             }
         }
     });

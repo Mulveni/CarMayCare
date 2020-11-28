@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
 import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   registerGrid: {
     display: "flex",
     flexDirection: "column",
@@ -204,6 +204,7 @@ const Register = () => {
                 {t('country')}
               </InputLabel>
               <Controller
+                style={{ background: "#91BED4" }}
                 as={
                   <Select>
                     <MenuItem value="finland">
