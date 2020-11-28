@@ -8,6 +8,7 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
 import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
+import Colors from '../styles/colors';
 
 const useStyles = makeStyles(() => ({
   registerGrid: {
@@ -204,7 +205,7 @@ const Register = () => {
                 {t('country')}
               </InputLabel>
               <Controller
-                style={{ background: "#91BED4" }}
+                style={{ background: Colors.blue2 }}
                 as={
                   <Select>
                     <MenuItem value="finland">

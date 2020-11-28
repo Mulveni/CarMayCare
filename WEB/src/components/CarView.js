@@ -13,21 +13,22 @@ import { useSelector } from 'react-redux';
 import Error from './Error';
 import Loading from './Loading';
 import { defaultButton, background } from '../styles/classes';
+import Colors from '../styles/colors';
 
 const useStyles = makeStyles({
     tabView: {
-        backgroundColor: "#304269",
+        backgroundColor: Colors.blue1,
         color: "white"
     },
     indicatorColor: {
-        backgroundColor: "#F26101"
+        backgroundColor: Colors.orange
     },
     tabActive: {
         color: "white",
-        backgroundColor: "#F26101"
+        backgroundColor: Colors.orange
     },
     avatar: {
-        backgroundColor: "#304269",
+        backgroundColor: Colors.blue1,
         width: 75,
         height: 75
     },
