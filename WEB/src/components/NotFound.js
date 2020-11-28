@@ -22,7 +22,7 @@ const NotFound = () => {
     return (
         <div>
             <Card className={classes.background} style={{ marginTop: 50 }}>
-                <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+                <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
                     <Typography variant="h5">
                         {t('page_not_found')}
                     </Typography>

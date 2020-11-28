@@ -82,7 +82,7 @@ const Login = () => {
     return (
         <div>
             <Card className={classes.background} style={{ marginTop: 50 }}>
-                <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+                <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
                     <div className={classes.loginGrid}>
                         <TextField
                             onKeyDown={pressKey}
