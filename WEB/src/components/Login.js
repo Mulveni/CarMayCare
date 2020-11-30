@@ -1,26 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons, logIn, addToken } from '../actions';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Link, Typography, Card } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import baseApiUrl from '../api_url.json';
+import { infoText, defaultButton, defaultLink, background } from '../styles/classes';
 
 
 const useStyles = makeStyles({
     loginGrid: {
-        display: "flex", flexDirection: "column",
-        maxWidth: 400,
-        minWidth: 300,
-        marginTop: 50
-    },
-    link: {
         display: "flex",
-        justifyContent: "center",
-        marginTop: 25
-    }
+        flexDirection: "column",
+        marginBottom: 50
+    },
+    background: background,
+    defaultLink: defaultLink,
+    defaultButton: defaultButton,
+    infoText: infoText
 });
 
 const Login = () => {
@@ -81,42 +79,42 @@ const Login = () => {
         }
     }
 
-
     return (
         <div>
-            <Grid container justify="center">
-                <div className={classes.loginGrid}>
-                    <TextField
-                        onKeyDown={pressKey}
-                        id="email"
-                        label={t('email')}
-                        variant="outlined"
-                        margin="normal"
-                        inputRef={emailInput}
-                    />
-                    <TextField
-                        onKeyDown={pressKey}
-                        id="password"
-                        label={t('password')}
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        inputRef={passwordInput}
-                    />
-                    <p>{loginText}</p>
-                    <Button
-                        onClick={handleLogin}
-                        variant="contained"
-                        style={{ marginTop: 50 }}>
-                        {t('login')}
-                    </Button>
-                    <Link className={classes.link} to="/forgotpassword" >{t('forgot_password')}</Link>
-                    <Link className={classes.link} to="/register" >{t('register_here')}</Link>
-                </div>
-            </Grid>
-
-
-
+            <Card className={classes.background} style={{ marginTop: 50 }}>
+                <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+                    <div className={classes.loginGrid}>
+                        <TextField
+                            onKeyDown={pressKey}
+                            id="email"
+                            label={t('email')}
+                            variant="outlined"
+                            margin="normal"
+                            inputRef={emailInput}
+                        />
+                        <TextField
+                            onKeyDown={pressKey}
+                            id="password"
+                            label={t('password')}
+                            type="password"
+                            variant="outlined"
+                            margin="normal"
+                            inputRef={passwordInput}
+                        />
+                        <Typography className={classes.infoText} variant="body1">
+                            {loginText}
+                        </Typography>
+                        <Button
+                            className={classes.defaultButton}
+                            onClick={handleLogin}
+                            style={{ marginTop: 50 }}>
+                            {t('login')}
+                        </Button>
+                        <Link className={classes.defaultLink} href="/forgotpassword" >{t('forgot_password')}</Link>
+                        <Link className={classes.defaultLink} href="/register" >{t('register_here')}</Link>
+                    </div>
+                </Grid>
+            </Card>
         </div >
     )
 }

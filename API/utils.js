@@ -1,5 +1,6 @@
 const db = require('./database');
 const bcrypt = require('bcryptjs');
+const { serializeUser } = require('passport');
 
 const utils = {
     checkUserLogin: (username, password) => {
@@ -18,6 +19,36 @@ const utils = {
         });
     },
 
+    getCarServices: (idUsers, idCars) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if(results.length !== 0){
+                    db.query('SELECT * FROM services WHERE idCars = ?', idCars)
+                    .then(results => {
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results);
+                        } else {
+                            resolve(false);
+                            return;
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
+                } else {
+                    resolve(false);
+                    return;
+                }
+
+            }).catch(error =>{
+                console.log(error);
+                reject(error);
+            });
+        });
+    },
+
     getCars: (userId) => {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM cars WHERE idUsers = ?', userId).then(results => {
@@ -30,8 +61,44 @@ const utils = {
                     resolve(false);
                     return;
                 }
-
             }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+
+    addNewService: (service, idUsers, idCars) => {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if(results.length !== 0){
+                    db.query("INSERT INTO services(idCars, description, mileAge, motorOilChangeDone, motorOilChangelongLifeOilUsed, airConditioningServiceDone, airConditioningServiceDryer, sparkPlugReplacement, airFilterReplacement, cleanAirReplacement, fuelFilterReplacement, brakeFluidReplacement, gearBoxOilReplacement, powerSteeringOilReplacement, timingBeltReplacement, waterPumpReplacement, dieselParticulateFilterReplacement, additionalInformation) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    [idCars, service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
+                        service.airConditioningService.done, service.airConditioningService.dryer, service.additionalServices.sparkPlugReplacement, 
+                        service.additionalServices.airFilterReplacement, service.additionalServices.cleanAirReplacement, 
+                        service.additionalServices.fuelFilterReplacement, service.additionalServices.brakeFluidReplacement, 
+                        service.additionalServices.gearBoxOilReplacement, service.additionalServices.powerSteeringOilReplacement, 
+                        service.additionalServices.timingBeltReplacement, service.additionalServices.waterPumpReplacement, 
+                        service.additionalServices.dieselParticulateFilterReplacement, service.additionalInformation])
+                    .then(results => {
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results); 
+                        } else {
+                            resolve(false);
+                            return;
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
+
+                } else {
+                    resolve(false);
+                    return;
+                }
+            }).catch(error => {
+                console.log(error);
                 reject(error);
             });
         });
@@ -65,6 +132,40 @@ const utils = {
             }).catch(error => {
                 console.log(error);
                 reject(error);
+            });
+        });
+    },
+
+    getService: (idUsers, idCars, idServices) => {
+        return new Promise(function(resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if (results.length !== 0){
+                    db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?',[idCars, idServices])
+                    .then(results => {
+                        if(results !== 0){
+                            console.log(results);
+                            resolve(results);
+                        } else {
+                            resolve(false);
+                            return;
+                        }
+
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                        return;
+                    });
+
+                } else {
+                    resolve(false);
+                    return;
+                }
+
+            }).catch(error => {
+                console.log(error);
+                reject(error);
+                return;
             });
         });
     },
@@ -139,6 +240,58 @@ const utils = {
         });
     },
 
+    editService: (idUsers, idCars, idServices, service) => {
+        return new Promise(function(resolve, reject) {
+
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if (results.length !== 0){
+
+                    db.query('SELECT * FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices])
+                    .then(results => {
+                        if (results.length !== 0){
+
+                            db.query('UPDATE services SET description = ?, mileage = ?, motorOilChangeDone = ?, motorOilChangelongLifeOilUsed = ?, airConditioningServiceDone = ?, airConditioningServiceDryer = ?, sparkPlugReplacement = ?, airFilterReplacement = ?, cleanAirReplacement = ?, fuelFilterReplacement = ?, brakeFluidReplacement = ?, gearBoxOilReplacement = ?, powerSteeringOilReplacement = ?, timingBeltReplacement = ?, waterPumpReplacement = ?, dieselParticulateFilterReplacement = ?, additionalInformation = ? WHERE idCars = ? AND idServices = ?',
+                            [service.description, service.mileAge, service.motorOilChange.done, service.motorOilChange.longLifeOilUsed, 
+                                service.airConditioningService.done, service.airConditioningService.dryer, service.additionalServices.sparkPlugReplacement,
+                                service.additionalServices.airFilterReplacement, service.additionalServices.cleanAirReplacement, 
+                                service.additionalServices.fuelFilterReplacement, service.additionalServices.brakeFluidReplacement , 
+                                service.additionalServices.gearBoxOilReplacement , service.additionalServices.powerSteeringOilReplacement, 
+                                service.additionalServices.timingBeltReplacement , service.additionalServices.waterPumpReplacement, 
+                                service.additionalServices.dieselParticulateFilterReplacement, service.additionalInformation, idCars, idServices])
+                                .then(results => {
+
+                                    console.log(results);
+                                    resolve(results);
+                                }).catch (error => {
+
+                                    console.log(error);
+                                    reject(error);
+                                });
+                        } else {
+
+                            resolve(false);
+                            return;
+                        }
+                    }).catch(error => {
+
+                        console.log(error);
+                        resolve(error);
+                    });
+                } else {
+
+                    resolve(false);
+                    return;
+                }
+                
+            }).catch(error => {
+                
+                console.log(error);
+                reject(error);
+            });
+        });
+    },
+
     getNotes: (userId, carId) => {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [userId, carId]).then(results => {
@@ -208,6 +361,39 @@ const utils = {
 
             }).catch(error => {
                 reject(error);
+            });
+        });
+    },
+
+    deleteService: (idUsers, idCars, idServices) => {
+        return new Promise(function(resolve, reject) {
+            db.query('SELECT * FROM cars WHERE idUsers = ? AND idCars = ?', [idUsers, idCars])
+            .then(results => {
+                if (results.length !== 0){
+                    db.query('DELETE FROM services WHERE idCars = ? AND idServices = ?', [idCars, idServices])
+                    .then(results => {
+                        if(results.length !== 0){
+                            console.log(results);
+                            resolve(results); 
+                        } else {
+                            resolve(false);
+                            return;
+
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error);
+                        return;
+                    });
+                } else {
+                    resolve(false);
+                    return;
+                }
+
+            }).catch(error => {
+                console.log(error);
+                reject(error);
+                return;
             });
         });
     },
@@ -402,5 +588,6 @@ const utils = {
             });
         });
     }
+
 }
 module.exports = utils;

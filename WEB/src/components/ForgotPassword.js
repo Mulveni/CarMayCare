@@ -2,18 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
-import { TextField, Grid, Button, makeStyles } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Card, Typography } from '@material-ui/core';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
+import { infoText, defaultButton, background } from '../styles/classes';
 
 const useStyles = makeStyles({
     forgotPasswordGrid: {
-        display: "flex", flexDirection: "column",
-        maxWidth: 400,
-        minWidth: 300,
-        marginTop: 50
-    }
+        display: "flex",
+        flexDirection: "column",
+        marginBottom: 50
+    },
+    background,
+    infoText: infoText,
+    defaultButton: defaultButton
 });
 
 const ForgotPassword = () => {
@@ -32,11 +35,15 @@ const ForgotPassword = () => {
 
     const MessageSent = () => {
         return (
-            <div style={{ marginTop: 50 }}>
-                <Grid container justify="center">
-                    <h1>{t('forgot_password_sent_message')}</h1>
-                </Grid>
-            </div>
+            <div>
+                <Card className={classes.background} style={{ marginTop: 50 }}>
+                    <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
+                        <Typography variant="h5">
+                            {t('forgot_password_sent_message')}
+                        </Typography>
+                    </Grid>
+                </Card>
+            </div >
         )
     }
 
@@ -96,26 +103,31 @@ const ForgotPassword = () => {
 
         return (
             <div>
-                <Grid container justify="center">
-                    <div className={classes.forgotPasswordGrid}>
-                        <h1>{t('forgot_password_header')}</h1>
-                        <TextField
-                            onKeyDown={pressKey}
-                            id="email"
-                            label={t('email')}
-                            variant="outlined"
-                            margin="normal"
-                            inputRef={emailInput}
-                        />
-                        <p>{forgotPasswordText}</p>
-                        <Button
-                            onClick={handleSubmit}
-                            variant="contained"
-                            style={{ marginTop: 50 }}>
-                            {t('send')}
-                        </Button>
-                    </div>
-                </Grid>
+                <Card className={classes.background} style={{ marginTop: 50 }}>
+                    <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+                        <div className={classes.forgotPasswordGrid}>
+                            <Typography variant="h5">
+                                {t('forgot_password_header')}
+                            </Typography>
+                            <TextField
+                                onKeyDown={pressKey}
+                                id="email"
+                                label={t('email')}
+                                variant="outlined"
+                                margin="normal"
+                                inputRef={emailInput}
+                            />
+                            <Typography className={classes.infoText}>{forgotPasswordText}</Typography>
+                            <Button
+                                className={classes.defaultButton}
+                                onClick={handleSubmit}
+                                variant="contained"
+                                style={{ marginTop: 50 }}>
+                                {t('send')}
+                            </Button>
+                        </div>
+                    </Grid>
+                </Card>
             </div >
         )
     }
