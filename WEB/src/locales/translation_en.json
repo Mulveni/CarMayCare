@@ -66,5 +66,6 @@
     "button_notes": "Notes",
     "try_to_login": "Try to login again.",
     "page_not_found": "Page not found.",
-    "back_to_main_page": "Back to main page."
+    "back_to_main_page": "Back to main page.",
+    "button_save": "Save"
 }
