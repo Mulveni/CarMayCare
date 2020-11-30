@@ -62,5 +62,6 @@
     "error_inputs": "accepts input values between",
 
     "button_submit": "Submit",
-    "unauthorized": "Unauthorized"
+    "unauthorized": "Unauthorized",
+    "error": "Error"
 }

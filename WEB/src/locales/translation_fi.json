@@ -62,5 +62,6 @@
     "error_inputs": "hyväksyy syöte arvot väliltä",
 
     "button_submit": "Lähetä",
-    "unauthorized": "Ei käyttöoikeutta"
+    "unauthorized": "Ei käyttöoikeutta",
+    "error": "Virhe"
 }
