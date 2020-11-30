@@ -5,34 +5,16 @@ import { showNavButtons } from '../actions';
 import { useForm, Controller } from "react-hook-form";
 import baseApiUrl from '../api_url.json';
 import axios from 'axios';
+import { withRouter } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {
-Grid,
-Divider,
-CardActions,
-CardContent,
-  Container,
-  Button,
-  TextField,
-  Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
-  Card,
-  CardHeader
-} from "@material-ui/core";
+import { useSelector } from 'react-redux';
+import { infoText, defaultButton, defaultLink, background } from '../styles/classes';
+import Error from './Error';
+import Loading from './Loading';
+import {Grid,Divider,CardActions,CardContent,Container,Button,TextField,Typography,Select,FormControl,MenuItem,InputLabel,FormHelperText, Card,CardHeader } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    width: 'fit-content',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   form: {
     width: 'fit-content', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -41,215 +23,260 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  formGrid: {
+  profileGrid: {
     display: "flex", flexDirection: "column",
     maxWidth: 700,
     minWidth: 300,
 
     marginTop: 50,
     margin: 'auto'
-  }
+  },
+  background: background,
+  defaultLink: defaultLink,
+  defaultButton: defaultButton,
+  infoText: infoText
 }));
 
-const Profile = () => {
+const Profile = (props) => {
 
   const [errorText, setErrorText] = useState(null);
-  const [submitText, setSubmitText] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [serverError, setServerError] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
   const defaultValue = {};
   const apiUrl = baseApiUrl.url;
+  const apiToken = useSelector(state => state.tokenReducer);
+  const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  useEffect(() => {
-      dispatch(showNavButtons());
-  }, [dispatch]);
 
-  const classes = useStyles();
   const { register, errors, control, handleSubmit } = useForm({
     defaultValue,
     mode: "onBlur",
   });
+  useEffect(() => {
+      dispatch(showNavButtons());
+  }, [dispatch]);
+
+  /*const checkUserIdFromState = () => {
+      if (props.location.state === undefined) {
+          setServerError(true);
+      } else {
+          getUserInfo();
+      }
+  }
+*/
+  //const getUserInfo = () => {
+
+useEffect(() => {
+  axios
+  .get(`${apiUrl}/user`, {
+    headers: {
+      Authorization: `Bearer ${apiToken}`
+  }
+  }).then(response => {
+      if (response.data.message === "No results with given id") {
+        console.log(response.data);
+          setServerError(true);
+          setLoading(false);
+      } else {
+          setUserData(response.data);
+          setLoading(false);
+      }
+
+  }).catch(error => {
+      console.log(error);
+      setServerError(true);
+      setLoading(false);
+
+  });
+},[])
+
+  if (serverError) {
+      return <Error />;
+  }
+
+  if (isLoading) {
+      return <Loading />;
+  }
+
   const onSubmit = data => {
-    setSubmitText(null);
-    setErrorText(null);
-    axios.post(`${apiUrl}/register`, data, {
-    })
-      .then((response) => {
-        setSubmitText(t("successfull_register"));
-      }, (error) => {
-        console.log(error.response.data);
-        if (error.response.data.message === "E-mail already in use") {
-          setErrorText(t('email_already_in_use'));
-        }
-        else if (error.response.status === 404) {
-          setErrorText(t("internal_server_error"))
-        }
-      });
-  };
+  }
   const onError = (errors, e) => {
     setErrorText(null);
     if (errors.email != null) {
       setErrorText(errors.email.message);
     }
-    if (errors.email == null) {
-      setErrorText(null);
+    else if (errors.phonenumber != null) {
+      setErrorText(errors.phonenumber.message);
+    }
+    else if (errors.firstname != null) {
+      setErrorText(errors.firstname.message);
+    }
+    else if (errors.lastname != null) {
+      setErrorText(errors.lastname.message);
+    }
+
+    else if (errors.address.street != null) {
+      setErrorText(errors.address.street.message);
+    }
+    else if (errors.address.city != null) {
+      setErrorText(errors.address.city.message);
+    }
+    else if (errors.address.postcode != null) {
+      setErrorText(errors.address.postcode.message);
+    }
+    else if (errors.address.country != null) {
+      setErrorText(errors.address.country.message);
     }
   }
 
   return (
-    <div className={classes.formGrid}>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Grid container item xs={12}>
-
-          <Grid 
-          className={classes.formGrid}
-          container item xs={12} direction="row">
-            <Card>
-            <CardHeader
-            title="Perustiedot"
-
+    <div>
+      <Card
+       className={classes.background} style={{ marginTop: 50 }}>
+        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+          <Typography variant="h5">
+            {t('profile')}
+          </Typography>
+          <form className={classes.profileGrid} onSubmit={handleSubmit(onSubmit, onError)}>
+          <CardHeader
             action={
-          <Button size="small">Muokkaa</Button>
+          <Button size="small">{t('button_edit')}</Button>
             }
             />
-            <CardContent>
-            <TextField
-              name="brand"
-              style={{ margin: 8 }}
-              label={t('email')}
-              inputRef={register({
-                required: t('car_brand') + " " + t('error_required'),
-                minLength: { value: 2, message: t('car_brand') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-              })}
-              margin="normal"
+              <Grid item direction="row" alignItems="center">
+              <TextField
               variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-
-            <TextField
-              name="model"
               style={{ margin: 8 }}
-              placeholder={t('car_model')}
               inputRef={register({
-                required: t('car_model') + " " + t('error_required'),
-                minLength: { value: 2, message: t('car_model') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-              })}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-
-            <TextField
-              name="yearModel"
-              style={{ margin: 8 }}
-              placeholder={t('car_yearmodel')}
-              inputRef={register({
-                required: t('car_yearmodel') + " " + t('error_required'),
-                minLength: { value: 4, message: t('car_yearmodel') + " " + t('error_shorter') + " 4 " + t('error_characters') },
-                maxLength: { value: 4, message: t('car_yearmodel') + " " + t('error_longer') + " 4 " + t('error_characters') },
-                min: { value: "1900", message: t('car_yearmodel') + " " + t('error_number') + " 1900 - 2100 " },
-                max: { value: "2100", message: t('car_yearmodel') + " " + t('error_number') + " 1900 - 2100 " },
+                required: true,
                 pattern: {
-                  value: /[0-9]/,
-                  message: t('car_yearmodel') + t('error_inputs') + " 0-9"
+                  value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  message: t('email_required'),
+                },
+                minLength: 2,
+              })}
+              label={userData.email}
+              disabled
+              name="email"
+            /> 
+              <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: t('phonenumber_required'),
+                minLength: 5,
+              })}
+              name="phonenumber"
+              disabled
+              label={userData.phonenumber}
+            />
+            <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: t('firstname_required'),
+                minLength: 2,
+              })}
+              name="firstname"
+              disabled
+              label={userData.firstname}
+            />
+            <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: t('lastname_required'),
+                minLength: 2,
+              })}
+              name="lastname"
+              disabled
+              label={userData.lastname}
+            />
+            <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('street_required') }
+              })}
+              name="address.street"
+              disabled
+              label={userData.address.street}
+            />
+
+            <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('city_required') }
+              })}
+              name="address.city"
+              disabled
+              label={userData.address.city}
+            />
+
+            <TextField
+              variant="outlined"
+              style={{ margin: 8 }}
+              inputRef={register({
+                required: true,
+                minLength: { value: 2, message: t('postcode_required') }
+              })}
+              name="address?.postcode"
+              disabled
+              label={userData.address.postcode}
+
+            />
+
+            <FormControl
+              variant="outlined"
+              disabled
+              style={{ margin: 8 }}
+            >
+              <InputLabel id="countries-label">
+                {userData.address.country}
+              </InputLabel>
+              <Controller
+                as={
+                  <Select>
+                    <MenuItem value="finland">
+                      {t('finland')}
+                    </MenuItem>
+                    <MenuItem value="sweden">
+                      {t('sweden')}
+                    </MenuItem>
+                    <MenuItem value="norway">
+                      {t('norway')}
+                    </MenuItem>
+                    <MenuItem value="denmark">
+                      {t('denmark')}
+                    </MenuItem>
+                  </Select>
                 }
-              })}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            
-            <TextField
-              name="powerType"
-              style={{ margin: 8 }}
-              placeholder={t('car_powertype')}
-              inputRef={register({
-                required: t('car_powertype') + " " + t('error_required'),
-                minLength: { value: 2, message: t('car_powertype') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-              })}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              name="engineSize"
-              style={{ margin: 8 }}
-              placeholder={t('car_enginesize')}
-              inputRef={register({
-                required: t('car_enginesize') + " " + t('error_required'),
-                minLength: { value: 2, message: t('car_enginesize') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-              })}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              name="licenseNumber"
-              style={{ margin: 8 }}
-              placeholder={t('car_license')}
-              inputRef={register({
-                required: t('car_license') + " " + t('error_required'),
-                minLength: { value: 2, message: t('car_license') + " " + t('error_shorter') + " 2 " + t('error_characters') }
-              })}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            </CardContent>
-            </Card>
-            </Grid>
-
-          <Grid
-           className={classes.formGrid}
-           style={{ marginTop: 8 }}
-           container xs={12} direction="row">
-               
-          <Card
-          style={{ marginTop: 8 }}>
-          <CardHeader
-            title="Salasanan vaihto"
-            action={
-                <Button size="small">Vaihda salasana</Button>
-                  }
-        />
-            <CardContent>
-            <Typography variant="body1" component="p">
-          Syötä salasana
+                name="address.country"
+                rules={{ required: t('country_required'),}}
+                control={control}
+                defaultValue=""
+              />
+            </FormControl>
+              </Grid>
+            <Typography className={classes.infoText} variant="body1">
+              {errorText}
             </Typography>
-            <Typography variant="body1" component="p">
-          Syötä salasan uudelleen
-            </Typography>
-            </CardContent>
-            </Card>
-          </Grid>
-          <Grid container item xs={12}>
-            <Grid item xs={8}>
-              <p>{errorText}</p>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                className={classes.button}
-                variant="outlined"
-                type="submit">
-                {t('button_submit')}
-              </Button>
-            </Grid>
-          </Grid>
+            <Button
+              className={classes.defaultButton}
+              style={{ margin: "auto", marginTop: 25 }}
+              type="submit">
+              {t('button_submit')}
+            </Button>
+          </form>
         </Grid>
-      </form>
+      </Card>
     </div>
-
   )
 }
 export default Profile;
