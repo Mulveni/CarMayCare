@@ -35,7 +35,7 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
     }
 
     const onSubmit = (data) => {
-        axios.put(`dd/cars/${carId}`, data, {
+        axios.put(`${apiUrl}/cars/${carId}`, data, {
             headers: {
                 Authorization: `Bearer ${apiToken}`
             }
