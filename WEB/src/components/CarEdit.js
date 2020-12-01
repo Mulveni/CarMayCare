@@ -1,69 +1,169 @@
-import React from 'react';
-import { Grid, TextField, makeStyles, Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid, TextField, makeStyles, Button, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { defaultButton } from '../styles/classes';
+import { defaultButton, infoText } from '../styles/classes';
+import { useForm } from 'react-hook-form';
+import baseApiUrl from '../api_url.json';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
-    defaultButton: defaultButton
+    editGrid: {
+        display: "flex",
+        flexDirection: "column",
+        marginBottom: 50
+    },
+    defaultButton: defaultButton,
+    infoText: infoText
 });
 
-const CarEdit = ({ data, handleSave }) => {
+const CarEdit = ({ data, carId, handleSaveButton }) => {
+    const [infoText, setInfoText] = useState(null);
+
     const carData = data;
     const { t } = useTranslation();
     const classes = useStyles();
+    const { register, handleSubmit } = useForm();
+    const history = useHistory();
+
+    const apiUrl = baseApiUrl.url;
+    const apiToken = useSelector(state => state.tokenReducer);
+
+    const handleCancel = () => {
+        handleSaveButton("cancel");
+    }
+
+    const onSubmit = (data) => {
+        axios.put(`dd/cars/${carId}`, data, {
+            headers: {
+                Authorization: `Bearer ${apiToken}`
+            }
+        }).then(response => {
+            console.log(response);
+            setInfoText("Submitted");
+            handleSaveButton("submit");
+        }).catch(error => {
+            if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
+                console.log("ID not found");
+                setInfoText(t('error_car_id_not_found'));
+            }
+            else if (error.response.data === "Unauthorized") {
+                history.push("/login", { error: t('unauthorized') });
+            } else {
+                setInfoText(t('internal_server_error'));
+            }
+            console.log(error);
+        });
+
+
+
+
+    }
+
+    const onError = (errors) => {
+        console.log(errors);
+        const firstValue = errors[Object.keys(errors)[0]];
+        console.log(firstValue.message);
+        setInfoText(firstValue.message);
+    }
 
     return (
         <>
             <Grid container item xs={4} justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }} >
+
                 <Grid container item justify="center">
+
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_brand"
+                        name="brand"
                         label={t('car_brand')}
                         defaultValue={carData.brand}
+                        inputRef={register({
+                            required: t('car_brand') + " " + t('error_required'),
+                            minLength: { value: 2, message: t('car_brand') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                        })}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_model"
+                        name="model"
                         label={t('car_model')}
                         defaultValue={carData.model}
+                        inputRef={register({
+                            required: t('car_model') + " " + t('error_required'),
+                            minLength: { value: 2, message: t('car_model') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                        })}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_yearmodel"
+                        name="yearModel"
                         label={t('car_yearmodel')}
                         defaultValue={carData.yearModel}
+                        inputRef={register({
+                            required: t('car_yearmodel') + " " + t('error_required'),
+                            minLength: { value: 4, message: t('car_yearmodel') + " " + t('error_shorter') + " 4 " + t('error_characters') },
+                            maxLength: { value: 4, message: t('car_yearmodel') + " " + t('error_longer') + " 4 " + t('error_characters') },
+                            min: { value: "1900", message: t('car_yearmodel') + " " + t('error_number') + " 1900 - 2100 " },
+                            max: { value: "2100", message: t('car_yearmodel') + " " + t('error_number') + " 1900 - 2100 " },
+                            pattern: {
+                                value: /[0-9]/,
+                                message: t('car_yearmodel') + t('error_inputs') + " 0-9"
+                            }
+                        })}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_powertype"
+                        name="powerType"
                         label={t('car_powertype')}
                         defaultValue={carData.powerType}
+                        inputRef={register({
+                            required: t('car_powertype') + " " + t('error_required'),
+                            minLength: { value: 2, message: t('car_powertype') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                        })}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_enginesize"
+                        name="engineSize"
                         label={t('car_enginesize')}
                         defaultValue={carData.engineSize}
+                        inputRef={register({
+                            required: t('car_enginesize') + " " + t('error_required'),
+                            minLength: { value: 2, message: t('car_enginesize') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                        })}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        id="car_license"
+                        name="licenseNumber"
                         label={t('car_license')}
                         defaultValue={carData.licenseNumber}
+                        inputRef={register({
+                            required: t('car_license') + " " + t('error_required'),
+                            minLength: { value: 2, message: t('car_license') + " " + t('error_shorter') + " 2 " + t('error_characters') }
+                        })}
                     />
                 </Grid>
             </Grid>
             <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
-                <Button onClick={handleSave} className={classes.defaultButton}>
-                    {t('button_save')}
-                </Button>
+
+                <Grid container item direction="row" justify="flex-end">
+                    <Button onClick={handleCancel} className={classes.defaultButton} style={{ marginRight: 10 }} >
+                        {t('button_cancel')}
+                    </Button>
+                    <Button onClick={handleSubmit(onSubmit, onError)} className={classes.defaultButton} >
+                        {t('button_save')}
+                    </Button>
+                </Grid>
+
+                <Typography className={classes.infoText} variant="body1">
+                    {infoText}
+                </Typography>
+
             </Grid>
         </>
     )

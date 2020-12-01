@@ -6,6 +6,7 @@ export const infoText = () => {
         backgroundColor: Colors.orange,
         borderRadius: 10,
         paddingLeft: 10,
+        paddingRight: 10,
         marginTop: 20
     }
 }

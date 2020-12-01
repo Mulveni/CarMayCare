@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography, Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { defaultButton } from '../styles/classes';
+import { defaultButton, infoText } from '../styles/classes';
 
 const useStyles = makeStyles({
-    defaultButton: defaultButton
+    defaultButton: defaultButton,
+    infoText: infoText
 });
 
-const CarInfo = ({ data, handleEdit }) => {
+const CarInfo = ({ data, text, handleEditButton }) => {
+    const [infoText, setInfoText] = useState(text);
     const carData = data;
     const { t } = useTranslation();
     const classes = useStyles();
@@ -33,9 +35,12 @@ const CarInfo = ({ data, handleEdit }) => {
                 </Grid>
             </Grid>
             <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
-                <Button onClick={handleEdit} className={classes.defaultButton}>
+                <Button onClick={handleEditButton} className={classes.defaultButton}>
                     {t('button_edit')}
                 </Button>
+                <Typography className={classes.infoText} variant="body1">
+                    {infoText}
+                </Typography>
             </Grid>
 
         </>

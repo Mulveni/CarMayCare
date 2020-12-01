@@ -43,6 +43,7 @@ const CarView = (props) => {
     const [tabIndex, setTabIndex] = useState(0);
     const [carData, setCarData] = useState({});
     const [editMode, setEditMode] = useState(false);
+    const [infoText, setInfoText] = useState(null);
 
     const classes = useStyles();
     const { t } = useTranslation();
@@ -90,23 +91,22 @@ const CarView = (props) => {
         setTabIndex(index);
     };
 
-    const handleEdit = useCallback(
-        event => {
-            event.preventDefault();
-            setEditMode(true);
-            console.log("handle edit");
-        },
-        [editMode]
-    );
+    const handleEditButton = useCallback(() => {
+        setEditMode(true);
+        console.log("handle edit");
+    }, [editMode]);
 
-    const handleSave = useCallback(
-        event => {
-            event.preventDefault();
-            setEditMode(false);
-            console.log("handle save");
-        },
-        [editMode]
-    );
+    const handleSaveButton = useCallback((status) => {
+        if (status === "submit") {
+            getCarInfo();
+            setInfoText("Saved succesfully.");
+        } else {
+            setInfoText(null);
+        }
+
+        setEditMode(false);
+        console.log("handle save");
+    }, [editMode]);
 
     const CarTabs = () => {
         switch (tabIndex) {
@@ -149,12 +149,14 @@ const CarView = (props) => {
                     {!editMode ?
                         <CarInfo
                             data={carData}
-                            handleEdit={handleEdit}
+                            text={infoText}
+                            handleEditButton={handleEditButton}
                         />
                         :
                         <CarEdit
                             data={carData}
-                            handleSave={handleSave}
+                            carId={props.location.state.carId}
+                            handleSaveButton={handleSaveButton}
                         />
                     }
                 </Grid>

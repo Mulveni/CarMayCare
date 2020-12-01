@@ -21,10 +21,23 @@ const useStyles = makeStyles({
     infoText: infoText
 });
 
-const Login = () => {
+const Login = (props) => {
     const [loginText, setloginText] = useState(null);
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
+
+    useEffect(() => {
+        const checkErrorsFromState = () => {
+            if (props.location.state !== undefined) {
+                if (props.location.state.error !== undefined) {
+                    console.log(props.location.state.error);
+                    setloginText(props.location.state.error);
+                }
+            }
+        }
+        checkErrorsFromState();
+    }, [props.location.state]);
+
 
     const { t } = useTranslation();
     const history = useHistory();
@@ -49,7 +62,7 @@ const Login = () => {
         passwordInput.current.value = null;
     }
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
         setloginText(null);
         if (emailInput.current.value.length < 1 || passwordInput.current.value.length < 1) {
             setloginText(t('empty_field'));
