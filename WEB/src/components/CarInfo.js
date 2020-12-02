@@ -9,7 +9,7 @@ const useStyles = makeStyles({
 });
 
 const CarInfo = ({ data, text, handleEditButton }) => {
-    const [infoText, setInfoText] = useState(text);
+    const [infoText] = useState(text);
     const carData = data;
     const { t } = useTranslation();
     const classes = useStyles();
