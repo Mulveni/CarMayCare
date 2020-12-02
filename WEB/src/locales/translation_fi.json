@@ -60,12 +60,16 @@
     "error_number": "pitää olla luku väliltä",
     "error_inputs": "hyväksyy syöte arvot väliltä",
     "button_submit": "Lähetä",
-    "unauthorized": "Ei käyttöoikeutta",
+    "unauthorized": "Ei käyttöoikeutta.",
     "error": "Virhe",
     "button_service_history": "Huoltohistoria",
     "button_add_service": "Lisää huolto",
     "button_notes": "Merkinnät",
     "try_to_login": "Yritä kirjautua uudelleen.",
     "page_not_found": "Sivua ei löydy.",
-    "back_to_main_page": "Takaisin etusivulle."
+    "back_to_main_page": "Takaisin etusivulle.",
+    "button_save": "Tallenna",
+    "button_cancel": "Peruuta",
+    "error_car_id_not_found": "Autoa ei löytynyt. Yritä kirjautua uudelleen.",
+    "saved": "Tallennettu."
 }

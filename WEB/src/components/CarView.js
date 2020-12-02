@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { showNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import { Grid, Button, makeStyles, Card, Tab, AppBar, Tabs, Avatar, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Card, Tab, AppBar, Tabs, Avatar } from '@material-ui/core';
 import ServiceHistory from './ServiceHistory';
 import AddService from '../components/AddService';
 import Notes from '../components/Notes';
@@ -12,8 +12,10 @@ import baseApiUrl from '../api_url.json';
 import { useSelector } from 'react-redux';
 import Error from './Error';
 import Loading from './Loading';
-import { defaultButton, background } from '../styles/classes';
+import { background } from '../styles/classes';
 import Colors from '../styles/colors';
+import CarInfo from '../components/CarInfo';
+import CarEdit from '../components/CarEdit';
 
 const useStyles = makeStyles({
     tabView: {
@@ -32,8 +34,7 @@ const useStyles = makeStyles({
         width: 75,
         height: 75
     },
-    background: background,
-    defaultButton: defaultButton
+    background: background
 });
 
 const CarView = (props) => {
@@ -41,6 +42,8 @@ const CarView = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
     const [carData, setCarData] = useState({});
+    const [editMode, setEditMode] = useState(false);
+    const [infoText, setInfoText] = useState(null);
 
     const classes = useStyles();
     const { t } = useTranslation();
@@ -88,6 +91,21 @@ const CarView = (props) => {
         setTabIndex(index);
     };
 
+    const handleEditButton = useCallback(() => {
+        setEditMode(true);
+    }, [editMode]);
+
+    const handleSaveButton = useCallback((status) => {
+        if (status === "submit") {
+            getCarInfo();
+            setInfoText(t('saved'));
+        } else {
+            setInfoText(null);
+        }
+
+        setEditMode(false);
+    }, [editMode]);
+
     const CarTabs = () => {
         switch (tabIndex) {
             case 0:
@@ -126,34 +144,23 @@ const CarView = (props) => {
                     <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25 }} >
                         <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>
                     </Grid>
-                    <Grid container item xs={4} justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }} >
-                        <Grid item>
-                            <Typography variant="body1">{t('car_brand')}:</Typography>
-                            <Typography variant="body1">{t('car_model')}:</Typography>
-                            <Typography variant="body1">{t('car_yearmodel')}:</Typography>
-                            <Typography variant="body1">{t('car_powertype')}:</Typography>
-                            <Typography variant="body1">{t('car_enginesize')}:</Typography>
-                            <Typography variant="body1">{t('car_license')}:</Typography>
-                        </Grid>
-                        <Grid item style={{ marginLeft: 10 }}>
-                            <Typography variant="body1">{carData.brand}</Typography>
-                            <Typography variant="body1">{carData.model}</Typography>
-                            <Typography variant="body1">{carData.yearModel}</Typography>
-                            <Typography variant="body1">{carData.powerType}</Typography>
-                            <Typography variant="body1">{carData.engineSize}</Typography>
-                            <Typography variant="body1">{carData.licenseNumber}</Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
-                        <Button className={classes.defaultButton}>
-                            {t('button_edit')}
-                        </Button>
-                    </Grid>
+                    {!editMode ?
+                        <CarInfo
+                            data={carData}
+                            text={infoText}
+                            handleEditButton={handleEditButton}
+                        />
+                        :
+                        <CarEdit
+                            data={carData}
+                            carId={props.location.state.carId}
+                            handleSaveButton={handleSaveButton}
+                        />
+                    }
                 </Grid>
             </Card>
 
             <Card className={classes.background}>
-
                 <AppBar position="static" color="default">
                     <Tabs centered value={tabIndex} onChange={handleTabIndex}
                         className={classes.tabView}
@@ -164,7 +171,6 @@ const CarView = (props) => {
                         <Tab label={t('button_notes')} className={tabIndex === 2 ? classes.tabActive : null} />
                     </Tabs>
                 </AppBar>
-
                 <CarTabs />
             </Card>
         </div>

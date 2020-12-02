@@ -60,12 +60,16 @@
     "error_number": "must be a number between",
     "error_inputs": "accepts input values between",
     "button_submit": "Submit",
-    "unauthorized": "Unauthorized",
+    "unauthorized": "Unauthorized.",
     "error": "Error",
     "button_service_history": "Service history",
     "button_add_service": "Add service",
     "button_notes": "Notes",
     "try_to_login": "Try to login again.",
     "page_not_found": "Page not found.",
-    "back_to_main_page": "Back to main page."
+    "back_to_main_page": "Back to main page.",
+    "button_save": "Save",
+    "button_cancel": "Cancel",
+    "error_car_id_not_found": "Car not found. Try to login again.",
+    "saved": "Saved."
 }
