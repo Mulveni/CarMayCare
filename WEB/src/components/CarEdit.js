@@ -37,15 +37,12 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
     const onSubmit = (data) => {
         if (checkIfDataIsChanged(data) === false) {
             handleSaveButton("submit");
-            console.log("no change");
         } else {
-            console.log("change");
             axios.put(`${apiUrl}/cars/${carId}`, data, {
                 headers: {
                     Authorization: `Bearer ${apiToken}`
                 }
-            }).then(response => {
-                console.log(response);
+            }).then(() => {
                 handleSaveButton("submit");
             }).catch(error => {
                 if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
@@ -57,18 +54,12 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
                 } else {
                     setInfoText(t('internal_server_error'));
                 }
-                console.log(error);
             });
         }
-        /*
-
-        */
     }
 
     const onError = (errors) => {
-        console.log(errors);
         const firstValue = errors[Object.keys(errors)[0]];
-        console.log(firstValue.message);
         setInfoText(firstValue.message);
     }
 

@@ -93,7 +93,6 @@ const CarView = (props) => {
 
     const handleEditButton = useCallback(() => {
         setEditMode(true);
-        console.log("handle edit");
     }, [editMode]);
 
     const handleSaveButton = useCallback((status) => {
@@ -105,7 +104,6 @@ const CarView = (props) => {
         }
 
         setEditMode(false);
-        console.log("handle save");
     }, [editMode]);
 
     const CarTabs = () => {
