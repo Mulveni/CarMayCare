@@ -35,29 +35,34 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
     }
 
     const onSubmit = (data) => {
-        axios.put(`${apiUrl}/cars/${carId}`, data, {
-            headers: {
-                Authorization: `Bearer ${apiToken}`
-            }
-        }).then(response => {
-            console.log(response);
+        if (checkIfDataIsChanged(data) === false) {
             handleSaveButton("submit");
-        }).catch(error => {
-            if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
-                console.log("ID not found");
-                setInfoText(t('error_car_id_not_found'));
-            }
-            else if (error.response.data === "Unauthorized") {
-                history.push("/login", { error: t('unauthorized') });
-            } else {
-                setInfoText(t('internal_server_error'));
-            }
-            console.log(error);
-        });
+            console.log("no change");
+        } else {
+            console.log("change");
+            axios.put(`${apiUrl}/cars/${carId}`, data, {
+                headers: {
+                    Authorization: `Bearer ${apiToken}`
+                }
+            }).then(response => {
+                console.log(response);
+                handleSaveButton("submit");
+            }).catch(error => {
+                if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
+                    console.log("ID not found");
+                    setInfoText(t('error_car_id_not_found'));
+                }
+                else if (error.response.data === "Unauthorized") {
+                    history.push("/login", { error: t('unauthorized') });
+                } else {
+                    setInfoText(t('internal_server_error'));
+                }
+                console.log(error);
+            });
+        }
+        /*
 
-
-
-
+        */
     }
 
     const onError = (errors) => {
@@ -65,6 +70,16 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
         const firstValue = errors[Object.keys(errors)[0]];
         console.log(firstValue.message);
         setInfoText(firstValue.message);
+    }
+
+    const checkIfDataIsChanged = (data) => {
+        let dataChanged = false;
+        for (const key in data) {
+            if (data[key] !== carData[key]) {
+                dataChanged = true;
+            }
+        }
+        return dataChanged;
     }
 
     return (
