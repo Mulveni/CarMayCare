@@ -61,6 +61,7 @@
     "error_inputs": "hyväksyy syöte arvot väliltä",
     "button_submit": "Lähetä",
     "unauthorized": "Ei käyttöoikeutta.",
+    "error": "Virhe",
     "button_service_history": "Huoltohistoria",
     "button_add_service": "Lisää huolto",
     "button_notes": "Merkinnät",

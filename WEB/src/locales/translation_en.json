@@ -61,6 +61,7 @@
     "error_inputs": "accepts input values between",
     "button_submit": "Submit",
     "unauthorized": "Unauthorized.",
+    "error": "Error",
     "button_service_history": "Service history",
     "button_add_service": "Add service",
     "button_notes": "Notes",
