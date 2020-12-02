@@ -97,6 +97,7 @@ const CarView = (props) => {
 
     const handleSaveButton = useCallback((status) => {
         if (status === "submit") {
+            setLoading(true);
             getCarInfo();
             setInfoText(t('saved'));
         } else {
