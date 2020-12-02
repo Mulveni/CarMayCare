@@ -69,5 +69,6 @@
     "back_to_main_page": "Back to main page.",
     "button_save": "Save",
     "button_cancel": "Cancel",
-    "error_car_id_not_found": "Car not found. Try to login again."
+    "error_car_id_not_found": "Car not found. Try to login again.",
+    "saved": "Saved."
 }

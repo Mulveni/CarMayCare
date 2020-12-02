@@ -41,7 +41,6 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
             }
         }).then(response => {
             console.log(response);
-            setInfoText("Submitted");
             handleSaveButton("submit");
         }).catch(error => {
             if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
