@@ -25,7 +25,7 @@ import {
   background,
   defaultButton,
 } from "../styles/classes";
-import Colors from "../styles/colors";
+//import Colors from "../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   registerGrid: {

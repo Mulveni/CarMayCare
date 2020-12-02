@@ -67,6 +67,7 @@ const Profile = (props) => {
   const [serverError, setServerError] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
+  const [infoText, setInfoText] = useState(null);
 
   const defaultValue = {};
   const apiUrl = baseApiUrl.url;
@@ -75,10 +76,33 @@ const Profile = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { register, errors, control, handleSubmit } = useForm({
+  const { register, errors, getValues, handleSubmit } = useForm({
     defaultValue,
     mode: "onBlur",
   });
+  const onSubmit = (data) => {
+    axios
+      .put(`${apiUrl}/user`, {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.message === "No results with given id") {
+          console.log(response.data);
+          setServerError(true);
+          setLoading(false);
+        } else {
+          setUserData(response.data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setServerError(true);
+        setLoading(false);
+      });
+  };
   useEffect(() => {
     dispatch(showNavButtons());
   }, [dispatch]);
@@ -91,9 +115,7 @@ const Profile = (props) => {
       }
   }
 */
-  //const getUserInfo = () => {
-
-  useEffect(() => {
+  async function getUserInfo() {
     axios
       .get(`${apiUrl}/user`, {
         headers: {
@@ -115,22 +137,24 @@ const Profile = (props) => {
         setServerError(true);
         setLoading(false);
       });
+  }
+  useEffect(() => {
+    getUserInfo();
   }, []);
 
-  const handleEdit = useCallback(
-    (event) => {
-      event.preventDefault();
-      setEditMode(true);
-      console.log("handle edit");
-    },
-    [editMode]
-  );
-
+  const handleEdit = useCallback(() => {
+    setEditMode(true);
+  }, [editMode]);
   const handleSave = useCallback(
-    (event) => {
-      event.preventDefault();
+    (status) => {
+      if (status === "submit") {
+        getUserInfo();
+        setInfoText(t("saved"));
+      } else {
+        setInfoText(null);
+      }
+
       setEditMode(false);
-      console.log("handle save");
     },
     [editMode]
   );
@@ -145,92 +169,162 @@ const Profile = (props) => {
 
   return (
     <div>
-      <Card className={classes.background} style={{ marginTop: 50 }}>
-        <Grid container>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Card className={classes.background} style={{ marginTop: 50 }}>
+          <Grid container>
+            <Grid
+              container
+              item
+              xs={4}
+              direction="row"
+              alignItems="flex-end"
+              style={{ paddingTop: 25 }}
+            ></Grid>
+            {!editMode ? (
+              <ProfileInfo data={userData} handleEdit={handleEdit} />
+            ) : (
+              <ProfileEdit data={userData} handleSave={handleSave} />
+            )}
+          </Grid>
+        </Card>
+        <Card className={classes.background} style={{ marginTop: 5 }}>
           <Grid
             container
             item
-            xs={4}
-            direction="row"
-            alignItems="flex-end"
-            style={{ paddingTop: 25 }}
-          ></Grid>
-          {!editMode ? (
-            <ProfileInfo data={userData} handleEdit={handleEdit} />
-          ) : (
-            <ProfileEdit data={userData} handleSave={handleSave} />
-          )}
-        </Grid>
-      </Card>
-      <Card className={classes.background} style={{ marginTop: 5 }}>
-        <Typography
-          justify="center"
-          className={classes.background}
-          style={{ marginTop: 5 }}
-          variant="h5"
-        >
-          {t("Change password")}
-        </Typography>
-        <Grid
-          container
-          item
-          xs={12}
-          direction="column"
-          justify="center"
-          alignItems="center"
-          style={{ paddingTop: 5, paddingBottom: 5 }}
-        >
-          <Grid item xs={6}>
-            <Typography
-              style={{ marginTop: 15 }}
-              className={classes.background}
-              variant="body1"
-            >
-              {t("syötä salasana")}
-            </Typography>
-            <Typography className={classes.background} variant="body1">
-              {t("syötä salasana uudelleen")}
-            </Typography>
-          </Grid>
-          <Grid container item xs={6} direction="column" alignItems="center">
-            <TextField
-              variant="outlined"
-              inputRef={register({
-                required: true,
-                minLength: 5,
-              })}
-              id="password"
-              type="password"
-              name="password"
-              label={t("password")}
-            />
-            <TextField
-              variant="outlined"
-              inputRef={register({
-                required: true,
-                minLength: 5,
-              })}
-              id="password"
-              type="password"
-              name="password"
-              label={t("password")}
-            />
-            {errors.password && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("password_required")}
+            xs={12}
+            direction="column"
+            justify="center"
+            alignItems="center"
+            style={{ paddingTop: 5, paddingBottom: 5 }}
+          >
+            <Grid item xs={12}>
+              <Typography
+                justify="center"
+                className={classes.background}
+                style={{ marginTop: 5 }}
+                variant="h5"
+              >
+                {t("Salasanan vaihto")}
               </Typography>
-            )}
-            <Button
-              justify="center"
-              className={classes.defaultButton}
-              type="submit"
-              style={{ marginTop: 0 }}
-            >
-              {t("submit")}
-            </Button>
+            </Grid>
+            <Grid container item xs={6} direction="column" alignItems="center">
+              <Typography
+                style={{ marginTop: 15 }}
+                className={classes.background}
+                variant="body1"
+              >
+                {t("syötä salasana")}
+              </Typography>
+              <TextField
+                variant="outlined"
+                inputRef={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                id="password"
+                type="password"
+                name="password"
+                label={t("password")}
+              />
+              <Typography className={classes.background} variant="body1">
+                {t("syötä salasana uudelleen")}
+              </Typography>
+              <TextField
+                variant="outlined"
+                inputRef={register({
+                  required: true,
+                  minLength: 5,
+                  validate: {
+                    matchesPreviousPassword: (value) => {
+                      const { password } = getValues();
+                      return password === value || "Passwords should match!";
+                    },
+                  },
+                })}
+                id="password"
+                type="password"
+                name="passwordConfirmation"
+                label={t("password")}
+              />
+              {errors.passwordConfirmation && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("salasanat ei täsmää")}
+                </Typography>
+              )}
+              <Button
+                justify="center"
+                className={classes.defaultButton}
+                type="submit"
+                style={{ marginTop: 5 }}
+              >
+                {t("submit")}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
+        </Card>
+        <Card className={classes.background} style={{ marginTop: 5 }}>
+          <Grid
+            container
+            item
+            xs={12}
+            direction="column"
+            justify="center"
+            alignItems="center"
+            style={{ paddingTop: 5, paddingBottom: 5 }}
+          >
+            <Grid item xs={6}>
+              <Typography
+                justify="center"
+                className={classes.background}
+                style={{ marginTop: 5 }}
+                variant="h5"
+              >
+                {t("Poista käyttäjä")}
+              </Typography>
+            </Grid>
+            <Grid container item xs={6} direction="column" alignItems="center">
+              <Typography
+                style={{ marginTop: 15 }}
+                className={classes.background}
+                variant="body1"
+              >
+                {t("kirjoita delete")}
+              </Typography>
+              <TextField
+                variant="outlined"
+                inputRef={register({})}
+                name="delete1"
+                label={t("delete1")}
+              />
+              <Typography className={classes.background} variant="body1">
+                {t("kirjoita delete")}
+              </Typography>
+              <TextField
+                variant="outlined"
+                inputRef={register({})}
+                name="delete2"
+                label={t("delete2")}
+              />
+              <Button
+                justify="center"
+                className={classes.defaultButton}
+                //type="submit"
+                onClick={(e) => {
+                  if (
+                    window.confirm(
+                      "Haluatko varmasti poistaa käyttäjätunnuksen?"
+                    )
+                  )
+                    this.deleteItem(e);
+                }}
+                style={{ marginTop: 5 }}
+              >
+                {t("Poista käyttäjä")}
+              </Button>
+            </Grid>
+          </Grid>
+        </Card>
+      </form>
     </div>
   );
 };
