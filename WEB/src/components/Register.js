@@ -3,13 +3,6 @@ import { useDispatch } from "react-redux";
 import { hideNavButtons } from "../actions";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
-<<<<<<< Updated upstream
-import baseApiUrl from '../api_url.json';
-import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
-import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
-=======
 import baseApiUrl from "../api_url.json";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,7 +26,6 @@ import {
   defaultButton,
 } from "../styles/classes";
 import Colors from "../styles/colors";
->>>>>>> Stashed changes
 
 const useStyles = makeStyles((theme) => ({
   registerGrid: {
@@ -96,13 +88,6 @@ const Register = () => {
   return (
     <div>
       <Card className={classes.background} style={{ marginTop: 50 }}>
-<<<<<<< Updated upstream
-        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
-          <Typography variant="h5">
-            {t('register')}
-          </Typography>
-          <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
-=======
         <Grid
           container
           item
@@ -117,7 +102,6 @@ const Register = () => {
             className={classes.registerGrid}
             onSubmit={handleSubmit(onSubmit, onError)}
           >
->>>>>>> Stashed changes
             <TextField
               variant="outlined"
               margin="normal"
