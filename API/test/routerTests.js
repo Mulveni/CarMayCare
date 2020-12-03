@@ -9,6 +9,8 @@ const apiUrl = 'http://localhost:3000';
 
 const testemail = "testemail@testemail.fi";
 const testpassword = "test123";
+let testJwt = null;
+let carId = null;
 
 // "testemail@testemail.fi"
 
@@ -45,6 +47,18 @@ function createEditedUser(email) {
     return editedUser;
 }
 
+function createTestCar(brand) {
+    const testCar = {
+        brand: brand,
+        model: "testModel",
+        yearModel: "2001",
+        powerType: "testPowerType",
+        engineSize: "testEngine",
+        licenseNumber: "xxx-111"
+    }
+    return testCar;
+}
+
 describe('Car Service Manual API operations', () => {
 
     before(() => {
@@ -57,8 +71,8 @@ describe('Car Service Manual API operations', () => {
     });
 
 
-    describe('Register user', () => {
 
+    describe('Register user', () => {
         it('Should fail with missing information', async () => {
             await chai.request(apiUrl)
                 .post('/register')
@@ -129,10 +143,9 @@ describe('Car Service Manual API operations', () => {
 
     });
 
-    let testJwt = null;
+
 
     describe('Login user', () => {
-
         it('Should fail with wrong username', async () => {
             await chai.request(apiUrl)
                 .post('/login')
@@ -185,8 +198,9 @@ describe('Car Service Manual API operations', () => {
     });
 
 
-    describe('User info', () => {
 
+
+    describe('User info', () => {
         it('Should get user info', async () => {
             await chai.request(apiUrl)
                 .get('/user')
@@ -194,11 +208,27 @@ describe('Car Service Manual API operations', () => {
                 .then(response => {
                     expect(response).to.have.property('status');
                     expect(response.status).to.equal(200);
+                    expect(response.body).to.have.property('id');
+                    expect(response.body).to.have.property('firstname');
+                    expect(response.body).to.have.property('lastname');
+                    expect(response.body).to.have.property('email');
+                    expect(response.body).to.have.property('phonenumber');
+                    expect(response.body.address).to.have.property('street');
+                    expect(response.body.address).to.have.property('city');
+                    expect(response.body.address).to.have.property('postcode');
+                    expect(response.body.address).to.have.property('country');
+                    expect(response.body).to.have.property('registerDate');
+                    expect(response.body).to.have.property('password');
                 }).catch(error => {
                     expect.fail(error);
                 });
         });
 
+    });
+
+
+
+    describe('Edit user info', () => {
         it('Should fail to edit user info with missing data', async () => {
             await chai.request(apiUrl)
                 .put('/user')
@@ -257,6 +287,153 @@ describe('Car Service Manual API operations', () => {
         });
 
     });
+
+
+
+    describe('Create new car', () => {
+        it('Should fail with empty body', async () => {
+            await chai.request(apiUrl)
+                .post('/cars')
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(400);
+                    expect(response.text).to.equal('{"message":"Missing brand from body"}');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should create new car', async () => {
+            const testCar = createTestCar("testBrand");
+            await chai.request(apiUrl)
+                .post('/cars')
+                .set('Authorization', `Bearer ${testJwt}`)
+                .send(testCar)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+    });
+
+
+
+    describe('Get cars', () => {
+        it('Should get all cars of user', async () => {
+            await chai.request(apiUrl)
+                .get('/cars')
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0]).to.have.property('idCars');
+                    expect(response.body[0]).to.have.property('brand');
+                    expect(response.body[0]).to.have.property('model');
+                    expect(response.body[0]).to.have.property('yearModel');
+                    expect(response.body[0]).to.have.property('powerType');
+                    expect(response.body[0]).to.have.property('licenseNumber');
+                    carId = response.body[0].idCars;
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should get car with id', async () => {
+            await chai.request(apiUrl)
+                .get(`/cars/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0]).to.have.property('idCars');
+                    expect(response.body[0]).to.have.property('brand');
+                    expect(response.body[0]).to.have.property('model');
+                    expect(response.body[0]).to.have.property('yearModel');
+                    expect(response.body[0]).to.have.property('powerType');
+                    expect(response.body[0]).to.have.property('licenseNumber');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should not get car info that does not belong to user', async () => {
+            await chai.request(apiUrl)
+                .get('/cars/37')
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.text).to.equal('{"message":"No results with given id"}');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should not get car info that does not exists', async () => {
+            await chai.request(apiUrl)
+                .get('/cars/doesntexists')
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.text).to.equal('{"message":"No results with given id"}');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+    });
+
+
+    describe('Edit car', () => {
+        it('Should get car with id', async () => {
+            const testCar = createTestCar("editedBrand");
+            await chai.request(apiUrl)
+                .put(`/cars/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .send(testCar)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should get car with id and should match edited fields', async () => {
+            await chai.request(apiUrl)
+                .get(`/cars/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0].brand).to.equal('editedBrand')
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+    });
+
+
+
+    describe('Delete car', () => {
+        it('Should delete car', async () => {
+            await chai.request(apiUrl)
+                .delete(`/cars/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+    });
+
 
 
     describe('Delete user', () => {
