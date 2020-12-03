@@ -99,23 +99,6 @@ describe('Car Service Manual API operations', () => {
                 });
         });
 
-        // Fix response message
-        /*
-        it('Should fail with phonenumber in wrong format', async () => {
-            const testUser = createTestUser(testemail, "0000000", testpassword);
-            await chai.request(apiUrl)
-                .post('/register')
-                .send(testUser)
-                .then(response => {
-                    expect(response).to.have.property('status');
-                    expect(response.status).to.equal(400);
-                    //expect(response.text).to.equal('{"message":"message here"}');
-                }).catch(error => {
-                    expect.fail(error);
-                });
-        });
-        */
-
         it('Should fail with password being too short', async () => {
             const testUser = createTestUser(testemail, "+358401234567", "pw");
             await chai.request(apiUrl)
@@ -129,7 +112,6 @@ describe('Car Service Manual API operations', () => {
                     expect.fail(error);
                 });
         });
-
 
         it('Should create new user', async () => {
             const testUser = createTestUser(testemail, "+358401234567", testpassword);
