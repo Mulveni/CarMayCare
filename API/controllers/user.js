@@ -42,7 +42,6 @@ router.put('/', [body('email').isEmail()], async (req, res) => {
             await utils.updateUser(updateUser, userId);
             res.sendStatus(201);
         } catch (error) {
-            console.log(error.sqlMessage.indexOf("users.email_UNIQUE"));
             if (error.sqlMessage.indexOf("users.email_UNIQUE") > -1) {
                 res.status(400).send({ message: "Email already in use." });
             } else {
