@@ -288,7 +288,7 @@ router.put('/:carId/:serviceId', async (req, res) => {
 
     if (serviceEdit !== 0) {
 
-        res.status(200);
+        res.status(201);
         res.json(serviceEdit);
 
     } else {
