@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     },
 
     carButton:{
-        backgroundColor:Colors.white,
+        backgroundColor:Colors.blue2,
         paddingbottom: 24,
         marginBottom: 5,
 
@@ -89,12 +89,8 @@ const MyCars = () => {
                 setErrorText(t('error') + ": " +t('unauthorized'));
                 setLoading(false);
             }
-            else if (error.response.status === 404) {
-                setErrorText(t('error') + ": " +t('internal_server_error'))
-                setLoading(false);
-            }
             else {
-                setErrorText(t('error') + ": " +t('unknown_reason'));
+                setErrorText(t('error') + ": " +t('internal_server_error'))
                 setLoading(false);
             }
         });
@@ -125,15 +121,14 @@ const MyCars = () => {
         title={t('menu_own_cars')}
         subheaderTypographyProps={{ variant: "body1"}}
         subheader={errorText}
-        action={<Button className={classes.defaultButton} alignItems="end" size="small" variant="outlined" onClick={() => { history.push("/AddCar"); }}>{t('car_addcar')}</Button>}
+        action={<Button className={classes.defaultButton} size="small" variant="outlined" onClick={() => { history.push("/AddCar"); }}>{t('car_addcar')}</Button>}
         />
 
         <Grid container item xs={12} direction="column" alignContent="center"  style={{ paddingTop: 25, paddingBottom: 25, margin: 'auto'}}>
             <CardContent>
                 {cars.map(i => {
-                    console.log(i.idCars)
                     return (
-                        <Paper elevation={1} key={i.idCars} className={classes.carButton} button onClick={() => { history.push("/CarView/", {carId: i.idCars});}}>
+                        <Paper elevation={1} key={i.idCars} className={classes.carButton} onClick={() => { history.push("/CarView/", {carId: i.idCars})}}>
                             <ListItem>
                                 <ListItemAvatar> 
                                     <Avatar className={classes.avatar}>{i.brand.substring(0, 1)}</Avatar>
