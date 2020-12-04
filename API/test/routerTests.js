@@ -11,6 +11,7 @@ const testemail = "testemail@testemail.fi";
 const testpassword = "test123";
 let testJwt = null;
 let carId = null;
+let serviceId = null;
 
 // "testemail@testemail.fi"
 
@@ -57,6 +58,35 @@ function createTestCar(brand) {
         licenseNumber: "xxx-111"
     }
     return testCar;
+}
+
+function createTestService(description) {
+    const testService = {
+        description: description,
+        mileAge: "1000km",
+        motorOilChange: {
+            done: true,
+            longLifeOilUsed: true
+        },
+        airConditioningService: {
+            done: true,
+            dryer: true
+        },
+        additionalServices: {
+            sparkPlugReplacement: true,
+            airFilterReplacement: true,
+            cleanAirReplacement: true,
+            fuelFilterReplacement: true,
+            brakeFluidReplacement: true,
+            gearBoxOilReplacement: true,
+            powerSteeringOilReplacement: true,
+            timingBeltReplacement: true,
+            waterPumpReplacement: true,
+            dieselParticulateFilterReplacement: true
+        },
+        additionalInformation: "test"
+    }
+    return testService;
 }
 
 describe('Car Service Manual API operations', () => {
@@ -416,6 +446,165 @@ describe('Car Service Manual API operations', () => {
                 });
         });
 
+    });
+
+
+
+    describe('Create new service', () => {
+        it('Should fail with empty body', async () => {
+            await chai.request(apiUrl)
+                .post(`/services/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(400);
+                    expect(response.text).to.equal('{"message":"Mileage is missing, please enter the mileage"}');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should create new service', async () => {
+            const testService = createTestService("test");
+            await chai.request(apiUrl)
+                .post(`/services/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .send(testService)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+    });
+
+
+
+    describe('Get services', () => {
+        it('Should fail with id that does not exists', async () => {
+            await chai.request(apiUrl)
+                .get(`/services/wrongId`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(404);
+                    expect(response.text).to.equal(`{"message":"No services found for the car. Either services are not there or you don't have proper authorization!"}`);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should get all services of users car', async () => {
+            await chai.request(apiUrl)
+                .get(`/services/${carId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0]).to.have.property('idServices');
+                    expect(response.body[0]).to.have.property('description');
+                    expect(response.body[0]).to.have.property('dateOfService');
+                    expect(response.body[0]).to.have.property('mileAge');
+                    expect(response.body[0].motorOilChange).to.have.property('done');
+                    expect(response.body[0].motorOilChange).to.have.property('longLifeOilUsed');
+                    expect(response.body[0].airConditioningService).to.have.property('done');
+                    expect(response.body[0].airConditioningService).to.have.property('dryer');
+                    expect(response.body[0].additionalServices).to.have.property('sparkPlugReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('airFilterReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('cleanAirReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('fuelFilterReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('brakeFluidReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('gearBoxOilReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('powerSteeringOilReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('timingBeltReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('waterPumpReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('dieselParticulateFilterReplacement');
+                    expect(response.body[0]).to.have.property('additionalInformation');
+                    serviceId = response.body[0].idServices;
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should get service with id', async () => {
+            await chai.request(apiUrl)
+                .get(`/services/${carId}/${serviceId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0]).to.have.property('idServices');
+                    expect(response.body[0]).to.have.property('description');
+                    expect(response.body[0]).to.have.property('dateOfService');
+                    expect(response.body[0]).to.have.property('mileAge');
+                    expect(response.body[0].motorOilChange).to.have.property('done');
+                    expect(response.body[0].motorOilChange).to.have.property('longLifeOilUsed');
+                    expect(response.body[0].airConditioningService).to.have.property('done');
+                    expect(response.body[0].airConditioningService).to.have.property('dryer');
+                    expect(response.body[0].additionalServices).to.have.property('sparkPlugReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('airFilterReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('cleanAirReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('fuelFilterReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('brakeFluidReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('gearBoxOilReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('powerSteeringOilReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('timingBeltReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('waterPumpReplacement');
+                    expect(response.body[0].additionalServices).to.have.property('dieselParticulateFilterReplacement');
+                    expect(response.body[0]).to.have.property('additionalInformation');
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+    });
+
+
+
+    describe('Edit service', () => {
+        it('Should edit service', async () => {
+            const testService = createTestService("editedDescription");
+            await chai.request(apiUrl)
+                .put(`/services/${carId}/${serviceId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .send(testService)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+
+        it('Should get service with id and should match edited fields', async () => {
+            await chai.request(apiUrl)
+                .get(`/services/${carId}/${serviceId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(200);
+                    expect(response.body[0].description).to.equal('editedDescription')
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
+    });
+
+
+
+    describe('Delete service', () => {
+        it('Should delete service', async () => {
+            await chai.request(apiUrl)
+                .delete(`/services/${carId}/${serviceId}`)
+                .set('Authorization', `Bearer ${testJwt}`)
+                .then(response => {
+                    expect(response).to.have.property('status');
+                    expect(response.status).to.equal(201);
+                }).catch(error => {
+                    expect.fail(error);
+                });
+        });
     });
 
 
