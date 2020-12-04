@@ -81,8 +81,6 @@ router.post('/:carId', async (req, res) => {
             additionalInformation: req.body.additionalInformation
         };
 
-        console.log(service);
-
         try {
             servicePosting = await utils.addNewService(service, req.user.id, req.params.carId);
 
@@ -92,7 +90,6 @@ router.post('/:carId', async (req, res) => {
                 res.json({ message: "Failure to create the service. Missing bligatory information or the car does not exist or no user match!" });
 
             } else {
-                console.log("Service created succesfully!");
                 res.sendStatus(201);
 
             }
@@ -150,8 +147,6 @@ router.put('/:carId/:serviceId', async (req, res) => {
         res.json({ message: "Unable to edit the service. Either the service doesn't exist or you don't have proper authorization!" });
         return;
     }
-
-    console.log(comaparative[0].description);
 
     let editable = {
 
@@ -212,8 +207,6 @@ router.put('/:carId/:serviceId', async (req, res) => {
     if (req.body.mileAge === undefined || req.body.mileAge == null || req.body.mileAge == "") {
         editable.mileAge = comaparative[0].mileAge;
     }
-
-    console.log(comaparative);
 
     if (req.body.motorOilChange === undefined) {
         res.status(400).send({ message: "BAD REQUEST! Motor oil change information must be submitted!" });
