@@ -9,6 +9,7 @@ import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   infoText,
   defaultButton,
@@ -41,7 +42,7 @@ const ProfileEdit = ({ data, handleSave }) => {
   const [infoText, setInfoText] = useState(null);
   const userData = data;
   const { t } = useTranslation();
-
+  const history = useHistory();
   const apiUrl = baseApiUrl.url;
   const apiToken = useSelector((state) => state.tokenReducer);
   const classes = useStyles();
@@ -72,12 +73,12 @@ const ProfileEdit = ({ data, handleSave }) => {
         .catch((error) => {
           if (
             error.response.status === 404 &&
-            error.response.data.message === "User has no cars with given id"
+            error.response.data.message === "no useid with given id"
           ) {
             console.log("ID not found");
-            setInfoText(t("error_car_id_not_found"));
+            setInfoText(t("no user found"));
           } else if (error.response.data === "Unauthorized") {
-            //history.push("/login", { error: t("unauthorized") });
+            history.push("/login", { error: t("unauthorized") });
           } else {
             setInfoText(t("internal_server_error"));
           }

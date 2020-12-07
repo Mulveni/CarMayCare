@@ -2,12 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { showNavButtons } from "../actions";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import baseApiUrl from "../api_url.json";
 import axios from "axios";
-import { withRouter } from "react-router";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   infoText,
@@ -21,20 +20,15 @@ import ProfileInfo from "../components/ProfileInfo";
 import ProfileEdit from "../components/ProfileEdit";
 import {
   Grid,
-  Divider,
-  CardActions,
-  CardContent,
-  Container,
   Button,
   TextField,
   Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
   Card,
-  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContentText,
+  DialogTitle,
+  DialogContent,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,13 +56,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = (props) => {
-  const [errorText, setErrorText] = useState(null);
   const [userData, setUserData] = useState({});
+  const [userPassword, setUserPassword] = useState({});
   const [serverError, setServerError] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [infoText, setInfoText] = useState(null);
-
+  const [openDialog, setDialogOpen] = useState(false);
+  const [openPasswordDialog, setDialogPasswordOpen] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const history = useHistory();
   const defaultValue = {};
   const apiUrl = baseApiUrl.url;
   const apiToken = useSelector((state) => state.tokenReducer);
@@ -80,9 +77,73 @@ const Profile = (props) => {
     defaultValue,
     mode: "onBlur",
   });
+
+  const {
+    register: register2,
+    errors: errors2,
+    handleSubmit: handleSubmit2,
+  } = useForm({
+    mode: "onBlur",
+  });
+  let newPasswordData = null;
+
+  const onSubmitCheckPassword = (data) => {
+    console.log(data.passwordDelete);
+    setUserPassword(data.passwordDelete);
+    //console.log(userPassword);
+    checkLogin(data.passwordDelete);
+    newPasswordData = data.password;
+    if (passwordCheck === true) {
+      deleteUser();
+      history.push("/login");
+    } else {
+      setDialogOpen(false);
+    }
+  };
+
   const onSubmit = (data) => {
+    console.log({ password: data.password });
+    setUserPassword(data.passwordOld);
+    console.log(userPassword);
+    checkLogin(data.passwordOld);
+    newPasswordData = data.password;
+    changePassword();
+  };
+  useEffect(() => {
+    dispatch(showNavButtons());
+  }, [dispatch]);
+
+  function changePassword() {
     axios
-      .put(`${apiUrl}/user`, {
+      .put(
+        `${apiUrl}/user/password`,
+        { password: newPasswordData },
+        {
+          headers: {
+            Authorization: `Bearer ${apiToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.message === "No results with given id") {
+          console.log(response.data);
+          setServerError(true);
+          setLoading(false);
+        } else {
+          setUserPassword(response.data);
+          setInfoText("Salasana vaihdettu onnistuneesti");
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setServerError(true);
+        setLoading(false);
+      });
+  }
+  function deleteUser() {
+    axios
+      .delete(`${apiUrl}/user`, {
         headers: {
           Authorization: `Bearer ${apiToken}`,
         },
@@ -98,24 +159,18 @@ const Profile = (props) => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        setServerError(true);
-        setLoading(false);
+        if (error.response === undefined) {
+          setInfoText(t("internal_server_error"));
+        } else {
+          if (error.response.data === "Unauthorized") {
+            setInfoText(t("incorrect_login"));
+          } else {
+            setInfoText(t("internal_server_error"));
+          }
+        }
       });
-  };
-  useEffect(() => {
-    dispatch(showNavButtons());
-  }, [dispatch]);
-
-  /*const checkUserIdFromState = () => {
-      if (props.location.state === undefined) {
-          setServerError(true);
-      } else {
-          getUserInfo();
-      }
   }
-*/
-  async function getUserInfo() {
+  function getUserInfo() {
     axios
       .get(`${apiUrl}/user`, {
         headers: {
@@ -138,18 +193,60 @@ const Profile = (props) => {
         setLoading(false);
       });
   }
+  const checkLogin = (data) => {
+    axios
+      .post(`${apiUrl}/login`, null, {
+        auth: {
+          username: userData.email,
+          password: data,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200) {
+          setDialogPasswordOpen(true);
+          setPasswordCheck(true);
+        }
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          setServerError(true);
+          setLoading(false);
+        } else {
+          if (error.response.data === "Unauthorized") {
+            setInfoText(t("incorrect_login"));
+          } else {
+            setInfoText(t("internal_server_error"));
+          }
+        }
+      });
+  };
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [editMode]);
 
+  const handleOnCloseDelete = () => {
+    checkLogin();
+    setDialogOpen(false);
+  };
+  function handleOnOpen() {
+    setDialogOpen(true);
+  }
+  function handleOnClose() {
+    setDialogOpen(false);
+  }
+  function handleOnClosePassword() {
+    setDialogPasswordOpen(false);
+  }
+  function handleOnOpenPassword() {}
   const handleEdit = useCallback(() => {
     setEditMode(true);
   }, [editMode]);
+
   const handleSave = useCallback(
     (status) => {
       if (status === "submit") {
         getUserInfo();
-        setInfoText(t("saved"));
       } else {
         setInfoText(null);
       }
@@ -169,25 +266,25 @@ const Profile = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className={classes.background} style={{ marginTop: 50 }}>
-          <Grid container>
-            <Grid
-              container
-              item
-              xs={4}
-              direction="row"
-              alignItems="flex-end"
-              style={{ paddingTop: 25 }}
-            ></Grid>
-            {!editMode ? (
-              <ProfileInfo data={userData} handleEdit={handleEdit} />
-            ) : (
-              <ProfileEdit data={userData} handleSave={handleSave} />
-            )}
-          </Grid>
-        </Card>
-        <Card className={classes.background} style={{ marginTop: 5 }}>
+      <Card className={classes.background} style={{ marginTop: 50 }}>
+        <Grid container>
+          <Grid
+            container
+            item
+            xs={4}
+            direction="row"
+            alignItems="flex-end"
+            style={{ paddingTop: 25 }}
+          ></Grid>
+          {!editMode ? (
+            <ProfileInfo data={userData} handleEdit={handleEdit} />
+          ) : (
+            <ProfileEdit data={userData} handleSave={handleSave} />
+          )}
+        </Grid>
+      </Card>
+      <Card className={classes.background} style={{ marginTop: 5 }}>
+        <form key={1} onSubmit={handleSubmit(onSubmit)}>
           <Grid
             container
             item
@@ -204,7 +301,7 @@ const Profile = (props) => {
                 style={{ marginTop: 5 }}
                 variant="h5"
               >
-                {t("Salasanan vaihto")}
+                {t("Change password")}
               </Typography>
             </Grid>
             <Grid container item xs={6} direction="column" alignItems="center">
@@ -213,7 +310,21 @@ const Profile = (props) => {
                 className={classes.background}
                 variant="body1"
               >
-                {t("syötä salasana")}
+                {t("Enter old password")}
+              </Typography>
+              <TextField
+                variant="outlined"
+                inputRef={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                id="password"
+                type="password"
+                name="passwordOld"
+                label={t("password")}
+              />
+              <Typography className={classes.background} variant="body1">
+                {t("enter new password")}
               </Typography>
               <TextField
                 variant="outlined"
@@ -227,7 +338,7 @@ const Profile = (props) => {
                 label={t("password")}
               />
               <Typography className={classes.background} variant="body1">
-                {t("syötä salasana uudelleen")}
+                {t("confirm password")}
               </Typography>
               <TextField
                 variant="outlined"
@@ -255,76 +366,101 @@ const Profile = (props) => {
                 justify="center"
                 className={classes.defaultButton}
                 type="submit"
+                onClick={handleOnOpenPassword}
                 style={{ marginTop: 5 }}
               >
                 {t("submit")}
               </Button>
+              <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
+                <DialogTitle id="alert-dialog-title">
+                  {"Salasana vaihdettu"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    {"Salasana vaihdettu onnistuneesti"}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={handleOnClosePassword}
+                    color="primary"
+                    autoFocus
+                  >
+                    {"Ok"}
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Grid>
           </Grid>
-        </Card>
-        <Card className={classes.background} style={{ marginTop: 5 }}>
-          <Grid
-            container
-            item
-            xs={12}
-            direction="column"
-            justify="center"
-            alignItems="center"
-            style={{ paddingTop: 5, paddingBottom: 5 }}
-          >
-            <Grid item xs={6}>
-              <Typography
-                justify="center"
-                className={classes.background}
-                style={{ marginTop: 5 }}
-                variant="h5"
-              >
-                {t("Poista käyttäjä")}
-              </Typography>
-            </Grid>
-            <Grid container item xs={6} direction="column" alignItems="center">
-              <Typography
-                style={{ marginTop: 15 }}
-                className={classes.background}
-                variant="body1"
-              >
-                {t("kirjoita delete")}
-              </Typography>
-              <TextField
-                variant="outlined"
-                inputRef={register({})}
-                name="delete1"
-                label={t("delete1")}
-              />
-              <Typography className={classes.background} variant="body1">
-                {t("kirjoita delete")}
-              </Typography>
-              <TextField
-                variant="outlined"
-                inputRef={register({})}
-                name="delete2"
-                label={t("delete2")}
-              />
-              <Button
-                justify="center"
-                className={classes.defaultButton}
-                //type="submit"
-                onClick={(e) => {
-                  if (
-                    window.confirm(
-                      "Haluatko varmasti poistaa käyttäjätunnuksen?"
-                    )
-                  )
-                    this.deleteItem(e);
-                }}
-                style={{ marginTop: 5 }}
-              >
-                {t("Poista käyttäjä")}
-              </Button>
-            </Grid>
+        </form>
+      </Card>
+      <Card className={classes.background} style={{ marginTop: 5 }}>
+        <Grid
+          container
+          item
+          xs={12}
+          direction="column"
+          justify="center"
+          alignItems="center"
+          style={{ paddingTop: 5, paddingBottom: 5 }}
+        >
+          <Grid item xs={6}>
+            <Typography
+              justify="center"
+              className={classes.background}
+              style={{ marginTop: 5 }}
+              variant="h5"
+            >
+              {t("Poista käyttäjä")}
+            </Typography>
           </Grid>
-        </Card>
-      </form>
+          <Grid container item xs={6} direction="column" alignItems="center">
+            <Button
+              justify="center"
+              className={classes.defaultButton}
+              onClick={handleOnOpen}
+              style={{ marginTop: 5 }}
+            >
+              {t("Poista käyttäjä")}
+            </Button>
+            <Dialog open={openDialog} onClose={handleOnClose}>
+              <DialogTitle id="alert-dialog-title">
+                {"Käyttäjätilin poisto"}
+              </DialogTitle>
+              <DialogContent>
+                <form key={2} onSubmit={handleSubmit2(onSubmitCheckPassword)}>
+                  <DialogContentText id="alert-dialog-description">
+                    {"Kirjoita salasana poistaaksesi käyttäjätili"}
+                  </DialogContentText>
+                  <TextField
+                    variant="outlined"
+                    inputRef={register2({
+                      required: true,
+                      minLength: 5,
+                    })}
+                    id="passwordDelete"
+                    type="password"
+                    name="passwordDelete"
+                    label={t("password")}
+                  />
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  type="submit"
+                  onSubmit={onSubmitCheckPassword}
+                  color="primary"
+                >
+                  {"Poista käyttäjä"}
+                </Button>
+                <Button onClick={handleOnClose} color="primary" autoFocus>
+                  {"Peruuta"}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        </Grid>
+      </Card>
     </div>
   );
 };
