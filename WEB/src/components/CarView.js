@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { showNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
@@ -95,16 +95,15 @@ const CarView = (props) => {
         setTabIndex(index);
     };
 
-    const handleEditButton = useCallback((status) => {
+    const handleEditButton = (status) => {
         if (status === "edit") {
             setEditMode(true);
         } else {
             history.push("/mycars");
         }
+    }
 
-    }, [editMode]);
-
-    const handleSaveButton = useCallback((status) => {
+    const handleSaveButton = (status) => {
         if (status === "submit") {
             setLoading(true);
             getCarInfo();
@@ -114,7 +113,7 @@ const CarView = (props) => {
         }
 
         setEditMode(false);
-    }, [editMode]);
+    }
 
     const CarTabs = () => {
         switch (tabIndex) {
