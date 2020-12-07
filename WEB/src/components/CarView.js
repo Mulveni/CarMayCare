@@ -38,6 +38,8 @@ const useStyles = makeStyles({
 });
 
 const CarView = (props) => {
+
+    const carId = props.location.state.carId;
     const [serverError, setServerError] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
@@ -111,7 +113,7 @@ const CarView = (props) => {
         switch (tabIndex) {
             case 0:
                 return (
-                    <ServiceHistory />
+                    <ServiceHistory carId = {carId} />
                 )
             case 1:
                 return (
