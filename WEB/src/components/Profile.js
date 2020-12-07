@@ -62,7 +62,7 @@ const Profile = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [infoText, setInfoText] = useState(null);
-  const [openDialog, setDialogOpen] = useState(false);
+  const [openDeleteDialog, setDeleteDialogOpen] = useState(false);
   const [openPasswordDialog, setDialogPasswordOpen] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const history = useHistory();
@@ -91,14 +91,14 @@ const Profile = (props) => {
   const onSubmit = (data) => {
     setUserPassword(data.passwordOld);
     console.log(userPassword);
-    checkLogin(data.passwordOld);
+    checkLoginPassword(data.passwordOld);
     newPasswordData = data.password;
     changePassword();
   };
 
   const onSubmitCheckPassword = (data) => {
     setUserPassword(data.passwordDelete);
-    checkLogin(data.passwordDelete);
+    checkLoginDelete(data.passwordDelete);
     newPasswordData = data.password;
   };
   useEffect(() => {
@@ -184,7 +184,36 @@ const Profile = (props) => {
         setLoading(false);
       });
   }
-  const checkLogin = (data) => {
+  const checkLoginPassword = (data) => {
+    axios
+      .post(`${apiUrl}/login`, null, {
+        auth: {
+          username: userData.email,
+          password: data,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200) {
+          setPasswordCheck(true);
+          changePassword();
+        }
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          setServerError(true);
+          setLoading(false);
+          setDeleteDialogOpen(false);
+        } else {
+          if (error.response.data === "Unauthorized") {
+            setInfoText(t("incorrect_login"));
+          } else {
+            setInfoText(t("internal_server_error"));
+          }
+        }
+      });
+  };
+  const checkLoginDelete = (data) => {
     axios
       .post(`${apiUrl}/login`, null, {
         auth: {
@@ -203,7 +232,7 @@ const Profile = (props) => {
         if (error.response === undefined) {
           setServerError(true);
           setLoading(false);
-          setDialogOpen(false);
+          setDeleteDialogOpen(false);
         } else {
           if (error.response.data === "Unauthorized") {
             setInfoText(t("incorrect_login"));
@@ -218,13 +247,13 @@ const Profile = (props) => {
   }, [editMode]);
 
   const handleOnCloseDelete = () => {
-    setDialogOpen(false);
+    setDeleteDialogOpen(false);
   };
-  function handleOnOpen() {
-    setDialogOpen(true);
+  function handleOnOpenPassword() {
+    setDialogPasswordOpen(true);
   }
-  function handleOnClose() {
-    setDialogOpen(false);
+  function handleOnOpenDelete() {
+    setDeleteDialogOpen(true);
   }
   function handleOnClosePassword() {
     setDialogPasswordOpen(false);
@@ -346,7 +375,11 @@ const Profile = (props) => {
             >
               {t("submit")}
             </Button>
-            <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
+            <Dialog
+              onOpen={handleOnOpenPassword}
+              open={openPasswordDialog}
+              onClose={handleOnClosePassword}
+            >
               <DialogTitle>{t("changed_password")}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -356,7 +389,7 @@ const Profile = (props) => {
               <DialogActions>
                 <Button
                   onClick={handleOnClosePassword}
-                  color="primary"
+                  className={classes.defaultButton}
                   autoFocus
                 >
                   {"Ok"}
@@ -390,12 +423,12 @@ const Profile = (props) => {
             <Button
               justify="center"
               className={classes.defaultButton}
-              onClick={handleOnOpen}
+              onClick={handleOnOpenDelete}
               style={{ marginTop: 25 }}
             >
               {t("delete_user_account")}
             </Button>
-            <Dialog open={openDialog} onClose={handleOnCloseDelete}>
+            <Dialog open={openDeleteDialog} onClose={handleOnCloseDelete}>
               <DialogTitle>{t("delete_user_account")}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -422,7 +455,7 @@ const Profile = (props) => {
                 </Button>
                 <Button
                   className={classes.defaultButton}
-                  onClick={handleOnClose}
+                  onClick={handleOnCloseDelete}
                   autoFocus
                 >
                   {t("cancel")}
