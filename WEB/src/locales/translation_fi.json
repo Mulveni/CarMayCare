@@ -78,16 +78,16 @@
     "additional_services": "Lisähuollot",
     
     "done": "Tehty",
-    "dryer": "Kuivaaja",
+    "dryer": "Moottori-ilmansuodattimen vaihto",
     "long_life_oil_used": "Longlife öljy",
-    "sparkplug_replacement": "Tulpan vaihto",
+    "sparkplug_replacement": "Sytytystulppa vaihto",
     "air_filter_replacement": "Ilmansuodattimen vaihto",
-    "clean_air_replacement": "Clean air replacement???",
+    "clean_air_replacement": "Raitisilmasuodattimen vaihto",
     "fuel_filter_replacement": "Polttoainesuodattimen vaihto",
     "brake_fluid_replacement": "Jarrunesteiden vaihto",
-    "gearbox_oil_replacement": "Vaihteisto öljynvaihto",
+    "gearbox_oil_replacement": "Vaihteistoöljyn vaihto",
     "power_steering_oil_replacement": "Ohjaustehostimen öljynvaihto",
     "timing_belt_replacement": "Jakohihnan vaihto",
     "water_pump_replacement": "Vesipumpun vaihto",
-    "diesel_particulate_filter_replacement": "Hiukkassuodattimen filtterin vaihto"
+    "diesel_particulate_filter_replacement": "Hiukkassuodattimen vaihto"
 }
