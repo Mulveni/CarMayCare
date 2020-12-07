@@ -60,7 +60,7 @@
     "error_number": "must be a number between",
     "error_inputs": "accepts input values between",
     "button_submit": "Submit",
-    "unauthorized": "Unauthorized",
+    "unauthorized": "Unauthorized.",
     "error": "Error",
     "button_service_history": "Service history",
     "button_add_service": "Add service",
@@ -89,5 +89,10 @@
     "power_steering_oil_replacement": "Power steering oil replacement",
     "timing_belt_replacement": "Timing belt replacement",
     "water_pump_replacement": "Water pump replacement",
-    "diesel_particulate_filter_replacement": "Diesel particulate filter replacement"
+    "diesel_particulate_filter_replacement": "Diesel particulate filter replacement",
+
+    "button_save": "Save",
+    "button_cancel": "Cancel",
+    "error_car_id_not_found": "Car not found. Try to login again.",
+    "saved": "Saved."
 }
