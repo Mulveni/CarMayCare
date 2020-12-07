@@ -68,15 +68,12 @@
     "try_to_login": "Yritä kirjautua uudelleen.",
     "page_not_found": "Sivua ei löydy.",
     "back_to_main_page": "Takaisin etusivulle.",
-
     "service_description": "Huollon kuvaus",
     "service_mileage": "Mittarilukema",
     "service_additional_information": "Lisätietoja",
-
-    "motor_oil_change":"Moottoriöljyn vaihto",
-    "air_conditioning_service": "Ilmastoinnin huolto", 
+    "motor_oil_change": "Moottoriöljyn vaihto",
+    "air_conditioning_service": "Ilmastoinnin huolto",
     "additional_services": "Lisähuollot",
-    
     "done": "Tehty",
     "dryer": "Moottori-ilmansuodattimen vaihto",
     "long_life_oil_used": "Käytetty Longlife -öljyä",
@@ -89,11 +86,14 @@
     "power_steering_oil_replacement": "Ohjaustehostimen öljynvaihto",
     "timing_belt_replacement": "Jakohihnan vaihto",
     "water_pump_replacement": "Vesipumpun vaihto",
-
     "diesel_particulate_filter_replacement": "Hiukkassuodattimen vaihto",
-
     "button_save": "Tallenna",
     "button_cancel": "Peruuta",
+    "button_delete": "Poista",
     "error_car_id_not_found": "Autoa ei löytynyt. Yritä kirjautua uudelleen.",
-    "saved": "Tallennettu."
+    "saved": "Tallennettu.",
+    "car_delete_question": "Haluatko varmasti poistaa auton?",
+    "car_delete_note": "Auto poistetaan pysyvästi ja myös siihen lisätyt huollot poistetaan.",
+    "button_yes": "Kyllä",
+    "button_no": "En"
 }

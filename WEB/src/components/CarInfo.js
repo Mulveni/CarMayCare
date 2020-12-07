@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Button, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Button, makeStyles, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { defaultButton, infoText } from '../styles/classes';
 
@@ -10,9 +10,23 @@ const useStyles = makeStyles({
 
 const CarInfo = ({ data, text, handleEditButton }) => {
     const [infoText] = useState(text);
+    const [deleteWindowOpen, setDeleteWindowOpen] = useState(false);
     const carData = data;
     const { t } = useTranslation();
     const classes = useStyles();
+
+    const handleWindowOpen = () => {
+        setDeleteWindowOpen(true);
+    };
+
+    const handleWindowYes = () => {
+        setDeleteWindowOpen(false);
+    };
+
+    const handleWindowNo = () => {
+        setDeleteWindowOpen(false);
+    };
+
     return (
         <>
 
@@ -35,13 +49,31 @@ const CarInfo = ({ data, text, handleEditButton }) => {
                 </Grid>
             </Grid>
             <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25, paddingRight: 10 }} >
-                <Button onClick={handleEditButton} className={classes.defaultButton}>
-                    {t('button_edit')}
-                </Button>
+                <Grid container item direction="row" justify="flex-end">
+                    <Button onClick={handleEditButton} className={classes.defaultButton} style={{ marginRight: 10 }}>
+                        {t('button_edit')}
+                    </Button>
+                    <Button onClick={handleWindowOpen} className={classes.defaultButton}>
+                        {t('button_delete')}
+                    </Button>
+                </Grid>
                 <Typography className={classes.infoText} variant="body1">
                     {infoText}
                 </Typography>
             </Grid>
+
+            <Dialog
+                open={deleteWindowOpen}
+            >
+                <DialogTitle>{t('car_delete_question')}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>{t('car_delete_note')}</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button className={classes.defaultButton} onClick={handleWindowYes}>{t('button_yes')}</Button>
+                    <Button className={classes.defaultButton} onClick={handleWindowNo} autoFocus>{t('button_no')}</Button>
+                </DialogActions>
+            </Dialog>
 
         </>
     )
