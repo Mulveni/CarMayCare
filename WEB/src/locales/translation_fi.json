@@ -77,5 +77,7 @@
   "delete_user_account": "Käyttäjätilin poisto",
   "btn_delete_user_account": "Poista käyttäjätili",
   "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili",
+  "button_save": "Tallenna",
+  "button_cancel": "Peruuta",
   "cancel": "Peruuta"
 }

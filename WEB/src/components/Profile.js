@@ -88,27 +88,18 @@ const Profile = (props) => {
   });
   let newPasswordData = null;
 
-  const onSubmitCheckPassword = (data) => {
-    console.log(data.passwordDelete);
-    setUserPassword(data.passwordDelete);
-    //console.log(userPassword);
-    checkLogin(data.passwordDelete);
-    newPasswordData = data.password;
-    if (passwordCheck === true) {
-      deleteUser();
-      history.push("/login");
-    } else {
-      setDialogOpen(false);
-    }
-  };
-
   const onSubmit = (data) => {
-    console.log({ password: data.password });
     setUserPassword(data.passwordOld);
     console.log(userPassword);
     checkLogin(data.passwordOld);
     newPasswordData = data.password;
     changePassword();
+  };
+
+  const onSubmitCheckPassword = (data) => {
+    setUserPassword(data.passwordDelete);
+    checkLogin(data.passwordDelete);
+    newPasswordData = data.password;
   };
   useEffect(() => {
     dispatch(showNavButtons());
@@ -154,7 +145,7 @@ const Profile = (props) => {
           setServerError(true);
           setLoading(false);
         } else {
-          setUserData(response.data);
+          history.push("/login");
           setLoading(false);
         }
       })
@@ -204,14 +195,15 @@ const Profile = (props) => {
       .then((response) => {
         console.log(response.data);
         if (response.status === 200) {
-          setDialogPasswordOpen(true);
           setPasswordCheck(true);
+          deleteUser();
         }
       })
       .catch((error) => {
         if (error.response === undefined) {
           setServerError(true);
           setLoading(false);
+          setDialogOpen(false);
         } else {
           if (error.response.data === "Unauthorized") {
             setInfoText(t("incorrect_login"));
@@ -226,7 +218,6 @@ const Profile = (props) => {
   }, [editMode]);
 
   const handleOnCloseDelete = () => {
-    checkLogin();
     setDialogOpen(false);
   };
   function handleOnOpen() {
@@ -238,23 +229,19 @@ const Profile = (props) => {
   function handleOnClosePassword() {
     setDialogPasswordOpen(false);
   }
-  function handleOnOpenPassword() {}
-  const handleEdit = useCallback(() => {
+  const handleEdit = () => {
     setEditMode(true);
-  }, [editMode]);
+  };
 
-  const handleSave = useCallback(
-    (status) => {
-      if (status === "submit") {
-        getUserInfo();
-      } else {
-        setInfoText(null);
-      }
+  const handleSave = (status) => {
+    if (status === "submit") {
+      getUserInfo();
+    } else {
+      setInfoText(null);
+    }
 
-      setEditMode(false);
-    },
-    [editMode]
-  );
+    setEditMode(false);
+  };
 
   if (serverError) {
     return <Error />;
@@ -284,103 +271,100 @@ const Profile = (props) => {
         </Grid>
       </Card>
       <Card className={classes.background} style={{ marginTop: 5 }}>
-        <form key={1} onSubmit={handleSubmit(onSubmit)}>
-          <Grid
-            container
-            item
-            xs={12}
-            direction="column"
-            justify="center"
-            alignItems="center"
-            style={{ paddingTop: 5, paddingBottom: 5 }}
-          >
-            <Grid item xs={12}>
-              <Typography
-                justify="center"
-                className={classes.background}
-                style={{ marginTop: 5 }}
-                variant="h5"
-              >
-                {t("change_password")}
-              </Typography>
-            </Grid>
-            <Grid container item xs={6} direction="column" alignItems="center">
-              <TextField
-                style={{ marginTop: 25 }}
-                variant="outlined"
-                inputRef={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                id="password"
-                type="password"
-                name="passwordOld"
-                label={t("enter_old_password")}
-              />
-              <TextField
-                style={{ marginTop: 5 }}
-                variant="outlined"
-                inputRef={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                id="password"
-                type="password"
-                name="password"
-                label={t("enter_new_password")}
-              />
-              <TextField
-                style={{ marginTop: 5 }}
-                variant="outlined"
-                inputRef={register({
-                  required: true,
-                  minLength: 5,
-                  validate: {
-                    matchesPreviousPassword: (value) => {
-                      const { password } = getValues();
-                      return password === value || "Passwords should match!";
-                    },
-                  },
-                })}
-                id="password"
-                type="password"
-                name="passwordConfirmation"
-                label={t("confirm_password")}
-              />
-              {errors.passwordConfirmation && (
-                <Typography className={classes.infoText} variant="body1">
-                  {t("passwords_dont_match")}
-                </Typography>
-              )}
-              <Button
-                justify="center"
-                className={classes.defaultButton}
-                type="submit"
-                onClick={handleOnOpenPassword}
-                style={{ marginTop: 5 }}
-              >
-                {t("submit")}
-              </Button>
-              <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
-                <DialogTitle>{t("changed_password")}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    {t("password_change_successfull")}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={handleOnClosePassword}
-                    color="primary"
-                    autoFocus
-                  >
-                    {"Ok"}
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          direction="column"
+          justify="center"
+          alignItems="center"
+          style={{ paddingTop: 5, paddingBottom: 5 }}
+        >
+          <Grid item xs={12}>
+            <Typography
+              justify="center"
+              className={classes.background}
+              style={{ marginTop: 5 }}
+              variant="h5"
+            >
+              {t("change_password")}
+            </Typography>
           </Grid>
-        </form>
+          <Grid container item xs={6} direction="column" alignItems="center">
+            <TextField
+              style={{ marginTop: 25 }}
+              variant="outlined"
+              inputRef={register({
+                required: true,
+                minLength: 5,
+              })}
+              id="password"
+              type="password"
+              name="passwordOld"
+              label={t("enter_old_password")}
+            />
+            <TextField
+              style={{ marginTop: 5 }}
+              variant="outlined"
+              inputRef={register({
+                required: true,
+                minLength: 5,
+              })}
+              id="password"
+              type="password"
+              name="password"
+              label={t("enter_new_password")}
+            />
+            <TextField
+              style={{ marginTop: 5 }}
+              variant="outlined"
+              inputRef={register({
+                required: true,
+                minLength: 5,
+                validate: {
+                  matchesPreviousPassword: (value) => {
+                    const { password } = getValues();
+                    return password === value || "Passwords should match!";
+                  },
+                },
+              })}
+              id="password"
+              type="password"
+              name="passwordConfirmation"
+              label={t("confirm_password")}
+            />
+            {errors.passwordConfirmation && (
+              <Typography className={classes.infoText} variant="body1">
+                {t("passwords_dont_match")}
+              </Typography>
+            )}
+            <Button
+              justify="center"
+              className={classes.defaultButton}
+              onClick={handleSubmit(onSubmit)}
+              style={{ marginTop: 5 }}
+            >
+              {t("submit")}
+            </Button>
+            <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
+              <DialogTitle>{t("changed_password")}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  {t("password_change_successfull")}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={handleOnClosePassword}
+                  color="primary"
+                  autoFocus
+                >
+                  {"Ok"}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        </Grid>
       </Card>
       <Card className={classes.background} style={{ marginTop: 5 }}>
         <Grid
@@ -411,25 +395,23 @@ const Profile = (props) => {
             >
               {t("delete_user_account")}
             </Button>
-            <Dialog open={openDialog} onClose={handleOnClose}>
+            <Dialog open={openDialog} onClose={handleOnCloseDelete}>
               <DialogTitle>{t("delete_user_account")}</DialogTitle>
               <DialogContent>
-                <form key={2}>
-                  <DialogContentText>
-                    {t("type_password_to_delete_user")}
-                  </DialogContentText>
-                  <TextField
-                    variant="outlined"
-                    inputRef={register2({
-                      required: true,
-                      minLength: 5,
-                    })}
-                    id="passwordDelete"
-                    type="password"
-                    name="passwordDelete"
-                    label={t("password")}
-                  />
-                </form>
+                <DialogContentText>
+                  {t("type_password_to_delete_user")}
+                </DialogContentText>
+                <TextField
+                  variant="outlined"
+                  inputRef={register2({
+                    required: true,
+                    minLength: 5,
+                  })}
+                  id="passwordDelete"
+                  type="password"
+                  name="passwordDelete"
+                  label={t("password")}
+                />
               </DialogContent>
               <DialogActions>
                 <Button

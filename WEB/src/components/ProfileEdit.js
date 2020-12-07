@@ -48,7 +48,7 @@ const ProfileEdit = ({ data, handleSave }) => {
   const classes = useStyles();
   const defaultValue = {};
 
-  const { register, errors, control, handleSubmit } = useForm({
+  const { register, errors, setValue, control, handleSubmit } = useForm({
     defaultValue,
     mode: "onBlur",
   });
@@ -88,6 +88,18 @@ const ProfileEdit = ({ data, handleSave }) => {
         });
     }
   };
+  useEffect(() => {
+    if (userData) {
+      setValue("email", userData.email);
+      setValue("phonenumber", userData.phonenumber);
+      setValue("firstname", userData.firstname);
+      setValue("lastname", userData.lastname);
+      setValue("address.street", userData.address.street);
+      setValue("address.city", userData.address.city);
+      setValue("address.postcode", userData.address.postcode);
+      setValue("address.country", userData.address.country);
+    }
+  }, [userData]);
   const checkIfDataIsChanged = (data) => {
     let dataChanged = false;
     for (const key in data) {
@@ -98,23 +110,23 @@ const ProfileEdit = ({ data, handleSave }) => {
     return dataChanged;
   };
   const onError = (errors, e) => {
-    setErrorText(null);
+    setInfoText(null);
     if (errors.email != null) {
-      setErrorText(errors.email.message);
+      setInfoText(errors.email.message);
     } else if (errors.phonenumber != null) {
-      setErrorText(errors.phonenumber.message);
+      setInfoText(errors.phonenumber.message);
     } else if (errors.firstname != null) {
-      setErrorText(errors.firstname.message);
+      setInfoText(errors.firstname.message);
     } else if (errors.lastname != null) {
-      setErrorText(errors.lastname.message);
+      setInfoText(errors.lastname.message);
     } else if (errors.address.street != null) {
-      setErrorText(errors.address.street.message);
+      setInfoText(errors.address.street.message);
     } else if (errors.address.city != null) {
-      setErrorText(errors.address.city.message);
+      setInfoText(errors.address.city.message);
     } else if (errors.address.postcode != null) {
-      setErrorText(errors.address.postcode.message);
+      setInfoText(errors.address.postcode.message);
     } else if (errors.address.country != null) {
-      setErrorText(errors.address.country.message);
+      setInfoText(errors.address.country.message);
     }
   };
   return (
@@ -140,7 +152,6 @@ const ProfileEdit = ({ data, handleSave }) => {
                 },
                 minLength: 2,
               })}
-              defaultValue={userData.email}
               label={t("email")}
               name="email"
             />
@@ -153,7 +164,6 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               name="phonenumber"
               label={t("phonenumber")}
-              defaultValue={userData.phonenumber}
             />
             <TextField
               variant="outlined"
@@ -164,19 +174,27 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               name="firstname"
               label={t("firstname")}
-              defaultValue={userData.firstname}
             />
           </Grid>
           <Grid item xs={2}>
             <Button
+              style={{ margin: "auto" }}
               onClick={handleSubmit(onSubmit, onError)}
               className={classes.defaultButton}
             >
               {t("button_save")}
             </Button>
-            <Button onClick={handleCancel} className={classes.defaultButton}>
+            <Button
+              style={{ margin: "auto" }}
+              onClick={handleCancel}
+              className={classes.defaultButton}
+            >
               {t("button_cancel")}
             </Button>
+            <Typography className={classes.infoText} variant="body1">
+              {errorText}
+              {infoText}
+            </Typography>
           </Grid>
           <Grid item xs={10}>
             <TextField
@@ -188,7 +206,6 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               name="lastname"
               label={t("lastname")}
-              defaultValue={userData.lastname}
             />
             <TextField
               variant="outlined"
@@ -199,7 +216,6 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               name="address.street"
               label={t("street")}
-              defaultValue={userData.address.street}
             />
             <TextField
               variant="outlined"
@@ -210,7 +226,6 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               label={t("city")}
               name="address.city"
-              defaultValue={userData.address.city}
             />
           </Grid>
           <Grid item xs={10}>
@@ -223,7 +238,6 @@ const ProfileEdit = ({ data, handleSave }) => {
               })}
               label={t("postcode")}
               name="address.postcode"
-              defaultValue={userData.address.postcode}
             />
 
             <FormControl variant="outlined" style={{ margin: 8 }}>
@@ -238,17 +252,14 @@ const ProfileEdit = ({ data, handleSave }) => {
                     <MenuItem value="denmark">{t("denmark")}</MenuItem>
                   </Select>
                 }
+                defaultValue=""
                 name="address.country"
                 rules={{ required: t("country_required") }}
                 control={control}
-                defaultValue={userData.address.country}
               />
             </FormControl>
           </Grid>
-          <Typography className={classes.infoText} variant="body1">
-            {errorText}
-            {infoText}
-          </Typography>
+
           <Grid
             container
             item

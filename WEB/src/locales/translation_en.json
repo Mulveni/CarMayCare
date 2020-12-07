@@ -77,5 +77,7 @@
   "delete_user_account": "Delete user account",
   "btn_delete_user_account": "Delete user account",
   "type_password_to_delete_user": "Type password to delete user account",
+  "button_save": "Save",
+  "button_cancel": "Cancel",
   "cancel": "Cancel"
 }
