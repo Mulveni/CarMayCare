@@ -6,7 +6,6 @@ import { withRouter } from "react-router";
 import { Grid, Button, makeStyles, Card, Tab, AppBar, Tabs, Avatar, Typography } from '@material-ui/core';
 import ServiceHistory from './ServiceHistory';
 import AddService from '../components/AddService';
-import EditService from '../components/EditService';
 import Notes from '../components/Notes';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
