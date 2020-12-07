@@ -66,6 +66,7 @@ const Profile = (props) => {
   const [openPasswordDialog, setDialogPasswordOpen] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const history = useHistory();
+
   const defaultValue = {};
   const apiUrl = baseApiUrl.url;
   const apiToken = useSelector((state) => state.tokenReducer);
@@ -131,7 +132,6 @@ const Profile = (props) => {
           setLoading(false);
         } else {
           setUserPassword(response.data);
-          setInfoText("Salasana vaihdettu onnistuneesti");
           setLoading(false);
         }
       })
@@ -301,18 +301,12 @@ const Profile = (props) => {
                 style={{ marginTop: 5 }}
                 variant="h5"
               >
-                {t("Change password")}
+                {t("change_password")}
               </Typography>
             </Grid>
             <Grid container item xs={6} direction="column" alignItems="center">
-              <Typography
-                style={{ marginTop: 15 }}
-                className={classes.background}
-                variant="body1"
-              >
-                {t("Enter old password")}
-              </Typography>
               <TextField
+                style={{ marginTop: 25 }}
                 variant="outlined"
                 inputRef={register({
                   required: true,
@@ -321,12 +315,10 @@ const Profile = (props) => {
                 id="password"
                 type="password"
                 name="passwordOld"
-                label={t("password")}
+                label={t("enter_old_password")}
               />
-              <Typography className={classes.background} variant="body1">
-                {t("enter new password")}
-              </Typography>
               <TextField
+                style={{ marginTop: 5 }}
                 variant="outlined"
                 inputRef={register({
                   required: true,
@@ -335,12 +327,10 @@ const Profile = (props) => {
                 id="password"
                 type="password"
                 name="password"
-                label={t("password")}
+                label={t("enter_new_password")}
               />
-              <Typography className={classes.background} variant="body1">
-                {t("confirm password")}
-              </Typography>
               <TextField
+                style={{ marginTop: 5 }}
                 variant="outlined"
                 inputRef={register({
                   required: true,
@@ -355,11 +345,11 @@ const Profile = (props) => {
                 id="password"
                 type="password"
                 name="passwordConfirmation"
-                label={t("password")}
+                label={t("confirm_password")}
               />
               {errors.passwordConfirmation && (
                 <Typography className={classes.infoText} variant="body1">
-                  {t("salasanat ei täsmää")}
+                  {t("passwords_dont_match")}
                 </Typography>
               )}
               <Button
@@ -372,12 +362,10 @@ const Profile = (props) => {
                 {t("submit")}
               </Button>
               <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
-                <DialogTitle id="alert-dialog-title">
-                  {"Salasana vaihdettu"}
-                </DialogTitle>
+                <DialogTitle>{t("changed_password")}</DialogTitle>
                 <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    {"Salasana vaihdettu onnistuneesti"}
+                  <DialogContentText>
+                    {t("password_change_successfull")}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -411,7 +399,7 @@ const Profile = (props) => {
               style={{ marginTop: 5 }}
               variant="h5"
             >
-              {t("Poista käyttäjä")}
+              {t("delete_user_account")}
             </Typography>
           </Grid>
           <Grid container item xs={6} direction="column" alignItems="center">
@@ -419,18 +407,16 @@ const Profile = (props) => {
               justify="center"
               className={classes.defaultButton}
               onClick={handleOnOpen}
-              style={{ marginTop: 5 }}
+              style={{ marginTop: 25 }}
             >
-              {t("Poista käyttäjä")}
+              {t("delete_user_account")}
             </Button>
             <Dialog open={openDialog} onClose={handleOnClose}>
-              <DialogTitle id="alert-dialog-title">
-                {"Käyttäjätilin poisto"}
-              </DialogTitle>
+              <DialogTitle>{t("delete_user_account")}</DialogTitle>
               <DialogContent>
-                <form key={2} onSubmit={handleSubmit2(onSubmitCheckPassword)}>
-                  <DialogContentText id="alert-dialog-description">
-                    {"Kirjoita salasana poistaaksesi käyttäjätili"}
+                <form key={2}>
+                  <DialogContentText>
+                    {t("type_password_to_delete_user")}
                   </DialogContentText>
                   <TextField
                     variant="outlined"
@@ -447,14 +433,17 @@ const Profile = (props) => {
               </DialogContent>
               <DialogActions>
                 <Button
-                  type="submit"
-                  onSubmit={onSubmitCheckPassword}
-                  color="primary"
+                  className={classes.defaultButton}
+                  onClick={handleSubmit2(onSubmitCheckPassword)}
                 >
-                  {"Poista käyttäjä"}
+                  {t("delete_user_account")}
                 </Button>
-                <Button onClick={handleOnClose} color="primary" autoFocus>
-                  {"Peruuta"}
+                <Button
+                  className={classes.defaultButton}
+                  onClick={handleOnClose}
+                  autoFocus
+                >
+                  {t("cancel")}
                 </Button>
               </DialogActions>
             </Dialog>

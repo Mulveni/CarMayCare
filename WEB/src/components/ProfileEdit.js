@@ -71,7 +71,10 @@ const ProfileEdit = ({ data, handleSave }) => {
           handleSave("submit");
         })
         .catch((error) => {
-          if (
+          console.log(error.response.data.message);
+          if (error.response.data.message === "Email already in use.") {
+            setInfoText(t("email_already_in_use"));
+          } else if (
             error.response.status === 404 &&
             error.response.data.message === "no useid with given id"
           ) {
@@ -244,6 +247,7 @@ const ProfileEdit = ({ data, handleSave }) => {
           </Grid>
           <Typography className={classes.infoText} variant="body1">
             {errorText}
+            {infoText}
           </Typography>
           <Grid
             container
