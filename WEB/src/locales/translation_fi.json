@@ -60,7 +60,7 @@
     "error_number": "pitää olla luku väliltä",
     "error_inputs": "hyväksyy syötearvot väliltä",
     "button_submit": "Lähetä",
-    "unauthorized": "Ei käyttöoikeutta",
+    "unauthorized": "Ei käyttöoikeutta.",
     "error": "Virhe",
     "button_service_history": "Huoltohistoria",
     "button_add_service": "Lisää huolto",
@@ -89,5 +89,11 @@
     "power_steering_oil_replacement": "Ohjaustehostimen öljynvaihto",
     "timing_belt_replacement": "Jakohihnan vaihto",
     "water_pump_replacement": "Vesipumpun vaihto",
-    "diesel_particulate_filter_replacement": "Hiukkassuodattimen vaihto"
+
+    "diesel_particulate_filter_replacement": "Hiukkassuodattimen vaihto",
+
+    "button_save": "Tallenna",
+    "button_cancel": "Peruuta",
+    "error_car_id_not_found": "Autoa ei löytynyt. Yritä kirjautua uudelleen.",
+    "saved": "Tallennettu."
 }
