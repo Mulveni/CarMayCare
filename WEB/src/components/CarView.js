@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import { Grid, Button, makeStyles, Card, Tab, AppBar, Tabs, Avatar, Typography } from '@material-ui/core';
 import ServiceHistory from './ServiceHistory';
 import AddService from '../components/AddService';
+import EditService from '../components/EditService';
 import Notes from '../components/Notes';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
@@ -37,6 +38,8 @@ const useStyles = makeStyles({
 });
 
 const CarView = (props) => {
+    const carId=props.location.state.carId;
+
     const [serverError, setServerError] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
@@ -96,7 +99,7 @@ const CarView = (props) => {
                 )
             case 1:
                 return (
-                    <AddService />
+                    <AddService carId={carId}/> //serviceId={100}
                 )
             case 2:
                 return (
@@ -121,7 +124,7 @@ const CarView = (props) => {
 
     return (
         <div>
-            <Card className={classes.background} style={{ marginTop: 50 }}>
+            <Card className={classes.background} style={{ marginTop: 25 }}>
                 <Grid container >
                     <Grid container item xs={4} direction="column" alignItems="flex-end" style={{ paddingTop: 25 }} >
                         <Avatar className={classes.avatar}>{carData.brand.substring(0, 1)}</Avatar>

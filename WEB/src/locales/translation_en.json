@@ -67,5 +67,27 @@
     "button_notes": "Notes",
     "try_to_login": "Try to login again.",
     "page_not_found": "Page not found.",
-    "back_to_main_page": "Back to main page."
+    "back_to_main_page": "Back to main page.",
+
+    "service_description": "Service description",
+    "service_mileage": "Mileage",
+    "service_additional_information": "Additional information",
+
+    "motor_oil_change":"Motor oil change",
+    "air_conditioning_service": "Air conditioning service", 
+    "additional_services": "Additional services",
+    
+    "done": "Done",
+    "dryer": "Dryer",
+    "long_life_oil_used": "LongLife oil",
+    "sparkplug_replacement": "Sparkplug replacement",
+    "air_filter_replacement": "Air filter replacement",
+    "clean_air_replacement": "Clean air replacement",
+    "fuel_filter_replacement": "Fuel filter replacement",
+    "brake_fluid_replacement": "Brake fluid replacement",
+    "gearbox_oil_replacement": "Gearbox oil replacement",
+    "power_steering_oil_replacement": "Power steering oil replacement",
+    "timing_belt_replacement": "Timing belt replacement",
+    "water_pump_replacement": "Water pump replacement",
+    "diesel_particulate_filter_replacement": "Diesel particulate filter replacement"
 }
