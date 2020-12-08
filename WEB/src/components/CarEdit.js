@@ -46,7 +46,6 @@ const CarEdit = ({ data, carId, handleSaveButton }) => {
                 handleSaveButton("submit");
             }).catch(error => {
                 if (error.response.status === 404 && error.response.data.message === "User has no cars with given id") {
-                    console.log("ID not found");
                     setInfoText(t('error_car_id_not_found'));
                 }
                 else if (error.response.data === "Unauthorized") {

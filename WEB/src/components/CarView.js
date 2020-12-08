@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { showNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ import { background } from '../styles/classes';
 import Colors from '../styles/colors';
 import CarInfo from '../components/CarInfo';
 import CarEdit from '../components/CarEdit';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     tabView: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
 });
 
 const CarView = (props) => {
-    const carId=props.location.state.carId;
+    const carId = props.location.state.carId;
 
     const [serverError, setServerError] = useState(false);
     const [isLoading, setLoading] = useState(true);
@@ -49,6 +50,7 @@ const CarView = (props) => {
 
     const classes = useStyles();
     const { t } = useTranslation();
+    const history = useHistory();
 
     const apiUrl = baseApiUrl.url;
     const apiToken = useSelector(state => state.tokenReducer);
@@ -93,11 +95,15 @@ const CarView = (props) => {
         setTabIndex(index);
     };
 
-    const handleEditButton = useCallback(() => {
-        setEditMode(true);
-    }, [editMode]);
+    const handleEditButton = (status) => {
+        if (status === "edit") {
+            setEditMode(true);
+        } else {
+            history.push("/mycars");
+        }
+    }
 
-    const handleSaveButton = useCallback((status) => {
+    const handleSaveButton = (status) => {
         if (status === "submit") {
             setLoading(true);
             getCarInfo();
@@ -107,7 +113,7 @@ const CarView = (props) => {
         }
 
         setEditMode(false);
-    }, [editMode]);
+    }
 
     const CarTabs = () => {
         switch (tabIndex) {
@@ -117,7 +123,7 @@ const CarView = (props) => {
                 )
             case 1:
                 return (
-                    <AddService carId={carId}/> //serviceId={100}
+                    <AddService carId={carId} /> //serviceId={100}
                 )
             case 2:
                 return (
