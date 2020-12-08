@@ -95,5 +95,6 @@
     "car_delete_question": "Haluatko varmasti poistaa auton?",
     "car_delete_note": "Auto poistetaan pysyvästi ja myös siihen lisätyt huollot poistetaan.",
     "button_yes": "Kyllä",
-    "button_no": "En"
+    "button_no": "En",
+    "no_notes_added": "There is no notes added for this car."
 }
