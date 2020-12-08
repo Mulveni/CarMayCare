@@ -122,10 +122,10 @@ const ProfileEdit = ({ data, handleSave }) => {
           item
           xs={12}
           direction="row"
-          alignItems="center"
-          style={{ paddingTop: 25, paddingBottom: 25, margin: "auto" }}
+          alignItems="flex-end"
+          style={{ paddingLeft: 20, paddingBottom: 5, margin: "auto" }}
         >
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <TextField
               variant="outlined"
               style={{ margin: 8 }}
@@ -161,27 +161,26 @@ const ProfileEdit = ({ data, handleSave }) => {
               label={t("firstname")}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid style={{ paddingLeft: 150 }} item xs={3}>
             <Button
-              style={{ margin: "auto" }}
+              style={{ marginRight: 10 }}
               onClick={handleSubmit(onSubmit, onError)}
               className={classes.defaultButton}
             >
               {t("button_save")}
             </Button>
             <Button
-              style={{ margin: "auto" }}
+              style={{ marginTop: 8 }}
               onClick={handleCancel}
               className={classes.defaultButton}
             >
               {t("button_cancel")}
             </Button>
             <Typography className={classes.infoText} variant="body1">
-              {errorText}
               {infoText}
             </Typography>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <TextField
               variant="outlined"
               style={{ margin: 8 }}
@@ -213,7 +212,7 @@ const ProfileEdit = ({ data, handleSave }) => {
               name="address.city"
             />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <TextField
               variant="outlined"
               style={{ margin: 8 }}

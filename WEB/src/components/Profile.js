@@ -186,7 +186,6 @@ const Profile = (props) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setPasswordCheck(true);
           changePassword();
         }
       })
@@ -214,7 +213,6 @@ const Profile = (props) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setPasswordCheck(true);
           deleteUser();
         }
       })
