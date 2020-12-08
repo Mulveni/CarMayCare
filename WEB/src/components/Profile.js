@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { showNavButtons } from "../actions";
@@ -79,18 +79,13 @@ const Profile = (props) => {
     mode: "onBlur",
   });
 
-  const {
-    register: register2,
-    errors: errors2,
-    handleSubmit: handleSubmit2,
-  } = useForm({
+  const { register: register2, handleSubmit: handleSubmit2 } = useForm({
     mode: "onBlur",
   });
   let newPasswordData = null;
 
   const onSubmit = (data) => {
     setUserPassword(data.passwordOld);
-    console.log(userPassword);
     checkLoginPassword(data.passwordOld);
     newPasswordData = data.password;
     changePassword();
@@ -118,7 +113,6 @@ const Profile = (props) => {
       )
       .then((response) => {
         if (response.data.message === "No results with given id") {
-          console.log(response.data);
           setServerError(true);
           setLoading(false);
         } else {
@@ -141,7 +135,6 @@ const Profile = (props) => {
       })
       .then((response) => {
         if (response.data.message === "No results with given id") {
-          console.log(response.data);
           setServerError(true);
           setLoading(false);
         } else {
@@ -170,7 +163,6 @@ const Profile = (props) => {
       })
       .then((response) => {
         if (response.data.message === "No results with given id") {
-          console.log(response.data);
           setServerError(true);
           setLoading(false);
         } else {
@@ -193,7 +185,6 @@ const Profile = (props) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200) {
           setPasswordCheck(true);
           changePassword();
@@ -222,7 +213,6 @@ const Profile = (props) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200) {
           setPasswordCheck(true);
           deleteUser();

@@ -1,39 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { showNavButtons } from "../actions";
-import { useForm, Controller } from "react-hook-form";
-import baseApiUrl from "../api_url.json";
-import axios from "axios";
-import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  infoText,
-  defaultButton,
-  defaultLink,
-  background,
-} from "../styles/classes";
-import Error from "./Error";
-import Loading from "./Loading";
-import {
-  Grid,
-  Divider,
-  CardActions,
-  CardContent,
-  Container,
-  Button,
-  TextField,
-  Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
-  Card,
-  CardHeader,
-} from "@material-ui/core";
+import { defaultButton } from "../styles/classes";
+import { Grid, Button, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   defaultButton: defaultButton,

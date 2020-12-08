@@ -1,24 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { showNavButtons } from "../actions";
 import { useForm, Controller } from "react-hook-form";
 import baseApiUrl from "../api_url.json";
 import axios from "axios";
-import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  infoText,
-  defaultButton,
-  defaultLink,
-  background,
-} from "../styles/classes";
-import Error from "./Error";
-import Loading from "./Loading";
-//import Colors from "../styles/colors";
+import { defaultButton, background } from "../styles/classes";
 import {
   Grid,
   Button,
@@ -28,9 +16,6 @@ import {
   FormControl,
   MenuItem,
   InputLabel,
-  FormHelperText,
-  Card,
-  CardHeader,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -38,7 +23,7 @@ const useStyles = makeStyles({
   background: background,
 });
 const ProfileEdit = ({ data, handleSave }) => {
-  const [errorText, setErrorText] = useState(null);
+  const [errorText] = useState(null);
   const [infoText, setInfoText] = useState(null);
   const userData = data;
   const { t } = useTranslation();
@@ -48,7 +33,7 @@ const ProfileEdit = ({ data, handleSave }) => {
   const classes = useStyles();
   const defaultValue = {};
 
-  const { register, errors, setValue, control, handleSubmit } = useForm({
+  const { register, setValue, control, handleSubmit } = useForm({
     defaultValue,
     mode: "onBlur",
   });
