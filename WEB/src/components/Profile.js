@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   infoText: infoText,
 }));
 
-const Profile = (props) => {
+const Profile = () => {
   const [userData, setUserData] = useState({});
   const [setUserPassword] = useState({});
   const [serverError, setServerError] = useState(false);
