@@ -2,7 +2,6 @@ import {ListItem, ListItemText, Divider, Paper, makeStyles} from '@material-ui/c
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 import baseApiUrl from '../api_url.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNavButtons } from '../actions';
