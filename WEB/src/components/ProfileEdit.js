@@ -23,7 +23,6 @@ const useStyles = makeStyles({
   background: background,
 });
 const ProfileEdit = ({ data, handleSave }) => {
-  const [errorText] = useState(null);
   const [infoText, setInfoText] = useState(null);
   const userData = data;
   const { t } = useTranslation();
@@ -84,7 +83,8 @@ const ProfileEdit = ({ data, handleSave }) => {
       setValue("address.postcode", userData.address.postcode);
       setValue("address.country", userData.address.country);
     }
-  }, [userData]);
+  }, [userData, setValue]);
+
   const checkIfDataIsChanged = (data) => {
     let dataChanged = false;
     for (const key in data) {
@@ -94,6 +94,7 @@ const ProfileEdit = ({ data, handleSave }) => {
     }
     return dataChanged;
   };
+
   const onError = (errors, e) => {
     setInfoText(null);
     if (errors.email != null) {

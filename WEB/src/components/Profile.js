@@ -57,14 +57,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = (props) => {
   const [userData, setUserData] = useState({});
-  const [userPassword, setUserPassword] = useState({});
+  const [setUserPassword] = useState({});
   const [serverError, setServerError] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [infoText, setInfoText] = useState(null);
   const [openDeleteDialog, setDeleteDialogOpen] = useState(false);
   const [openPasswordDialog, setDialogPasswordOpen] = useState(false);
-  const [passwordCheck, setPasswordCheck] = useState(false);
   const history = useHistory();
 
   const defaultValue = {};
@@ -100,7 +99,7 @@ const Profile = (props) => {
     dispatch(showNavButtons());
   }, [dispatch]);
 
-  function changePassword() {
+  const changePassword = () => {
     axios
       .put(
         `${apiUrl}/user/password`,
@@ -125,8 +124,8 @@ const Profile = (props) => {
         setServerError(true);
         setLoading(false);
       });
-  }
-  function deleteUser() {
+  };
+  const deleteUser = () => {
     axios
       .delete(`${apiUrl}/user`, {
         headers: {
@@ -153,8 +152,9 @@ const Profile = (props) => {
           }
         }
       });
-  }
-  function getUserInfo() {
+  };
+  const onInit = () => getUserInfo();
+  const getUserInfo = () => {
     axios
       .get(`${apiUrl}/user`, {
         headers: {
@@ -175,7 +175,7 @@ const Profile = (props) => {
         setServerError(true);
         setLoading(false);
       });
-  }
+  };
   const checkLoginPassword = (data) => {
     axios
       .post(`${apiUrl}/login`, null, {
@@ -187,6 +187,7 @@ const Profile = (props) => {
       .then((response) => {
         if (response.status === 200) {
           changePassword();
+          setDialogPasswordOpen(true);
         }
       })
       .catch((error) => {
@@ -230,22 +231,24 @@ const Profile = (props) => {
         }
       });
   };
-  useEffect(() => {
-    getUserInfo();
-  }, [editMode]);
+  useEffect(onInit, []);
 
   const handleOnCloseDelete = () => {
     setDeleteDialogOpen(false);
   };
-  function handleOnOpenPassword() {
+
+  const handleOnOpenPassword = () => {
     setDialogPasswordOpen(true);
-  }
-  function handleOnOpenDelete() {
+  };
+
+  const handleOnOpenDelete = () => {
     setDeleteDialogOpen(true);
-  }
-  function handleOnClosePassword() {
+  };
+
+  const handleOnClosePassword = () => {
     setDialogPasswordOpen(false);
-  }
+  };
+
   const handleEdit = () => {
     setEditMode(true);
   };
@@ -363,11 +366,7 @@ const Profile = (props) => {
             >
               {t("submit")}
             </Button>
-            <Dialog
-              onOpen={handleOnOpenPassword}
-              open={openPasswordDialog}
-              onClose={handleOnClosePassword}
-            >
+            <Dialog open={openPasswordDialog} onClose={handleOnClosePassword}>
               <DialogTitle>{t("changed_password")}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -433,6 +432,9 @@ const Profile = (props) => {
                   name="passwordDelete"
                   label={t("password")}
                 />
+                <Typography className={classes.infoText} variant="body1">
+                  {infoText}
+                </Typography>
               </DialogContent>
               <DialogActions>
                 <Button
