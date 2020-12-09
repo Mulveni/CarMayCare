@@ -125,37 +125,38 @@ const Notes = (data) => {
 
     return (
         <div>
-            <Card className={classes.background}>
-                <CardContent>
-                    {notesData.map(note => {
-                        return (
+            <Grid container item xs={8} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, margin: 'auto' }}>
+                {notesData.map(note => {
+                    return (
+                        <div style={{ width: "100%" }}>
                             <Paper id={note.idNotes} key={note.idNotes} className={classes.noteBackground} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
                                 <Grid container>
-                                    <Grid container item xs={3} direction="column" alignItems="flex-end" />
-                                    <Grid container item xs={6} direction="column" justify="center" alignItems="center" style={{ overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto" }}>
+
+                                    <Grid container item xs={8} direction="column" justify="center" alignItems="flex-start" style={{ overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto" }}>
                                         <Typography variant="body1">
                                             {note.note}
                                         </Typography>
                                     </Grid>
-                                    <Grid container item xs={3} direction="column" alignItems="flex-end">
+                                    <Grid container item xs={4} direction="column" alignItems="flex-end">
                                         <Grid container item direction="row" justify="flex-end">
-                                            <Button className={classes.defaultButton} style={{ marginRight: 10, visibility: currentNoteIndex === note.idNotes ? "visible" : "hidden" }} >
+                                            <Button className={classes.defaultButton} style={{ marginRight: 10, display: currentNoteIndex === note.idNotes ? "block" : "none" }} >
                                                 {t('button_edit')}
                                             </Button>
                                             <Button className={classes.defaultButton} onClick={() => handleDelete(note.idNotes)} style={{ visibility: currentNoteIndex === note.idNotes ? "visible" : "hidden" }} >
                                                 {t('button_delete')}
                                             </Button>
                                         </Grid>
-                                        <Typography className={classes.infoText} variant="body1" style={{ visibility: noteToDelete === note.idNotes ? "visible" : "hidden" }}>
+                                        <Typography className={classes.infoText} variant="body1" style={{ display: noteToDelete === note.idNotes ? "block" : "none" }}>
                                             {infoText}
                                         </Typography>
                                     </Grid>
                                 </Grid>
                             </Paper>
-                        )
-                    })}
-                </CardContent>
-            </Card>
+                        </div>
+                    )
+                })}
+            </Grid>
+
 
             <Dialog
                 open={deleteNoteWindow}
