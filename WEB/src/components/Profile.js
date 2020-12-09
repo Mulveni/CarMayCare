@@ -84,14 +84,12 @@ const Profile = () => {
   let newPasswordData = null;
 
   const onSubmit = (data) => {
-    setUserPassword(data.passwordOld);
     checkLoginPassword(data.passwordOld);
     newPasswordData = data.password;
     changePassword();
   };
 
   const onSubmitCheckPassword = (data) => {
-    setUserPassword(data.passwordDelete);
     checkLoginDelete(data.passwordDelete);
     newPasswordData = data.password;
   };
@@ -125,6 +123,7 @@ const Profile = () => {
         setLoading(false);
       });
   };
+
   const deleteUser = () => {
     axios
       .delete(`${apiUrl}/user`, {
@@ -153,7 +152,9 @@ const Profile = () => {
         }
       });
   };
+
   const onInit = () => getUserInfo();
+
   const getUserInfo = () => {
     axios
       .get(`${apiUrl}/user`, {
@@ -176,6 +177,7 @@ const Profile = () => {
         setLoading(false);
       });
   };
+
   const checkLoginPassword = (data) => {
     axios
       .post(`${apiUrl}/login`, null, {
@@ -204,6 +206,7 @@ const Profile = () => {
         }
       });
   };
+
   const checkLoginDelete = (data) => {
     axios
       .post(`${apiUrl}/login`, null, {
@@ -231,14 +234,11 @@ const Profile = () => {
         }
       });
   };
+
   useEffect(onInit, []);
 
   const handleOnCloseDelete = () => {
     setDeleteDialogOpen(false);
-  };
-
-  const handleOnOpenPassword = () => {
-    setDialogPasswordOpen(true);
   };
 
   const handleOnOpenDelete = () => {
