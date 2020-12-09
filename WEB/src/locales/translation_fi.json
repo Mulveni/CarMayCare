@@ -95,5 +95,7 @@
     "button_save": "Tallenna",
     "button_cancel": "Peruuta",
     "error_car_id_not_found": "Autoa ei löytynyt. Yritä kirjautua uudelleen.",
-    "saved": "Tallennettu."
+    "saved": "Tallennettu.",
+
+    "no_results": "Ei Autoja"
 }

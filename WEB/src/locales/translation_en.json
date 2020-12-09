@@ -94,5 +94,7 @@
     "button_save": "Save",
     "button_cancel": "Cancel",
     "error_car_id_not_found": "Car not found. Try to login again.",
-    "saved": "Saved."
+    "saved": "Saved.",
+
+    "no_results": "No cars"
 }
