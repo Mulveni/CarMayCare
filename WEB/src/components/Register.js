@@ -3,31 +3,15 @@ import { useDispatch } from "react-redux";
 import { hideNavButtons } from "../actions";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
-import baseApiUrl from "../api_url.json";
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  TextField,
-  Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
-  Link,
-  Card,
-  Grid,
-} from "@material-ui/core";
-import {
-  infoText,
-  defaultLink,
-  background,
-  defaultButton,
-} from "../styles/classes";
-//import Colors from "../styles/colors";
+import baseApiUrl from '../api_url.json';
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
+import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
+import Colors from '../styles/colors';
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles(() => ({
   registerGrid: {
     display: "flex",
     flexDirection: "column",
@@ -88,20 +72,11 @@ const Register = () => {
   return (
     <div>
       <Card className={classes.background} style={{ marginTop: 50 }}>
-        <Grid
-          container
-          item
-          xs={12}
-          direction="column"
-          justify="center"
-          alignItems="center"
-          style={{ paddingTop: 25 }}
-        >
-          <Typography variant="h5">{t("register")}</Typography>
-          <form
-            className={classes.registerGrid}
-            onSubmit={handleSubmit(onSubmit, onError)}
-          >
+        <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+          <Typography variant="h5">
+            {t('register')}
+          </Typography>
+          <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -229,6 +204,7 @@ const Register = () => {
             <FormControl variant="outlined" margin="normal">
               <InputLabel id="countries-label">{t("country")}</InputLabel>
               <Controller
+                style={{ background: Colors.blue2 }}
                 as={
                   <Select>
                     <MenuItem value="finland">{t("finland")}</MenuItem>

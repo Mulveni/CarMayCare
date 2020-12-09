@@ -86,7 +86,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserInformation"
+                "$ref": "#/components/schemas/RegisterUser"
               }
             }
           },
@@ -1099,6 +1099,58 @@
             "type": "string"
           }
         }
+      },
+      "RegisterUser": {
+        "title": "RegisterUser",
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phonenumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "required": [
+              "street",
+              "city",
+              "postcode",
+              "country"
+            ],
+            "properties": {
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string",
+                "description": "ISO 3166"
+              }
+            }
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "firstname",
+          "lastname",
+          "email",
+          "phonenumber",
+          "address"
+        ]
       }
     },
     "securitySchemes": {

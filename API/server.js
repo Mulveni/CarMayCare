@@ -79,12 +79,12 @@ function verifyAdmin(req, res, next) {
 // Endpoints
 app.use('/register', registerController);
 app.use('/login', passport.authenticate('basic', { session: false }), loginController);
-app.use('/user', passport.authenticate('jwt', { session: false }), verifyAdmin, userController);
+app.use('/user', passport.authenticate('jwt', { session: false }), userController);
 app.use('/cars', passport.authenticate('jwt', { session: false }), carsController);
 app.use('/notes', passport.authenticate('jwt', { session: false }), notesController);
 app.use('/services', passport.authenticate('jwt', { session: false }), servicesController);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
-app.use('/email', passport.authenticate('jwt', { session: false }), emailController);
+app.use('/email', passport.authenticate('jwt', { session: false }), verifyAdmin, emailController);
 
 app.get('/', (req, res) => {
     res.send('Car Service Manual API');

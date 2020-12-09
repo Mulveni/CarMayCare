@@ -12,6 +12,7 @@ import CarView from './components/CarView';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import Colors from './styles/colors';
 
 const App = () => {
     const theme = createMuiTheme({
@@ -22,8 +23,13 @@ const App = () => {
             MuiLink: {
                 root: {
                     fontFamily: 'Quicksand',
-                    color: "#304269"
+                    color: Colors.blue1
                 },
+            },
+            MuiTextField: {
+                root: {
+                    backgroundColor: Colors.blue2
+                }
             }
         }
     });

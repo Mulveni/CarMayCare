@@ -110,7 +110,7 @@ const ResetPassword = () => {
                 {!sent ?
 
                     <Card className={classes.background} style={{ marginTop: 50 }}>
-                        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+                        <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
 
                             <Button
                                 className={classes.defaultButton}
@@ -126,7 +126,7 @@ const ResetPassword = () => {
 
                     :
                     <Card className={classes.background} style={{ marginTop: 50 }}>
-                        <Grid container xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
+                        <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
                             <Typography variant="h5">
                                 {t('password_reseted_and_sent')}
                             </Typography>
