@@ -93,14 +93,12 @@ const ServiceHistory = (props) => {
 
     return (
         <div>
-        <Paper className={classes.background} alignContent="center" style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
+        <Paper className={classes.background} style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
 
                 {services.map(i => {
-                    console.log(i.idCars)
                     return (
-                        <Paper className={classes.background} key={i.idCars} alignContent="center" style={{marginLeft: 20, marginRight: 20}}>
+                        <Paper className={classes.background} key={i.idServices} style={{marginLeft: 20, marginRight: 20}}>
                             <ListItem className={classes.serviceButton} style={{paddingTop: 25, paddingBottom: 25}} button onClick={() => {
-                                console.log("Pressed the item, functionality to come later...");
                             }}>
                                 <ListItemText
                                 primary={i.description} style={{textAlign: "left", marginLeft: 20}}/>
