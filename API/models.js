@@ -41,8 +41,8 @@ const models = {
     userModel: (userInfo) => {
         const newUserModel = {
             id: userInfo.idUsers,
-            firstname: userInfo.firstname,
-            lastname: userInfo.lastname,
+            firstname: userInfo.firstName,
+            lastname: userInfo.lastName,
             email: userInfo.email,
             phonenumber: userInfo.phonenumber,
             address: {

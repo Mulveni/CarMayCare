@@ -1,9 +1,12 @@
+import Colors from '../styles/colors';
+
 export const infoText = () => {
     return {
         color: "white",
-        backgroundColor: "#F26101",
+        backgroundColor: Colors.orange,
         borderRadius: 10,
         paddingLeft: 10,
+        paddingRight: 10,
         marginTop: 20
     }
 }
@@ -11,9 +14,9 @@ export const infoText = () => {
 export const defaultButton = () => {
     return {
         color: "white",
-        backgroundColor: "#304269",
+        backgroundColor: Colors.blue1,
         '&:hover': {
-            backgroundColor: "#F26101"
+            backgroundColor: Colors.orange
         }
     }
 }
@@ -28,7 +31,7 @@ export const defaultLink = () => {
 
 export const background = () => {
     return {
-        backgroundColor: "#D9E8F5",
+        backgroundColor: Colors.blue3,
         margin: "auto",
         maxWidth: 1024
     }
