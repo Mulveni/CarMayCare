@@ -5,14 +5,10 @@ import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNavButtons } from '../actions';
-import { background, defaultButton } from '../styles/classes';
+import { background} from '../styles/classes';
 import Colors from '../styles/colors';
 
 const useStyles = makeStyles({
-
-    indicatorColor: {
-        backgroundColor: Colors.orange
-    },
 
     serviceButton: {
         backgroundColor:Colors.blue2,
@@ -26,7 +22,6 @@ const useStyles = makeStyles({
     },
 
     background: background,
-    defaultButton: defaultButton
 
 })
 
