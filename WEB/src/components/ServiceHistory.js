@@ -5,7 +5,7 @@ import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNavButtons } from '../actions';
-import { background, infoText} from '../styles/classes';
+import { background } from '../styles/classes';
 import Colors from '../styles/colors';
 import { useHistory } from 'react-router-dom';
 
@@ -23,7 +23,6 @@ const useStyles = makeStyles({
     },
 
     background: background,
-    infoText: infoText
 
 })
 
@@ -64,7 +63,7 @@ const ServiceHistory = (props) => {
                 history.push("/");
             }
             else if (error.response.status === 404) {
-                setErrorText(t('error') + ": " + t('internal_server_error'));
+                setErrorText(t('no_services_found_for_this_car'));
             }
 
         });
@@ -84,7 +83,7 @@ const ServiceHistory = (props) => {
     if(errorText){
 
         return <div>
-            <Typography className={classes.infoText}>
+            <Typography variant="h5" align="center">
                 {errorText}
             </Typography>
 

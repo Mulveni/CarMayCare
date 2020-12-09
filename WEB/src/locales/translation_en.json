@@ -95,5 +95,6 @@
     "car_delete_question": "Are you sure you want to delete the car?",
     "car_delete_note": "The car and services related to it will be removed permanently.",
     "button_yes": "Yes",
-    "button_no": "No"
+    "button_no": "No",
+    "no_services_found_for_this_car": "No services found for this car"
 }
