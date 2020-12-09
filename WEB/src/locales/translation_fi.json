@@ -96,7 +96,7 @@
     "car_delete_note": "Auto poistetaan pysyvästi ja myös siihen lisätyt huollot poistetaan.",
     "button_yes": "Kyllä",
     "button_no": "En",
-    "no_services_found_for_this_car": "Tälle autolle ei ole huoltoja"
+    "no_services_found_for_this_car": "Tälle autolle ei ole huoltoja",
     "password_change_successfull": "Salasanan vaihto onnistui",
     "change_password": "Vaihda salasana",
     "changed_password": "Salasana vaihdettu",

@@ -105,6 +105,6 @@
   "passwords_dont_match": "Passwords don't match",
   "delete_user_account": "Delete user account",
   "btn_delete_user_account": "Delete user account",
-  "type_password_to_delete_user": "Type password to delete user account"
+  "type_password_to_delete_user": "Type password to delete user account",
   "no_services_found_for_this_car": "No services found for this car"
 }
