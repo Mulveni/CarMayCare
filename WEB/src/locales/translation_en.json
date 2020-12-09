@@ -95,5 +95,15 @@
     "car_delete_question": "Are you sure you want to delete the car?",
     "car_delete_note": "The car and services related to it will be removed permanently.",
     "button_yes": "Yes",
-    "button_no": "No"
+    "button_no": "No",
+    "password_change_successfull": "Password changed successfully",
+    "change_password": "Change password",
+    "changed_password": "Changed password",
+    "enter_old_password": "Enter old password",
+    "enter_new_password": "Enter new password",
+    "confirm_password": "Confirm password",
+    "passwords_dont_match": "Passwords don't match",
+    "delete_user_account": "Delete user account",
+    "btn_delete_user_account": "Delete user account",
+    "type_password_to_delete_user": "Type password to delete user account",
 }
