@@ -1,12 +1,13 @@
-import {ListItem, ListItemText, Divider, Paper, makeStyles} from '@material-ui/core';
+import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNavButtons } from '../actions';
-import { background} from '../styles/classes';
+import { background, infoText} from '../styles/classes';
 import Colors from '../styles/colors';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
 
@@ -22,16 +23,19 @@ const useStyles = makeStyles({
     },
 
     background: background,
+    infoText: infoText
 
 })
 
 const ServiceHistory = (props) => {
 
+    const history = useHistory();
     const classes = useStyles();
     const apiUrl = baseApiUrl.url;
     const myToken = useSelector(state => state.tokenReducer);
     const [services, setServices] = useState([]);
-    const [setErrorText] = useState(null);
+    const [errorText, setErrorText] = useState(null);
+
     var results = [];
 
 
@@ -57,6 +61,7 @@ const ServiceHistory = (props) => {
 
             if (error.response.data === "Unauthorized") {
                 setErrorText(t('error') + ": " + t('unauthorized'));
+                history.push("/");
             }
             else if (error.response.status === 404) {
                 setErrorText(t('error') + ": " + t('internal_server_error'));
@@ -64,6 +69,8 @@ const ServiceHistory = (props) => {
 
         });
     }
+
+
 
     useEffect(getServices, []);
 
@@ -74,10 +81,20 @@ const ServiceHistory = (props) => {
         dispatch(showNavButtons());
     }, [dispatch]);
 
+    if(errorText){
+
+        return <div>
+            <Typography className={classes.infoText}>
+                {errorText}
+            </Typography>
+
+        </div>
+    }
+
 
     return (
         <div>
-            <Paper className={classes.background} alignContent="center" style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
+        <Paper className={classes.background} alignContent="center" style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
 
                 {services.map(i => {
                     console.log(i.idCars)
