@@ -97,4 +97,14 @@
     "button_yes": "Kyllä",
     "button_no": "En",
     "no_services_found_for_this_car": "Tälle autolle ei ole huoltoja"
+    "password_change_successfull": "Salasanan vaihto onnistui",
+    "change_password": "Vaihda salasana",
+    "changed_password": "Salasana vaihdettu",
+    "enter_old_password": "Vanha salasana",
+    "enter_new_password": "Uusi salasana",
+    "confirm_password": "Uusi salasana uudelleen",
+    "passwords_dont_match": "Tarkista, että kirjoitit uudet salasanat oikein",
+    "delete_user_account": "Käyttäjätilin poisto",
+    "btn_delete_user_account": "Poista käyttäjätili",
+    "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili"
 }
