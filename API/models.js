@@ -1,7 +1,6 @@
 const models = {
     serviceModel: (service) => {
 
-
         const newServiceModel = {
             idServices: service.idServices,
             idCars: service.idCars,
