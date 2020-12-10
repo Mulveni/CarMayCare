@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, makeStyles, Card, Typography, Button, CardContent, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { Grid, makeStyles, Typography, Button, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import { background, defaultButton, infoText } from '../styles/classes';
 import Colors from '../styles/colors';
 import baseApiUrl from '../api_url.json';
