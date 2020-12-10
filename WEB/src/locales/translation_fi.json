@@ -99,5 +99,6 @@
     "note_delete_note": "Merkintä poistetaan pysyvästi.",
     "button_yes": "Kyllä",
     "button_no": "En",
-    "no_notes_added": "Ei lisättyjä merkintöjä tälle autolle."
+    "no_notes_added": "Ei lisättyjä merkintöjä tälle autolle.",
+    "message_over_200": "Viestin maksimipituus on 200 merkkiä."
 }

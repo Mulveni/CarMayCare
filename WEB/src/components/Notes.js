@@ -9,6 +9,7 @@ import axios from 'axios';
 import Loading from './Loading';
 import Error from './Error';
 import { useHistory } from 'react-router-dom';
+import NoteEdit from './NoteEdit';
 
 const useStyles = makeStyles({
     noteBackground: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 const Notes = (data) => {
     const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
     const [noteToDelete, setNoteToDelete] = useState(null);
+    const [noteToEdit, setNoteToEdit] = useState(null);
     const [notesData, setNotesData] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [serverError, setServerError] = useState(false);
@@ -72,7 +74,10 @@ const Notes = (data) => {
     const handleDelete = (noteId) => {
         setDeleteNoteWindow(true);
         setNoteToDelete(parseInt(noteId, 10));
+    }
 
+    const handleEdit = (noteId) => {
+        setNoteToEdit(parseInt(noteId, 10));
     }
 
     const handleWindowYes = () => {
@@ -98,7 +103,20 @@ const Notes = (data) => {
     }
 
     const handleWindowNo = () => {
+        setNoteToDelete(null);
         setDeleteNoteWindow(false);
+    }
+
+    const handleEditButton = (status, noteId) => {
+        if (status === "cancel") {
+            setNoteToDelete(null);
+        } else {
+            setLoading(true);
+            getNotes();
+            setInfoText(t('saved'));
+            setNoteToDelete(noteId);
+        }
+        setNoteToEdit(null);
     }
 
     if (serverError) {
@@ -128,31 +146,39 @@ const Notes = (data) => {
             <Grid container item xs={8} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, margin: 'auto' }}>
                 {notesData.map(note => {
                     return (
-                        <div style={{ width: "100%" }}>
-                            <Paper id={note.idNotes} key={note.idNotes} className={classes.noteBackground} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-                                <Grid container>
-
-                                    <Grid container item xs={8} direction="column" justify="center" alignItems="flex-start" style={{ overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto" }}>
-                                        <Typography variant="body1">
-                                            {note.note}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid container item xs={4} direction="column" alignItems="flex-end">
-                                        <Grid container item direction="row" justify="flex-end">
-                                            <Button className={classes.defaultButton} style={{ marginRight: 10, display: currentNoteIndex === note.idNotes ? "block" : "none" }} >
-                                                {t('button_edit')}
-                                            </Button>
-                                            <Button className={classes.defaultButton} onClick={() => handleDelete(note.idNotes)} style={{ visibility: currentNoteIndex === note.idNotes ? "visible" : "hidden" }} >
-                                                {t('button_delete')}
-                                            </Button>
+                        <div key={note.idNotes} style={{ width: "100%" }}>
+                            {noteToEdit === note.idNotes ?
+                                <NoteEdit
+                                    note={note}
+                                    handleEditButton={handleEditButton}
+                                />
+                                :
+                                <Paper id={note.idNotes} key={note.idNotes} className={classes.noteBackground} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+                                    <Grid container>
+                                        <Grid container item xs={8} direction="column" justify="center" alignItems="flex-start" style={{ overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto" }}>
+                                            <Typography variant="body1">
+                                                {note.note}
+                                            </Typography>
                                         </Grid>
-                                        <Typography className={classes.infoText} variant="body1" style={{ display: noteToDelete === note.idNotes ? "block" : "none" }}>
-                                            {infoText}
-                                        </Typography>
+                                        <Grid container item xs={4} direction="column" alignItems="flex-end">
+                                            <Grid container item direction="row" justify="flex-end">
+                                                <Button className={classes.defaultButton} onClick={() => handleEdit(note.idNotes)} style={{ marginRight: 10, display: currentNoteIndex === note.idNotes ? "block" : "none" }} >
+                                                    {t('button_edit')}
+                                                </Button>
+                                                <Button className={classes.defaultButton} onClick={() => handleDelete(note.idNotes)} style={{ visibility: currentNoteIndex === note.idNotes ? "visible" : "hidden" }} >
+                                                    {t('button_delete')}
+                                                </Button>
+                                            </Grid>
+                                            <Typography className={classes.infoText} variant="body1" style={{ display: noteToDelete === note.idNotes ? "block" : "none" }}>
+                                                {infoText}
+                                            </Typography>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Paper>
+
+                                </Paper>
+                            }
                         </div>
+
                     )
                 })}
             </Grid>

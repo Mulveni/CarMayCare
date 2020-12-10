@@ -99,5 +99,6 @@
   "note_delete_note": "Note will be removed permanently.",
   "button_yes": "Yes",
   "button_no": "No",
-  "no_notes_added": "There is no notes added for this car."
+  "no_notes_added": "There is no notes added for this car.",
+  "message_over_200": "Limit of message is 200 characters."
 }
