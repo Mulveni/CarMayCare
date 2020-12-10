@@ -25,7 +25,7 @@ const models = {
                 fuelFilterReplacement: service.fuelFilterReplacement,
                 brakeFluidReplacement: service.brakeFluidReplacement,
                 gearBoxOilReplacement: service.gearBoxOilReplacement,
-                powerSteeringOilReplacement: service.gearBoxOilReplacement,
+                powerSteeringOilReplacement: service.powerSteeringOilReplacement,
                 timingBeltReplacement: service.timingBeltReplacement,
                 waterPumpReplacement: service.waterPumpReplacement,
                 dieselParticulateFilterReplacement: service.dieselParticulateFilterReplacement
