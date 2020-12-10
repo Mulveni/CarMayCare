@@ -92,6 +92,7 @@
     "button_delete": "Poista",
     "error_car_id_not_found": "Autoa ei löytynyt. Yritä kirjautua uudelleen.",
     "saved": "Tallennettu.",
+    "no_results": "Ei Autoja",
     "car_delete_question": "Haluatko varmasti poistaa auton?",
     "car_delete_note": "Auto poistetaan pysyvästi ja myös siihen lisätyt huollot poistetaan.",
     "button_yes": "Kyllä",
