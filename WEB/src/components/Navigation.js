@@ -3,6 +3,7 @@ import { IconButton, Grid, makeStyles, AppBar, Toolbar, Button, Drawer, List, Li
 import { AccountBox, Close, DriveEta } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import i18n from '../i18n';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, removeToken } from '../actions';
@@ -70,6 +71,7 @@ const Navigation = () => {
     const classes = useStyles();
     const navButtons = useSelector(state => state.navButtonsReducer);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleLeftMenuOpening = () => {
         if (leftMenuOpen === true) {
@@ -95,7 +97,9 @@ const Navigation = () => {
         console.log(lng);
         i18n.changeLanguage(lng);
     }
-
+    const handleOpenProfile = (e) =>{
+        history.push("/");
+    }
 
     return (
         <div>
@@ -172,7 +176,7 @@ const Navigation = () => {
                 open={Boolean(rightMenuOpen)}
                 onClose={handleClose}
             >
-                <MenuItem className={classes.navLinks} id="profile" onClick={(e) => handleClose(e)}>{t('profile')}</MenuItem>
+                <MenuItem className={classes.navLinks} id="profile" onClick={(e) => handleOpenProfile(e)}>{t('profile')}</MenuItem>
                 <MenuItem className={classes.navLinks} id="settings" onClick={(e) => handleClose(e)}>{t('settings')}</MenuItem>
                 <MenuItem className={classes.navLinks} id="logout" onClick={(e) => handleClose(e)}>{t('logout')}</MenuItem>
             </Menu>
