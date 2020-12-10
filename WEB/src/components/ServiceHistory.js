@@ -8,6 +8,7 @@ import { showNavButtons } from '../actions';
 import { background } from '../styles/classes';
 import Colors from '../styles/colors';
 import { useHistory } from 'react-router-dom';
+import Loading from './Loading';
 
 const useStyles = makeStyles({
 
@@ -90,14 +91,13 @@ const ServiceHistory = (props) => {
         </div>
     }
 
-
     return (
         <div>
-        <Paper className={classes.background} style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
+        <Paper className={classes.background} align="center" style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
 
                 {services.map(i => {
                     return (
-                        <Paper className={classes.background} key={i.idServices} style={{marginLeft: 20, marginRight: 20}}>
+                        <Paper className={classes.background} key={i.idServices} style={{marginLeft: 20, marginRight: 20, width: "66.6%"}}>
                             <ListItem className={classes.serviceButton} style={{paddingTop: 25, paddingBottom: 25}} button onClick={() => {
                             }}>
                                 <ListItemText
