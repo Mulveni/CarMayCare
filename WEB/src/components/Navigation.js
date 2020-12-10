@@ -99,6 +99,7 @@ const Navigation = () => {
     }
     const handleOpenProfile = (e) =>{
         history.push("/");
+        setRightMenuOpen(null);
     }
 
     return (
