@@ -128,7 +128,7 @@ const CarView = (props) => {
   const CarTabs = () => {
     switch (tabIndex) {
       case 0:
-        return <ServiceHistory />;
+        return <ServiceHistory carId={carId} />;
       case 1:
         return <AddService carId={carId} />;
       case 2:
@@ -175,12 +175,12 @@ const CarView = (props) => {
               handleEditButton={handleEditButton}
             />
           ) : (
-            <CarEdit
-              data={carData}
-              carId={props.location.state.carId}
-              handleSaveButton={handleSaveButton}
-            />
-          )}
+              <CarEdit
+                data={carData}
+                carId={props.location.state.carId}
+                handleSaveButton={handleSaveButton}
+              />
+            )}
         </Grid>
       </Card>
 
