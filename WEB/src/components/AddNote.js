@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import baseApiUrl from "../api_url.json";
-import { useDispatch } from "react-redux";
-import { showNavButtons } from "../actions";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import {
   TextField,
   Typography,
@@ -26,33 +25,30 @@ const useStyles = makeStyles({
   infoText: infoText,
 });
 const Notes = (props) => {
-  const [setErrorText] = useState(null);
   const [infoText, setInfoText] = useState(null);
   const apiUrl = baseApiUrl.url;
   const classes = useStyles();
+  const history = useHistory();
+
   const { register, handleSubmit, reset } = useForm();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(showNavButtons());
-  }, [dispatch]);
 
   const onSubmit = (data) => {
     axios.post(`${apiUrl}/notes/${props.carId}`, data, {}).then(
       (response) => {
-        setInfoText("note_saved");
+        setInfoText(t("note_saved"));
         reset();
       },
       (error) => {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        if (error.response.data === "Unauthorized") {
-          setErrorText(t("unauthorized"));
-        } else if (error.response.status === 404) {
-          setErrorText(t("internal_server_error"));
+        if (
+          error.response.status === 404 &&
+          error.response.data.message === "no results for given id"
+        ) {
+          setInfoText(t("error_note_id_not_found"));
+        } else if (error.response.data === "Unauthorized") {
+          history.push("/login", { error: t("unauthorized") });
         } else {
-          setErrorText(t("unknown_reason"));
+          setInfoText(t("internal_server_error"));
         }
       }
     );
@@ -73,9 +69,8 @@ const Notes = (props) => {
           placeholder={t("write_note_here")}
           fullWidth
           inputRef={register({
-            required: true,
-            minLength: 1,
-            maxLength: 100,
+            required: { value: true, message: t("empty_field") },
+            maxLength: { value: 200, message: t("message_over_200") },
           })}
           margin="normal"
           variant="outlined"
