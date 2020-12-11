@@ -28,9 +28,6 @@ const useStyles = makeStyles({
     infoText: infoText
   });
 
-
-// <EditService carId={carId} serviceId={serviceId}/>
-// Required props: carId, serviceId
 const EditService = (props) => {
     const classes = useStyles();
     const apiUrl = baseApiUrl.url;
@@ -85,7 +82,6 @@ const EditService = (props) => {
         responseAdditional = response.data[0].additionalServices;
         responseMotor = response.data[0].motorOilChange;
         responseAir= response.data[0].airConditioningService;
-        //console.log("here: " + response.data[0].additionalServices.powerSteeringOilReplacement);
 
         setDescription(response.data[0].description);
         setMileAge(response.data[0].mileAge);
@@ -176,7 +172,7 @@ const EditService = (props) => {
 
       axios.delete(`${apiUrl}/services/${props.carId}/${props.serviceId}`, {
       }).then((response) => {  
-  
+        props.goToService(0);
       }, (error) => {
           console.log(error.response.data);
           console.log(error.response.status);
@@ -221,7 +217,8 @@ const EditService = (props) => {
 
         }).then((response) => {
 
-            console.log(response); //-------------------???
+            console.log(response);
+            setErrorText(t('service_edit'));
 
         }, (error) => {
 
@@ -294,8 +291,16 @@ const EditService = (props) => {
 
     return (
       <Card className={classes.background} style={{ marginTop: 10}}>
-        <Grid container item xs={12} direction ="column">
-          <Grid container item direction="row" justify="flex-end" style={{ paddingTop: 25 }} >
+        <Grid container item xs={12} direction ="row">
+          <Grid container item xs={6} direction="row" justify="flex-start" style={{ paddingTop: 25 }} >
+            <Button
+                onClick={() => { props.goToService(0); }}
+                className={classes.defaultButton}
+                style={{ marginTop: 25, marginLeft: 10}}>
+                {t('button_back')}
+              </Button>
+          </Grid>
+          <Grid container item xs={6} direction="row" justify="flex-end" style={{ paddingTop: 25 }} >
               <Button
                 onClick={() => { setFieldsDisabled(fieldsDisabled => !fieldsDisabled) }}
                 className={classes.defaultButton}
