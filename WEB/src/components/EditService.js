@@ -7,7 +7,9 @@ import baseApiUrl from '../api_url.json';
 
 import { useForm } from 'react-hook-form';
 import { TextField, Grid, Button, makeStyles, Typography, Card, Checkbox, FormControl, 
-         FormControlLabel, FormLabel, FormGroup} from '@material-ui/core';
+         FormControlLabel, FormLabel, FormGroup, Dialog, DialogTitle, DialogContent, 
+         DialogContentText, DialogActions} from '@material-ui/core';
+
 import { infoText, defaultButton, background} from '../styles/classes';
 import Loading from './Loading';
 
@@ -40,6 +42,7 @@ const EditService = (props) => {
     const [description, setDescription] = useState();
     const [mileAge, setMileAge] = useState();
     const [additionalInformation, setAdditionalInformation] = useState();
+    const [deleteWindowOpen, setDeleteWindowOpen] = useState(false);
 
     const [motorOilChange, setMotorOilChange] = useState({
       mocDone: false,
@@ -69,92 +72,126 @@ const EditService = (props) => {
       waterPumpReplacement, dieselParticulateFilterReplacement} = additionalServices;
 
 
-      const getService = () => {
-        axios.defaults.headers.common = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': `Bearer ${myToken}`
+    const getService = () => {
+      axios.defaults.headers.common = {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          'Authorization': `Bearer ${myToken}`
+        }
+
+      axios.get(`${apiUrl}/services/${props.carId}/${props.serviceId}`, {
+      }).then((response) => {
+        var responseAdditional, responseMotor, responseAir, key;
+        responseAdditional = response.data[0].additionalServices;
+        responseMotor = response.data[0].motorOilChange;
+        responseAir= response.data[0].airConditioningService;
+        //console.log("here: " + response.data[0].additionalServices.powerSteeringOilReplacement);
+
+        setDescription(response.data[0].description);
+        setMileAge(response.data[0].mileAge);
+        setAdditionalInformation(response.data[0].additionalInformation);
+
+          for (key in responseAdditional) {
+            if(responseAdditional[key] === 1){
+              additionalServices[key] = true;
+            }
+            else{
+              additionalServices[key] = false;
+            }
           }
 
-        axios.get(`${apiUrl}/services/${props.carId}/${props.serviceId}`, {
-        }).then((response) => {
-          var responseAdditional, responseMotor, responseAir, key;
-          responseAdditional = response.data[0].additionalServices;
-          responseMotor = response.data[0].motorOilChange;
-          responseAir= response.data[0].airConditioningService;
-          //console.log("here: " + response.data[0].additionalServices.powerSteeringOilReplacement);
-
-          setDescription(response.data[0].description);
-          setMileAge(response.data[0].mileAge);
-          setAdditionalInformation(response.data[0].additionalInformation);
-
-            for (key in responseAdditional) {
-              if(responseAdditional[key] === 1){
-                additionalServices[key] = true;
+          for (key in responseAir) {
+            if(responseAir[key] === 1){
+              if(key === "done"){
+                airConditioningService.acsDone = true;
               }
               else{
-                additionalServices[key] = false;
+                airConditioningService[key] = true;
               }
             }
 
-            for (key in responseAir) {
-              if(responseAir[key] === 1){
-                if(key === "done"){
-                  airConditioningService.acsDone = true;
-                }
-                else{
-                  airConditioningService[key] = true;
-                }
+            else{
+              if(key === "done"){
+                airConditioningService.acsDone = false;
               }
-
               else{
-                if(key === "done"){
-                  airConditioningService.acsDone = false;
-                }
-                else{
-                  airConditioningService[key] = false;
-                }
+                airConditioningService[key] = false;
               }
             }
+          }
 
-            for (key in responseMotor) {
-              if(responseMotor[key] === 1){
-                if(key === "done"){
-                  motorOilChange.mocDone = true;
-                }
-                else{
-                  motorOilChange[key] = true;
-                }
+          for (key in responseMotor) {
+            if(responseMotor[key] === 1){
+              if(key === "done"){
+                motorOilChange.mocDone = true;
               }
-
               else{
-                if(key === "done"){
-                  motorOilChange.mocDone = false;
-                }
-                else{
-                  motorOilChange[key] = false;
-                }
+                motorOilChange[key] = true;
               }
             }
 
-            setLoading(false);
-    
-        }, (error) => {
-            console.log(error.response.data);
-            console.log(error.response.status);
-    
-            if (error.response.data === "Unauthorized") {
-                setErrorText(t('error') + ": " +t('unauthorized'));
-                setLoading(false);
+            else{
+              if(key === "done"){
+                motorOilChange.mocDone = false;
+              }
+              else{
+                motorOilChange[key] = false;
+              }
             }
-            else {
-                setErrorText(t('error') + ": " +t('internal_server_error'))
-                setLoading(false);
-            }
-        });
+          }
+
+          setLoading(false);
+  
+      }, (error) => {
+          console.log(error.response.data);
+          console.log(error.response.status);
+  
+          if (error.response.data === "Unauthorized") {
+              setErrorText(t('error') + ": " +t('unauthorized'));
+              setLoading(false);
+          }
+          else {
+              setErrorText(t('error') + ": " +t('internal_server_error'))
+              setLoading(false);
+          }
+      });
 
     }
 
+
+    const handleWindowOpen = () => {
+      setDeleteWindowOpen(true);
+    };
+
+    const handleWindowNo = () => {
+      setDeleteWindowOpen(false);
+  };
+
+    const deleteService = () => {
+      axios.defaults.headers.common = {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          'Authorization': `Bearer ${myToken}`
+        }
+
+      axios.delete(`${apiUrl}/services/${props.carId}/${props.serviceId}`, {
+      }).then((response) => {  
+  
+      }, (error) => {
+          console.log(error.response.data);
+          console.log(error.response.status);
+  
+          if (error.response.data === "Unauthorized") {
+              setErrorText(t('error') + ": " +t('unauthorized'));
+          }
+          else {
+              setErrorText(t('error') + ": " +t('internal_server_error'))
+          }
+      });
+
+      setDeleteWindowOpen(false);
+
+    }
 
     const onSubmit = data => {
       setFieldsDisabled(fieldsDisabled => !fieldsDisabled);
@@ -257,15 +294,23 @@ const EditService = (props) => {
 
     return (
       <Card className={classes.background} style={{ marginTop: 10}}>
-        <Grid container item xs={12} direction="column" alignContent="flex-end" style={{ paddingTop: 25 }} >
-            <Button
-              className={classes.defaultButton}
-              style={{ margin: "auto", marginTop: 25, marginRight: 10}}
-              disabled={!fieldsDisabled}
-              onClick={() => { setFieldsDisabled(fieldsDisabled => !fieldsDisabled) }}
-              >
-              {t('button_edit')}
-            </Button>
+        <Grid container item xs={12} direction ="column">
+          <Grid container item direction="row" justify="flex-end" style={{ paddingTop: 25 }} >
+              <Button
+                onClick={() => { setFieldsDisabled(fieldsDisabled => !fieldsDisabled) }}
+                className={classes.defaultButton}
+                style={{ marginTop: 25, marginRight: 10}}
+                disabled={!fieldsDisabled}>
+                {t('button_edit')}
+              </Button>
+              <Button 
+                onClick={handleWindowOpen} 
+                className={classes.defaultButton} 
+                style={{ marginTop: 25, marginRight: 10}}
+                disabled={!fieldsDisabled}>
+                {t('button_delete')}
+              </Button>
+          </Grid>
         </Grid>
         <Grid container item xs={8} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, margin: 'auto'}}>
    
@@ -451,6 +496,19 @@ const EditService = (props) => {
             </Button>
           </form>
         </Grid>
+
+        <Dialog open={deleteWindowOpen}>
+          <DialogTitle>{t('service_delete_question')}</DialogTitle>
+          <DialogContent>
+              <DialogContentText>{t('service_delete_note')}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+              <Button className={classes.defaultButton} onClick={deleteService}>{t('button_yes')}</Button>
+              <Button className={classes.defaultButton} onClick={handleWindowNo} autoFocus>{t('button_no')}</Button>
+          </DialogActions>
+        </Dialog>
+
+
       </Card>
     )
 }

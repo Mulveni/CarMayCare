@@ -95,6 +95,8 @@
   "button_delete": "Delete",
   "car_delete_question": "Are you sure you want to delete the car?",
   "car_delete_note": "The car and services related to it will be removed permanently.",
+  "service_delete_question": "Are you sure you want to delete the service?",
+  "service_delete_note": "The service will be removed permanently.",
   "button_yes": "Yes",
   "button_no": "No",
   "password_change_successfull": "Password changed successfully",

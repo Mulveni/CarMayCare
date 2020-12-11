@@ -95,6 +95,8 @@
     "no_results": "Ei Autoja",
     "car_delete_question": "Haluatko varmasti poistaa auton?",
     "car_delete_note": "Auto poistetaan pysyvästi ja myös siihen lisätyt huollot poistetaan.",
+    "service_delete_question": "Haluatko varmasti poistaa huollon?",
+    "service_delete_note": "Huolto poistetaan pysyvästi.",
     "button_yes": "Kyllä",
     "button_no": "En",
     "no_services_found_for_this_car": "Tälle autolle ei ole huoltoja",
