@@ -1,10 +1,9 @@
-import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography} from '@material-ui/core';
+import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography, Grid} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
-import { useDispatch, useSelector } from 'react-redux';
-import { showNavButtons } from '../actions';
+import { useSelector } from 'react-redux';
 import { background } from '../styles/classes';
 import Colors from '../styles/colors';
 import { useHistory } from 'react-router-dom';
@@ -81,19 +80,22 @@ const ServiceHistory = (props) => {
 
     const { t } = useTranslation();
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(showNavButtons());
-    }, [dispatch]);
-
     if(errorText){
 
-        return <div>
-            <Typography variant="h5" align="center">
-                {errorText}
-            </Typography>
+        return(
+            <div>
+                <Grid container direction="column" justify="center" alignItems="center" style={{paddingTop: 25, paddingBottom: 25}}>
 
-        </div>
+                
+                    <Typography variant="h5">
+
+                        {errorText}
+                        
+                    </Typography>
+
+                </Grid>
+            </div>
+        )
     }
 
     if(isLoading){
