@@ -105,7 +105,7 @@ const Navigation = () => {
     setRightMenuOpen(null);
   };
 
-  const handleNav = (e) => {
+  const handleNav = () => {
     history.push("/mycars");
     setLeftMenuOpen((leftMenuOpen) => !leftMenuOpen);
   };
@@ -114,7 +114,7 @@ const Navigation = () => {
     console.log(lng);
     i18n.changeLanguage(lng);
   };
-  const handleOpenProfile = (e) => {
+  const handleOpenProfile = () => {
     history.push("/");
     setRightMenuOpen(null);
   };
@@ -199,7 +199,7 @@ const Navigation = () => {
           <ListItem
             button
             className={classes.navLinks}
-            onClick={(e) => handleNav(e)}
+            onClick={() => handleNav()}
           >
             <IconButton className={classes.menuItem} disableRipple={true}>
               <DriveEta />
@@ -220,7 +220,7 @@ const Navigation = () => {
         <MenuItem
           className={classes.navLinks}
           id="profile"
-          onClick={(e) => handleOpenProfile(e)}
+          onClick={() => handleOpenProfile()}
         >
           {t("profile")}
         </MenuItem>

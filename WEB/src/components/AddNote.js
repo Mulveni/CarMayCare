@@ -30,7 +30,7 @@ const Notes = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, error } = useForm();
   const { t } = useTranslation();
 
   const onSubmit = (data) => {
@@ -52,6 +52,10 @@ const Notes = (props) => {
         }
       }
     );
+  };
+  const onError = (errors) => {
+    const firstValue = errors[Object.keys(errors)[0]];
+    setInfoText(firstValue.message);
   };
   return (
     <form className={classes.addNoteGrid}>
@@ -90,7 +94,7 @@ const Notes = (props) => {
           </Typography>
           <Button
             style={{ margin: "auto", marginTop: 25 }}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit, onError)}
             className={classes.defaultButton}
           >
             {t("button_save")}
