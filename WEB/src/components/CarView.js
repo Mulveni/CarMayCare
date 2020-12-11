@@ -131,7 +131,7 @@ const CarView = (props) => {
         return <ServiceHistory />;
       case 1:
         return (
-          <AddService carId={carId} /> //serviceId={100}
+          <AddService carId={carId} />
         );
       case 2:
         return <Notes />;

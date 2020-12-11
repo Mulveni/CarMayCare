@@ -1,7 +1,6 @@
 const models = {
     serviceModel: (service) => {
 
-
         const newServiceModel = {
             idServices: service.idServices,
             idCars: service.idCars,
@@ -26,7 +25,7 @@ const models = {
                 fuelFilterReplacement: service.fuelFilterReplacement,
                 brakeFluidReplacement: service.brakeFluidReplacement,
                 gearBoxOilReplacement: service.gearBoxOilReplacement,
-                powerSteeringOilReplacement: service.gearBoxOilReplacement,
+                powerSteeringOilReplacement: service.powerSteeringOilReplacement,
                 timingBeltReplacement: service.timingBeltReplacement,
                 waterPumpReplacement: service.waterPumpReplacement,
                 dieselParticulateFilterReplacement: service.dieselParticulateFilterReplacement
