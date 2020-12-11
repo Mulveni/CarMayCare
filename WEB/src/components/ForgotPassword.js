@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
-import { TextField, Grid, Button, makeStyles, Card, Typography } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Card, Typography, Link } from '@material-ui/core';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
-import { infoText, defaultButton, background } from '../styles/classes';
+import { infoText, defaultButton, background, defaultLink } from '../styles/classes';
 
 const useStyles = makeStyles({
     forgotPasswordGrid: {
@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     },
     background,
     infoText: infoText,
-    defaultButton: defaultButton
+    defaultButton: defaultButton,
+    defaultLink
 });
 
 const ForgotPassword = () => {
@@ -41,6 +42,7 @@ const ForgotPassword = () => {
                         <Typography variant="h5">
                             {t('forgot_password_sent_message')}
                         </Typography>
+                        <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
                     </Grid>
                 </Card>
             </div >
@@ -125,6 +127,7 @@ const ForgotPassword = () => {
                                 style={{ marginTop: 50 }}>
                                 {t('send')}
                             </Button>
+                            <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
                         </div>
                     </Grid>
                 </Card>

@@ -5,7 +5,7 @@
   "profile": "Profile",
   "settings": "Settings",
   "logout": "Logout",
-  "login": "Login",
+  "login_here": "Login here.",
   "email": "Email",
   "password": "Password",
   "empty_field": "Field cannot be empty.",

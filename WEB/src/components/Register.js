@@ -239,7 +239,7 @@ const Register = () => {
               {submitText}
             </Typography>
             <Link className={classes.defaultLink} href="/login">
-              {t("login")}
+              {t("login_here")}
             </Link>
           </form>
         </Grid>

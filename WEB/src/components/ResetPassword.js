@@ -5,12 +5,12 @@ import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
 import NotFound from '../components/NotFound';
 import axios from 'axios';
-import { Grid, Button, makeStyles, Typography, Card } from '@material-ui/core';
+import { Grid, Button, makeStyles, Typography, Card, Link } from '@material-ui/core';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
 import Error from './Error';
 import Loading from './Loading';
-import { infoText, defaultButton, background } from '../styles/classes';
+import { infoText, defaultButton, background, defaultLink } from '../styles/classes';
 
 const useStyles = makeStyles({
     resetPasswordGrid: {
@@ -21,7 +21,8 @@ const useStyles = makeStyles({
     },
     background: background,
     infoText: infoText,
-    defaultButton: defaultButton
+    defaultButton: defaultButton,
+    defaultLink: defaultLink
 });
 
 const ResetPassword = () => {
@@ -120,6 +121,7 @@ const ResetPassword = () => {
                                 {t('reset_password')}
                             </Button>
                             <Typography className={classes.infoText}>{resetPasswordText}</Typography>
+                            <Link className={classes.defaultLink} style={{ marginBottom: 25 }} href="/login">{t('login_here')}</Link>
                         </Grid>
                     </Card>
 
@@ -130,6 +132,7 @@ const ResetPassword = () => {
                             <Typography variant="h5">
                                 {t('password_reseted_and_sent')}
                             </Typography>
+                            <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
                         </Grid>
                     </Card>
                 }
