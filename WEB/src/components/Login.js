@@ -76,7 +76,7 @@ const Login = (props) => {
                 clearInputs();
                 dispatch(logIn());
                 dispatch(addToken(response.data.token));
-                history.push("/");
+                history.push("/mycars");
             }).catch(error => {
                 clearInputs();
                 if (error.response === undefined) {
