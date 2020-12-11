@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom'
 
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
-
 import { infoText, defaultButton, background } from '../styles/classes';
 import Colors from '../styles/colors';
 import { Avatar, Grid, Button, makeStyles, Card, CardHeader, CardContent, 
@@ -16,11 +15,14 @@ import { Avatar, Grid, Button, makeStyles, Card, CardHeader, CardContent,
 import Loading from './Loading';
 
 // TODO:
-// -    implement styles
 // -    error message needs to update on language change.
 
 
 const useStyles = makeStyles({ 
+
+    card: {
+        width: "66.6%"
+    },
 
     indicatorColor: {
         backgroundColor: Colors.orange
@@ -121,7 +123,6 @@ const MyCars = () => {
     return (
       
     <Card className={classes.background} style={{ marginTop: 50}}>           
-            
         <CardHeader
         style={{ paddingTop: 25}}
         titleTypographyProps={{ variant: "h4", align: "center"}}
@@ -135,8 +136,8 @@ const MyCars = () => {
          {errorText}
         </Typography>
 
-        <Grid container item xs={12} direction="column" alignContent="center"  style={{ paddingTop: 25, paddingBottom: 25, margin: 'auto'}}>
-            <CardContent>
+        <Grid container item direction="column" alignContent="center"  style={{ paddingTop: 25, paddingBottom: 25, margin: 'auto'}}>
+            <CardContent className={classes.card}>
                 {cars.map(i => {
                     return (
                         <Paper elevation={1} key={i.idCars} className={classes.carButton} onClick={() => { history.push("/CarView/", {carId: i.idCars})}}>
