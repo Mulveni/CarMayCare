@@ -25,7 +25,7 @@ const CarInfo = ({ data, text, handleEditButton }) => {
 
     const handleWindowOpen = () => {
         setDeleteWindowOpen(true);
-    };
+    }
 
     const handleWindowYes = () => {
         axios.delete(`${apiUrl}/cars/${carData.idCars}`, {
@@ -45,11 +45,11 @@ const CarInfo = ({ data, text, handleEditButton }) => {
             }
         });
         setDeleteWindowOpen(false);
-    };
+    }
 
     const handleWindowNo = () => {
         setDeleteWindowOpen(false);
-    };
+    }
 
     return (
         <>

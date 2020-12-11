@@ -127,7 +127,7 @@ const CarView = (props) => {
                 )
             case 2:
                 return (
-                    <Notes />
+                    <Notes carId={carId} />
                 )
             default:
                 return (
