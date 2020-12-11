@@ -110,7 +110,6 @@ const ServiceHistory = (props) => {
                                 primary={i.dateOfService.substring(0,10)} style={{textAlign: "right", marginRight: 20}}/>
 
                             </ListItem>
-                            <Divider variant="fullWidth"/>
                         </Paper>
                     )
                 })}
