@@ -114,5 +114,8 @@
   "delete_user_account": "Delete user account",
   "btn_delete_user_account": "Delete user account",
   "type_password_to_delete_user": "Type password to delete user account",
+  "button_add_note": "Add Note",
+  "note_saved": "Note saved",
+  "write_note_here": "Write the note here",
   "no_services_found_for_this_car": "No services found for this car"
 }

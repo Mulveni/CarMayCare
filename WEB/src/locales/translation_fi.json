@@ -114,5 +114,9 @@
     "passwords_dont_match": "Tarkista, että kirjoitit uudet salasanat oikein",
     "delete_user_account": "Käyttäjätilin poisto",
     "btn_delete_user_account": "Poista käyttäjätili",
-    "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili"
+    "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili",
+    "button_add_note": "Lisää Merkintä",
+    "note_saved": "Merkintä tallennettu",
+    "write_note_here": "Kirjoita merkintä tähän"
 }
+
