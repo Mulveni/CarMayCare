@@ -6,6 +6,7 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, removeToken } from '../actions';
+import { useHistory } from 'react-router-dom';
 import Colors from '../styles/colors';
 
 
@@ -66,6 +67,7 @@ const Navigation = () => {
     const [leftMenuOpen, setLeftMenuOpen] = useState(false);
     const [rightMenuOpen, setRightMenuOpen] = useState(null);
 
+    const history = useHistory();
     const { t } = useTranslation();
     const classes = useStyles();
     const navButtons = useSelector(state => state.navButtonsReducer);
@@ -89,6 +91,11 @@ const Navigation = () => {
             dispatch(removeToken());
         }
         setRightMenuOpen(null);
+    }
+
+    const handleNav = (e) => {
+        history.push("/mycars");
+        setLeftMenuOpen(leftMenuOpen => !leftMenuOpen);
     }
 
     const changeLanguage = (lng) => {
@@ -155,7 +162,7 @@ const Navigation = () => {
                 </div>
 
                 <List>
-                    <ListItem button className={classes.navLinks}>
+                    <ListItem button  className={classes.navLinks} onClick={(e) => handleNav(e)}>
                         <IconButton className={classes.menuItem} disableRipple={true}>
                             <DriveEta />
                             {t('menu_own_cars')}
