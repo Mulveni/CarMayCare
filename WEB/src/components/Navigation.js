@@ -181,6 +181,7 @@ const Navigation = () => {
                 className={classes.drawer}
                 anchor="left"
                 open={leftMenuOpen}
+                onClose={handleLeftMenuOpening}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
