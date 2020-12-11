@@ -71,8 +71,8 @@
   "service_description": "Service description",
   "service_mileage": "Mileage",
   "service_additional_information": "Additional information",
-  "motor_oil_change":"Motor oil change",
-  "air_conditioning_service": "Air conditioning service", 
+  "motor_oil_change": "Motor oil change",
+  "air_conditioning_service": "Air conditioning service",
   "additional_services": "Additional services",
   "done": "Done",
   "dryer": "Dryer replacement",
@@ -111,6 +111,6 @@
   "type_password_to_delete_user": "Type password to delete user account",
   "button_add_note": "Add Note",
   "note_saved": "Note saved",
-  "write_note_here": "Write the note here"
+  "write_note_here": "Write the note here",
   "no_services_found_for_this_car": "No services found for this car"
 }
