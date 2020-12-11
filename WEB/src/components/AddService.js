@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom'
-
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
-
 import { useForm } from 'react-hook-form';
 import { TextField, Grid, Button, makeStyles, Typography, Card, Checkbox, FormControl, 
          FormControlLabel, FormLabel, FormGroup} from '@material-ui/core';
@@ -29,7 +26,6 @@ const AddService = (props) => {
   console.log("Current car id: " + props.carId);
     const classes = useStyles();
     const apiUrl = baseApiUrl.url;
-    const history = useHistory();
     const [errorText, setErrorText] = useState(null);
     const { register, handleSubmit } = useForm();
 

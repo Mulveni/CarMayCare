@@ -176,7 +176,7 @@ const EditService = (props) => {
 
       axios.delete(`${apiUrl}/services/${props.carId}/${props.serviceId}`, {
       }).then((response) => {  
-  
+        props.goToService(0);
       }, (error) => {
           console.log(error.response.data);
           console.log(error.response.status);
@@ -221,7 +221,8 @@ const EditService = (props) => {
 
         }).then((response) => {
 
-            console.log(response); //-------------------???
+            console.log(response);
+            props.goToService(0);
 
         }, (error) => {
 
