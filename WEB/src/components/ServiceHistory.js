@@ -35,6 +35,7 @@ const ServiceHistory = (props) => {
     const myToken = useSelector(state => state.tokenReducer);
     const [services, setServices] = useState([]);
     const [errorText, setErrorText] = useState(null);
+    const [isLoading, setLoader] = useState(true);
 
     var results = [];
 
@@ -55,16 +56,20 @@ const ServiceHistory = (props) => {
             }
 
             setServices(results);
+            setLoader(false);
+
         }, (error) => {
             console.log(error.response.data);
             console.log(error.response.status);
 
             if (error.response.data === "Unauthorized") {
                 setErrorText(t('error') + ": " + t('unauthorized'));
+                setLoader(false);
                 history.push("/");
             }
             else if (error.response.status === 404) {
                 setErrorText(t('no_services_found_for_this_car'));
+                setLoader(false);
             }
 
         });
@@ -89,6 +94,10 @@ const ServiceHistory = (props) => {
             </Typography>
 
         </div>
+    }
+
+    if(isLoading){
+        return <Loading/>;
     }
 
     return (
