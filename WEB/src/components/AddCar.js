@@ -43,7 +43,7 @@ const AddCar = () => {
     }).then((response) => {
 
       console.log(response);
-      history.push("/mycars");
+      history.push("/");
 
     }, (error) => {
       console.log(error.response.data);

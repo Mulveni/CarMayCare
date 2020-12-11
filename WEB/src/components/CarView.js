@@ -109,7 +109,7 @@ const CarView = (props) => {
     if (status === "edit") {
       setEditMode(true);
     } else {
-      history.push("/mycars");
+      history.push("/");
     }
   };
 
