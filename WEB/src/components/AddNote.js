@@ -30,7 +30,7 @@ const Notes = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { register, handleSubmit, reset, error } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { t } = useTranslation();
 
   const onSubmit = (data) => {
