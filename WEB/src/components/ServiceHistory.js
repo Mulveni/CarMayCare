@@ -1,13 +1,13 @@
-import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography} from '@material-ui/core';
+import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography, Grid} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
-import { useDispatch, useSelector } from 'react-redux';
-import { showNavButtons } from '../actions';
+import { useSelector } from 'react-redux';
 import { background } from '../styles/classes';
 import Colors from '../styles/colors';
 import { useHistory } from 'react-router-dom';
+import Loading from './Loading';
 
 const useStyles = makeStyles({
 
@@ -34,6 +34,7 @@ const ServiceHistory = (props) => {
     const myToken = useSelector(state => state.tokenReducer);
     const [services, setServices] = useState([]);
     const [errorText, setErrorText] = useState(null);
+    const [isLoading, setLoader] = useState(true);
 
     var results = [];
 
@@ -54,16 +55,20 @@ const ServiceHistory = (props) => {
             }
 
             setServices(results);
+            setLoader(false);
+
         }, (error) => {
             console.log(error.response.data);
             console.log(error.response.status);
 
             if (error.response.data === "Unauthorized") {
                 setErrorText(t('error') + ": " + t('unauthorized'));
+                setLoader(false);
                 history.push("/");
             }
             else if (error.response.status === 404) {
                 setErrorText(t('no_services_found_for_this_car'));
+                setLoader(false);
             }
 
         });
@@ -75,29 +80,35 @@ const ServiceHistory = (props) => {
 
     const { t } = useTranslation();
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(showNavButtons());
-    }, [dispatch]);
-
     if(errorText){
 
-        return <div>
-            <Typography variant="h5" align="center">
-                {errorText}
-            </Typography>
+        return(
+            <div>
+                <Grid container direction="column" justify="center" alignItems="center" style={{paddingTop: 25, paddingBottom: 25}}>
 
-        </div>
+                
+                    <Typography variant="h5">
+
+                        {errorText}
+                        
+                    </Typography>
+
+                </Grid>
+            </div>
+        )
     }
 
+    if(isLoading){
+        return <Loading/>;
+    }
 
     return (
         <div>
-        <Paper className={classes.background} style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
+        <Paper className={classes.background} align="center" style={{ paddingTop: 25, paddingBottom: 25, margin: "auto"}}>
 
                 {services.map(i => {
                     return (
-                        <Paper className={classes.background} key={i.idServices} style={{marginLeft: 20, marginRight: 20}}>
+                        <Paper className={classes.background} key={i.idServices} style={{marginLeft: 20, marginRight: 20, width: "66.6%"}}>
                             <ListItem className={classes.serviceButton} style={{paddingTop: 25, paddingBottom: 25}} button onClick={() => {
                             }}>
                                 <ListItemText
