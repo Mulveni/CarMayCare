@@ -28,9 +28,6 @@ const useStyles = makeStyles({
     infoText: infoText
   });
 
-
-// <EditService carId={carId} serviceId={serviceId}/>
-// Required props: carId, serviceId
 const EditService = (props) => {
     const classes = useStyles();
     const apiUrl = baseApiUrl.url;
@@ -85,7 +82,6 @@ const EditService = (props) => {
         responseAdditional = response.data[0].additionalServices;
         responseMotor = response.data[0].motorOilChange;
         responseAir= response.data[0].airConditioningService;
-        //console.log("here: " + response.data[0].additionalServices.powerSteeringOilReplacement);
 
         setDescription(response.data[0].description);
         setMileAge(response.data[0].mileAge);
