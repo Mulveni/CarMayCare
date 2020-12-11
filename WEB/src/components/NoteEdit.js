@@ -11,12 +11,9 @@ import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     noteBackground: {
-        backgroundColor: Colors.blue2,
+        backgroundColor: Colors.orange_light,
         padding: 25,
         marginBottom: 25,
-        '&:hover': {
-            backgroundColor: Colors.orange_light
-        }
     },
     background: background,
     defaultButton: defaultButton,
@@ -96,7 +93,7 @@ const NoteEdit = ({ note, handleEditButton }) => {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            style={{ background: "white" }}
+
                         />
                     </Grid>
                     <Grid container item xs={4} direction="column" alignItems="flex-end">
