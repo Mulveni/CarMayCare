@@ -111,7 +111,6 @@ const Navigation = () => {
     };
 
     const changeLanguage = (lng) => {
-        console.log(lng);
         i18n.changeLanguage(lng);
     };
     const handleOpenProfile = () => {
@@ -223,13 +222,6 @@ const Navigation = () => {
                     onClick={() => handleOpenProfile()}
                 >
                     {t("profile")}
-                </MenuItem>
-                <MenuItem
-                    className={classes.navLinks}
-                    id="settings"
-                    onClick={(e) => handleClose(e)}
-                >
-                    {t("settings")}
                 </MenuItem>
                 <MenuItem
                     className={classes.navLinks}
