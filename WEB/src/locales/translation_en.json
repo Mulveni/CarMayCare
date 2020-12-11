@@ -109,5 +109,8 @@
   "delete_user_account": "Delete user account",
   "btn_delete_user_account": "Delete user account",
   "type_password_to_delete_user": "Type password to delete user account",
-  "no_services_found_for_this_car": "No services found for this car"
+  "no_services_found_for_this_car": "No services found for this car",
+  "service_add": "Service added.",
+  "service_edit": "Service edited.",
+  "button_back": "Back"
 }

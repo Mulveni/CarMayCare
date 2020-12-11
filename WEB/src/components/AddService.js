@@ -61,6 +61,7 @@ const AddService = (props) => {
       waterPumpReplacement, dieselParticulateFilterReplacement} = additionalServices;
 
     const onSubmit = data => {
+      setErrorText(null);
       if(motorOilChange.mocDone === false){
         motorOilChange.longLifeOilUsed = false;
       }
@@ -85,7 +86,8 @@ const AddService = (props) => {
 
         }).then((response) => {
 
-            console.log(response); //-------------------???
+            console.log(response);
+            setErrorText(t('service_add'));
 
         }, (error) => {
 

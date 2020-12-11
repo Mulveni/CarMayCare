@@ -1,4 +1,4 @@
-import {ListItem, ListItemText, Divider, Paper, makeStyles, Typography} from '@material-ui/core';
+import {ListItem, ListItemText, Paper, makeStyles, Typography} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';

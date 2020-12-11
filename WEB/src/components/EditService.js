@@ -218,7 +218,7 @@ const EditService = (props) => {
         }).then((response) => {
 
             console.log(response);
-            props.goToService(0);
+            setErrorText(t('service_edit'));
 
         }, (error) => {
 
@@ -291,8 +291,16 @@ const EditService = (props) => {
 
     return (
       <Card className={classes.background} style={{ marginTop: 10}}>
-        <Grid container item xs={12} direction ="column">
-          <Grid container item direction="row" justify="flex-end" style={{ paddingTop: 25 }} >
+        <Grid container item xs={12} direction ="row">
+          <Grid container item xs={6} direction="row" justify="flex-start" style={{ paddingTop: 25 }} >
+            <Button
+                onClick={() => { props.goToService(0); }}
+                className={classes.defaultButton}
+                style={{ marginTop: 25, marginLeft: 10}}>
+                {t('button_back')}
+              </Button>
+          </Grid>
+          <Grid container item xs={6} direction="row" justify="flex-end" style={{ paddingTop: 25 }} >
               <Button
                 onClick={() => { setFieldsDisabled(fieldsDisabled => !fieldsDisabled) }}
                 className={classes.defaultButton}

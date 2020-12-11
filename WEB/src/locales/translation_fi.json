@@ -109,5 +109,8 @@
     "passwords_dont_match": "Tarkista, että kirjoitit uudet salasanat oikein",
     "delete_user_account": "Käyttäjätilin poisto",
     "btn_delete_user_account": "Poista käyttäjätili",
-    "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili"
+    "type_password_to_delete_user": "Syötä salasana poistaaksesi käyttäjätili",
+    "service_add": "Huolto lisätty.",
+    "service_edit": "Huoltoa muokattu.",
+    "button_back": "Takaisin"
 }
