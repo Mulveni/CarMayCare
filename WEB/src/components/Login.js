@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 const Login = (props) => {
-    const [loginText, setloginText] = useState(null);
+    const [loginText, setLoginText] = useState(null);
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
 
@@ -31,7 +31,7 @@ const Login = (props) => {
             if (props.location.state !== undefined) {
                 if (props.location.state.error !== undefined) {
                     console.log(props.location.state.error);
-                    setloginText(props.location.state.error);
+                    setLoginText(props.location.state.error);
                 }
             }
         }
@@ -63,9 +63,9 @@ const Login = (props) => {
     }
 
     const handleLogin = (e) => {
-        setloginText(null);
+        setLoginText(null);
         if (emailInput.current.value.length < 1 || passwordInput.current.value.length < 1) {
-            setloginText(t('empty_field'));
+            setLoginText(t('empty_field'));
         } else {
             axios.post(`${apiUrl}/login`, null, {
                 auth: {
@@ -80,12 +80,12 @@ const Login = (props) => {
             }).catch(error => {
                 clearInputs();
                 if (error.response === undefined) {
-                    setloginText(t('internal_server_error'));
+                    setLoginText(t('internal_server_error'));
                 } else {
                     if (error.response.data === "Unauthorized") {
-                        setloginText(t('incorrect_login'));
+                        setLoginText(t('incorrect_login'));
                     } else {
-                        setloginText(t('internal_server_error'));
+                        setLoginText(t('internal_server_error'));
                     }
                 }
             });
