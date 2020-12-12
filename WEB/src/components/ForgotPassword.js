@@ -2,11 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideNavButtons } from '../actions';
 import { useTranslation } from 'react-i18next';
-import { TextField, Grid, Button, makeStyles, Card, Typography } from '@material-ui/core';
+import { TextField, Grid, Button, makeStyles, Card, Typography, Link } from '@material-ui/core';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
 import adminUser from '../admin_user.json';
-import { infoText, defaultButton, background } from '../styles/classes';
+import { infoText, defaultButton, background, defaultLink } from '../styles/classes';
+import Loading from './Loading';
 
 const useStyles = makeStyles({
     forgotPasswordGrid: {
@@ -16,12 +17,15 @@ const useStyles = makeStyles({
     },
     background,
     infoText: infoText,
-    defaultButton: defaultButton
+    defaultButton: defaultButton,
+    defaultLink
 });
 
 const ForgotPassword = () => {
-
     const [sent, setSent] = useState(false);
+    const [forgotPasswordText, setForgotPasswordText] = useState(null);
+    const emailInput = useRef(null);
+    const [isLoading, setLoading] = useState(false);
 
     const { t } = useTranslation();
     const classes = useStyles();
@@ -48,8 +52,6 @@ const ForgotPassword = () => {
     }
 
     const ForgotPasswordForm = () => {
-        const [forgotPasswordText, setForgotPasswordText] = useState(null);
-        const emailInput = useRef(null);
 
         const pressKey = (e) => {
             if (e.code === "Enter") {
@@ -65,39 +67,50 @@ const ForgotPassword = () => {
             else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.current.value) === false) {
                 setForgotPasswordText(t('invalid_email'));
             } else {
-                axios.post(`${apiUrl}/login`, null, {
-                    auth: {
-                        username: adminUser.email,
-                        password: adminUser.password
+                setLoading(true);
+                sendEmail(emailInput.current.value);
+            }
+        }
+
+        const sendEmail = (email) => {
+            axios.post(`${apiUrl}/login`, null, {
+                auth: {
+                    username: adminUser.email,
+                    password: adminUser.password
+                }
+            }).then(response => {
+                axios.post(`${apiUrl}/email`, {
+                    email: email,
+                    lng: localStorage.getItem('i18nextLng')
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${response.data.token}`
                     }
                 }).then(response => {
-                    axios.post(`${apiUrl}/email`, {
-                        email: emailInput.current.value,
-                        lng: localStorage.getItem('i18nextLng')
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${response.data.token}`
-                        }
-                    }).then(response => {
-                        if (response.status === 201) {
-                            setSent(true);
-                        } else {
-                            setForgotPasswordText(t('unknown_reason'));
-                        }
-                    }).catch(error => {
-                        if (error.response.status === 400 && error.response.data.message === "User already has valid link.") {
-                            setSent(true);
-                        }
-                        else if (error.response.status === 404 && error.response.data.message === "No user for this email.") {
-                            setSent(true);
-                        } else {
-                            setForgotPasswordText(t('internal_server_error'));
-                        }
-                    });
+                    if (response.status === 201) {
+                        setSent(true);
+                    } else {
+                        setForgotPasswordText(t('unknown_reason'));
+                    }
+                    setLoading(false);
                 }).catch(error => {
-                    setForgotPasswordText(t('internal_server_error'));
+                    if (error.response.status === 400 && error.response.data.message === "User already has valid link.") {
+                        setSent(true);
+                    }
+                    else if (error.response.status === 404 && error.response.data.message === "No user for this email.") {
+                        setSent(true);
+                    } else {
+                        setForgotPasswordText(t('internal_server_error'));
+                    }
+                    setLoading(false);
                 });
-            }
+            }).catch(error => {
+                setForgotPasswordText(t('internal_server_error'));
+                setLoading(false);
+            });
+        }
+        if (isLoading) {
+            return <Loading />;
         }
 
 
@@ -125,12 +138,14 @@ const ForgotPassword = () => {
                                 style={{ marginTop: 50 }}>
                                 {t('send')}
                             </Button>
+                            <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
                         </div>
                     </Grid>
                 </Card>
             </div >
         )
     }
+
 
     return (
         <>

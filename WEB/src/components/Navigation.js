@@ -73,6 +73,11 @@ const useStyles = makeStyles({
         marginRight: 5,
         marginTop: 5,
     },
+    headerLink: {
+        "&:hover": {
+            cursor: "pointer"
+        }
+    }
 });
 
 const Navigation = () => {
@@ -118,6 +123,10 @@ const Navigation = () => {
         setRightMenuOpen(null);
     };
 
+    const handleHeaderClick = () => {
+        history.push("/");
+    }
+
     return (
         <div>
             <AppBar className={classes.header}>
@@ -137,7 +146,7 @@ const Navigation = () => {
 
                     <Grid container justify={"center"}>
                         <div>
-                            <Typography variant="h4">{t("app_name")}</Typography>
+                            <Typography className={classes.headerLink} onClick={handleHeaderClick} variant="h4">{t("app_name")}</Typography>
                             <Typography variant="h5">{t("header")}</Typography>
                         </div>
                     </Grid>

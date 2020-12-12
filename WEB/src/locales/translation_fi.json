@@ -5,7 +5,7 @@
     "profile": "Profiili",
     "settings": "Asetukset",
     "logout": "Kirjaudu ulos",
-    "login": "Kirjaudu sisään",
+    "login_here": "Kirjaudu sisään tästä.",
     "email": "Sähköposti",
     "password": "Salasana",
     "empty_field": "Kenttä ei voi olla tyhjä.",
