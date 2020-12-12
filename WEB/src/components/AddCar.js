@@ -55,7 +55,7 @@ const AddCar = () => {
         setErrorText(t('internal_server_error'))
       }
       else {
-        setErrorText(t('unknown_reason'));
+        setErrorText(t('internal_server_error'));
       }
 
     });

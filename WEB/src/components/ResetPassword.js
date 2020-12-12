@@ -94,7 +94,7 @@ const ResetPassword = () => {
                         setSent(true);
                         setLoading2(false);
                     } else {
-                        setResetPasswordText(t('unknown_reason'));
+                        setResetPasswordText(t('internal_server_error'));
                     }
                 }).catch(error => {
                     if (error.response.status === 404) {
