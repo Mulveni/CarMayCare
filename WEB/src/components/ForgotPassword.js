@@ -90,7 +90,7 @@ const ForgotPassword = () => {
                     if (response.status === 201) {
                         setSent(true);
                     } else {
-                        setForgotPasswordText(t('unknown_reason'));
+                        setForgotPasswordText(t('internal_server_error'));
                     }
                     setLoading(false);
                 }).catch(error => {

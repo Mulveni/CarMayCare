@@ -55,7 +55,7 @@ const AddCar = () => {
         setErrorText(t('internal_server_error'))
       }
       else {
-        setErrorText(t('unknown_reason'));
+        setErrorText(t('internal_server_error'));
       }
 
     });
@@ -81,6 +81,10 @@ const AddCar = () => {
     else if (errors.licenseNumber != null) {
       setErrorText(errors.licenseNumber.message);
     }
+  }
+
+  const handleCancel = () => {
+    history.push("/");
   }
 
   const myToken = useSelector(state => state.tokenReducer);
@@ -198,16 +202,25 @@ const AddCar = () => {
             <Typography className={classes.infoText} variant="body1">
               {errorText}
             </Typography>
-            <Button
-              className={classes.defaultButton}
-              style={{ margin: "auto", marginTop: 25 }}
-              type="submit">
-              {t('button_submit')}
-            </Button>
+            <Grid container justify="center" alignItems="center" style={{ marginTop: 25 }}>
+              <Button
+                className={classes.defaultButton}
+                onClick={handleCancel}
+                style={{ marginRight: 25 }}
+              >
+                {t('button_cancel')}
+              </Button>
+              <Button
+                className={classes.defaultButton}
+                style={{}}
+                type="submit">
+                {t('button_submit')}
+              </Button>
+            </Grid>
           </form>
         </Grid>
       </Card>
-    </div>
+    </div >
   )
 }
 
