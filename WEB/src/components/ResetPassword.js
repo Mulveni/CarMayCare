@@ -72,8 +72,10 @@ const ResetPassword = () => {
     const ResetPasswordContent = () => {
         const [sent, setSent] = useState(false);
         const [resetPasswordText, setResetPasswordText] = useState("");
+        const [isLoading2, setLoading2] = useState(false);
 
         const handleSubmit = () => {
+            setLoading2(true);
             axios.post(`${apiUrl}/login`, null, {
                 auth: {
                     username: adminUser.email,
@@ -90,6 +92,7 @@ const ResetPassword = () => {
                 }).then(response => {
                     if (response.status === 201) {
                         setSent(true);
+                        setLoading2(false);
                     } else {
                         setResetPasswordText(t('unknown_reason'));
                     }
@@ -99,11 +102,16 @@ const ResetPassword = () => {
                     } else {
                         setResetPasswordText(t('internal_server_error'));
                     }
-
+                    setLoading2(false);
                 });
             }).catch(error => {
                 setResetPasswordText(t('internal_server_error'));
+                setLoading2(false);
             });
+        }
+
+        if (isLoading2) {
+            return <Loading />;
         }
 
         return (
