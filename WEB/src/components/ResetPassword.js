@@ -129,7 +129,6 @@ const ResetPassword = () => {
                                 {t('reset_password')}
                             </Button>
                             <Typography className={classes.infoText}>{resetPasswordText}</Typography>
-                            <Link className={classes.defaultLink} style={{ marginBottom: 25 }} href="/login">{t('login_here')}</Link>
                         </Grid>
                     </Card>
 

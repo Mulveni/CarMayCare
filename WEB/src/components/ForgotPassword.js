@@ -45,7 +45,6 @@ const ForgotPassword = () => {
                         <Typography variant="h5">
                             {t('forgot_password_sent_message')}
                         </Typography>
-                        <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
                     </Grid>
                 </Card>
             </div >
