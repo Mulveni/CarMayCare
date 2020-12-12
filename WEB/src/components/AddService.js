@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import baseApiUrl from '../api_url.json';
-import { useForm } from 'react-hook-form';
+import { useForm} from 'react-hook-form';
 import { TextField, Grid, Button, makeStyles, Typography, Card, Checkbox, FormControl, 
          FormControlLabel, FormLabel, FormGroup} from '@material-ui/core';
 import { infoText, defaultButton, background} from '../styles/classes';
@@ -27,8 +27,16 @@ const AddService = (props) => {
     const classes = useStyles();
     const apiUrl = baseApiUrl.url;
     const [errorText, setErrorText] = useState(null);
-    const { register, handleSubmit } = useForm();
 
+    const { register, handleSubmit, reset} = useForm(
+    { defaultValues: 
+      { 
+        description: "",
+        mileAge:"",
+        additionalInformation:""
+      } 
+    });
+   
     const [motorOilChange, setMotorOilChange] = useState({
       mocDone: false,
       longLifeOilUsed: false
@@ -85,6 +93,34 @@ const AddService = (props) => {
           }
 
         }).then((response) => {
+            reset();
+            setMotorOilChange(
+              {
+              mocDone: false,
+              longLifeOilUsed: false
+              }
+            );
+            setAirConditioningService(
+              {
+                acsDone: false,
+                dryer: false
+              }
+            );
+            setAdditionalServices(
+              {
+                sparkPlugReplacement: false,
+                airFilterReplacement: false,
+                cleanAirReplacement: false,
+                fuelFilterReplacement: false,
+                brakeFluidReplacement: false,
+                gearBoxOilReplacement: false,
+                powerSteeringOilReplacement: false,
+                timingBeltReplacement: false,
+                waterPumpReplacement: false,
+                dieselParticulateFilterReplacement: false
+              }
+            );
+
 
             console.log(response);
             setErrorText(t('service_add'));
