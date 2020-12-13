@@ -27,7 +27,8 @@ const useStyles = makeStyles(() => ({
 
 const Register = () => {
   const [errorText, setErrorText] = useState(null);
-  const [submitText, setSubmitText] = useState(null);
+  const [registerDone, setRegisterDone] = useState(false);
+
   const defaultValue = {};
   const apiUrl = baseApiUrl.url;
 
@@ -39,11 +40,10 @@ const Register = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    setSubmitText(null);
     setErrorText(null);
     axios.post(`${apiUrl}/register`, data, {}).then(
       (response) => {
-        setSubmitText(t("successfull_register"));
+        setRegisterDone(true);
       },
       (error) => {
         console.log(error.response.data);
@@ -56,6 +56,7 @@ const Register = () => {
     );
   };
   const onError = (errors, e) => {
+    console.log(errors);
     setErrorText(null);
     if (errors.email != null) {
       setErrorText(errors.email.message);
@@ -69,181 +70,197 @@ const Register = () => {
     dispatch(hideNavButtons());
   }, [dispatch]);
 
+  const RegisterDone = () => {
+    return (
+      <div>
+        <Card className={classes.background} style={{ marginTop: 50 }}>
+          <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
+            <Typography variant="h5">
+              {t("successfull_register")}
+            </Typography>
+            <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
+          </Grid>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <Card className={classes.background} style={{ marginTop: 50 }}>
-        <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
-          <Typography variant="h5">
-            {t('register')}
-          </Typography>
-          <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                pattern: {
-                  value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                  message: t("email_required"),
-                },
-                minLength: 2,
-              })}
-              label={t("email")}
-              name="email"
-            />
-            <Typography className={classes.infoText} variant="body1">
-              {errorText}
+      {!registerDone ?
+        <Card className={classes.background} style={{ marginTop: 50 }}>
+          <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
+            <Typography variant="h5">
+              {t('register')}
             </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: 5,
-              })}
-              id="password"
-              type="password"
-              name="password"
-              label={t("password")}
-            />
-            {errors.password && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("password_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: 5,
-              })}
-              name="phonenumber"
-              label={t("phonenumber")}
-            />
-            {errors.phonenumber && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("phonenumber_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: 2,
-              })}
-              name="firstname"
-              label={t("firstname")}
-            />
-            {errors.firstname && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("firstname_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: 2,
-              })}
-              name="lastname"
-              label={t("lastname")}
-            />
-            {errors.lastname && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("lastname_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: { value: 2, message: t("street_required") },
-              })}
-              name="address.street"
-              label={t("street")}
-            />
-            {errors?.address?.street && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("street_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: { value: 2, message: t("city_required") },
-              })}
-              name="address.city"
-              label={t("city")}
-            />
-            {errors?.address?.city && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("city_required")}
-              </Typography>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register({
-                required: true,
-                minLength: { value: 2, message: t("postcode_required") },
-              })}
-              name="address.postcode"
-              label={t("postcode")}
-            />
-            {errors?.address?.postcode && (
-              <Typography className={classes.infoText} variant="body1">
-                {t("postcode_required")}
-              </Typography>
-            )}
-            <FormControl variant="outlined" margin="normal">
-              <InputLabel id="countries-label">{t("country")}</InputLabel>
-              <Controller
-                style={{ background: Colors.blue2 }}
-                as={
-                  <Select>
-                    <MenuItem value="finland">{t("finland")}</MenuItem>
-                    <MenuItem value="sweden">{t("sweden")}</MenuItem>
-                    <MenuItem value="norway">{t("norway")}</MenuItem>
-                    <MenuItem value="denmark">{t("denmark")}</MenuItem>
-                  </Select>
-                }
-                name="address.country"
-                rules={{ required: true }}
-                control={control}
-                defaultValue=""
+            <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: { value: true, message: t("email_required") },
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: t("email_required"),
+                  },
+                  minLength: { value: 2, message: t("email_required") },
+                })}
+                label={t("email")}
+                name="email"
               />
-              {errors?.address?.country && (
+              <Typography className={classes.infoText} variant="body1" style={{ display: errorText === null ? "none" : "block" }}>
+                {errorText}
+              </Typography>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                id="password"
+                type="password"
+                name="password"
+                label={t("password")}
+              />
+              {errors.password && (
                 <Typography className={classes.infoText} variant="body1">
-                  {t("country_required")}
+                  {t("password_required")}
                 </Typography>
               )}
-              <FormHelperText>
-                {errors?.address?.country && errors?.address?.country.message}
-              </FormHelperText>
-            </FormControl>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                name="phonenumber"
+                label={t("phonenumber")}
+              />
+              {errors.phonenumber && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("phonenumber_required")}
+                </Typography>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: 2,
+                })}
+                name="firstname"
+                label={t("firstname")}
+              />
+              {errors.firstname && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("firstname_required")}
+                </Typography>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: 2,
+                })}
+                name="lastname"
+                label={t("lastname")}
+              />
+              {errors.lastname && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("lastname_required")}
+                </Typography>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: { value: 2, message: t("street_required") },
+                })}
+                name="address.street"
+                label={t("street")}
+              />
+              {errors?.address?.street && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("street_required")}
+                </Typography>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: { value: 2, message: t("city_required") },
+                })}
+                name="address.city"
+                label={t("city")}
+              />
+              {errors?.address?.city && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("city_required")}
+                </Typography>
+              )}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                inputRef={register({
+                  required: true,
+                  minLength: { value: 2, message: t("postcode_required") },
+                })}
+                name="address.postcode"
+                label={t("postcode")}
+              />
+              {errors?.address?.postcode && (
+                <Typography className={classes.infoText} variant="body1">
+                  {t("postcode_required")}
+                </Typography>
+              )}
+              <FormControl variant="outlined" margin="normal">
+                <InputLabel id="countries-label">{t("country")}</InputLabel>
+                <Controller
+                  style={{ background: Colors.blue2 }}
+                  as={
+                    <Select>
+                      <MenuItem value="finland">{t("finland")}</MenuItem>
+                      <MenuItem value="sweden">{t("sweden")}</MenuItem>
+                      <MenuItem value="norway">{t("norway")}</MenuItem>
+                      <MenuItem value="denmark">{t("denmark")}</MenuItem>
+                    </Select>
+                  }
+                  name="address.country"
+                  rules={{ required: true }}
+                  control={control}
+                  defaultValue=""
+                />
+                {errors?.address?.country && (
+                  <Typography className={classes.infoText} variant="body1">
+                    {t("country_required")}
+                  </Typography>
+                )}
+                <FormHelperText>
+                  {errors?.address?.country && errors?.address?.country.message}
+                </FormHelperText>
+              </FormControl>
 
-            <Button
-              className={classes.defaultButton}
-              type="submit"
-              style={{ marginTop: 50 }}
-            >
-              {t("submit")}
-            </Button>
-            <Typography className={classes.infoText} variant="body1">
-              {submitText}
-            </Typography>
-            <Link className={classes.defaultLink} href="/login">
-              {t("login_here")}
-            </Link>
-          </form>
-        </Grid>
-      </Card>
+              <Button
+                className={classes.defaultButton}
+                type="submit"
+                style={{ marginTop: 50 }}
+              >
+                {t("submit")}
+              </Button>
+              <Link className={classes.defaultLink} href="/login">
+                {t("login_here")}
+              </Link>
+            </form>
+          </Grid>
+        </Card>
+        :
+        <RegisterDone />
+      }
     </div>
   );
 };
