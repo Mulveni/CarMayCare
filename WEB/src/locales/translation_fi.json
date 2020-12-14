@@ -105,6 +105,7 @@
     "service_delete_note": "Huolto poistetaan pysyvästi.",
     "no_services_found_for_this_car": "Tälle autolle ei ole huoltoja",
     "password_change_successfull": "Salasanan vaihto onnistui",
+    "wrong_password": "Väärä salasana",
     "change_password": "Vaihda salasana",
     "changed_password": "Salasana vaihdettu",
     "enter_old_password": "Vanha salasana",
