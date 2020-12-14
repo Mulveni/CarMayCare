@@ -72,6 +72,7 @@ const Notes = (data) => {
     }
 
     const handleDelete = (noteId) => {
+        setInfoText(null);
         setDeleteNoteWindow(true);
         setNoteToDelete(parseInt(noteId, 10));
     }

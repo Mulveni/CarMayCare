@@ -626,7 +626,12 @@
             "description": "Not Found"
           }
         },
-        "description": "Delete note of car"
+        "description": "Delete note of car",
+        "security": [
+          {
+            "HTTP-Bearer": []
+          }
+        ]
       },
       "parameters": [
         {
