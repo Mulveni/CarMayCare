@@ -104,6 +104,7 @@
   "service_delete_question": "Are you sure you want to delete the service?",
   "service_delete_note": "The service will be removed permanently.",
   "password_change_successfull": "Password changed successfully",
+  "wrong_password": "Wrong password",
   "change_password": "Change password",
   "changed_password": "Changed password",
   "enter_old_password": "Enter old password",

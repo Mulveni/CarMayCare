@@ -57,24 +57,29 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const [userData, setUserData] = useState({});
-  const [setUserPassword] = useState({});
   const [serverError, setServerError] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [infoText, setInfoText] = useState(null);
+  const [errorText, setErrorText] = useState(null);
   const [openDeleteDialog, setDeleteDialogOpen] = useState(false);
   const [openPasswordDialog, setDialogPasswordOpen] = useState(false);
   const history = useHistory();
 
-  const defaultValue = {};
+
   const apiUrl = baseApiUrl.url;
   const apiToken = useSelector((state) => state.tokenReducer);
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { register, errors, getValues, handleSubmit } = useForm({
-    defaultValue,
+  const { register, errors, getValues, handleSubmit, reset } = useForm({
+    defaultValues: 
+      { 
+        passwordConfirmation: "",
+        passwordOld:"",
+        password:""
+      },
     mode: "onBlur",
   });
 
@@ -113,14 +118,12 @@ const Profile = () => {
           setServerError(true);
           setLoading(false);
         } else {
-          setUserPassword(response.data);
           setLoading(false);
         }
       })
       .catch((error) => {
-        console.log(error);
-        setServerError(true);
-        setLoading(false);
+
+            setErrorText(t("internal_server_error"));
       });
   };
 
@@ -199,9 +202,9 @@ const Profile = () => {
           setDeleteDialogOpen(false);
         } else {
           if (error.response.data === "Unauthorized") {
-            setInfoText(t("incorrect_login"));
+            setErrorText(t("wrong_password"));
           } else {
-            setInfoText(t("internal_server_error"));
+            setErrorText(t("internal_server_error"));
           }
         }
       });
@@ -247,6 +250,8 @@ const Profile = () => {
 
   const handleOnClosePassword = () => {
     setDialogPasswordOpen(false);
+    setErrorText(null);
+    reset();
   };
 
   const handleEdit = () => {
@@ -357,7 +362,12 @@ const Profile = () => {
               <Typography className={classes.infoText} variant="body1">
                 {t("passwords_dont_match")}
               </Typography>
+              
             )}
+            <Typography className={classes.infoText} variant="body1">
+              {errorText}
+            </Typography>
+
             <Button
               justify="center"
               className={classes.defaultButton}
