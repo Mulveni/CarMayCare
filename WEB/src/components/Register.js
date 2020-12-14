@@ -3,13 +3,29 @@ import { useDispatch } from "react-redux";
 import { hideNavButtons } from "../actions";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
-import baseApiUrl from '../api_url.json';
-import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography, Select, FormControl, MenuItem, InputLabel, FormHelperText, Link, Card, Grid } from "@material-ui/core";
-import { infoText, defaultLink, background, defaultButton } from '../styles/classes';
-import Colors from '../styles/colors';
-
+import baseApiUrl from "../api_url.json";
+import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  TextField,
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  FormHelperText,
+  Link,
+  Card,
+  Grid,
+} from "@material-ui/core";
+import {
+  infoText,
+  defaultLink,
+  background,
+  defaultButton,
+} from "../styles/classes";
+import Colors from "../styles/colors";
 
 const useStyles = makeStyles(() => ({
   registerGrid: {
@@ -74,26 +90,43 @@ const Register = () => {
     return (
       <div>
         <Card className={classes.background} style={{ marginTop: 50 }}>
-          <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25, paddingBottom: 25 }}>
-            <Typography variant="h5">
-              {t("successfull_register")}
-            </Typography>
-            <Link className={classes.defaultLink} href="/login">{t('login_here')}</Link>
+          <Grid
+            container
+            item
+            xs={12}
+            direction="column"
+            justify="center"
+            alignItems="center"
+            style={{ paddingTop: 25, paddingBottom: 25 }}
+          >
+            <Typography variant="h5">{t("successfull_register")}</Typography>
+            <Link className={classes.defaultLink} href="/login">
+              {t("login_here")}
+            </Link>
           </Grid>
         </Card>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
-      {!registerDone ?
+      {!registerDone ? (
         <Card className={classes.background} style={{ marginTop: 50 }}>
-          <Grid container item xs={12} direction="column" justify="center" alignItems="center" style={{ paddingTop: 25 }}>
-            <Typography variant="h5">
-              {t('register')}
-            </Typography>
-            <form className={classes.registerGrid} onSubmit={handleSubmit(onSubmit, onError)}>
+          <Grid
+            container
+            item
+            xs={12}
+            direction="column"
+            justify="center"
+            alignItems="center"
+            style={{ paddingTop: 25 }}
+          >
+            <Typography variant="h5">{t("register")}</Typography>
+            <form
+              className={classes.registerGrid}
+              onSubmit={handleSubmit(onSubmit, onError)}
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -108,7 +141,11 @@ const Register = () => {
                 label={t("email")}
                 name="email"
               />
-              <Typography className={classes.infoText} variant="body1" style={{ display: errorText === null ? "none" : "block" }}>
+              <Typography
+                className={classes.infoText}
+                variant="body1"
+                style={{ display: errorText === null ? "none" : "block" }}
+              >
                 {errorText}
               </Typography>
               <TextField
@@ -224,10 +261,10 @@ const Register = () => {
                   style={{ background: Colors.blue2 }}
                   as={
                     <Select>
-                      <MenuItem value="finland">{t("finland")}</MenuItem>
-                      <MenuItem value="sweden">{t("sweden")}</MenuItem>
-                      <MenuItem value="norway">{t("norway")}</MenuItem>
-                      <MenuItem value="denmark">{t("denmark")}</MenuItem>
+                      <MenuItem value="Finland">{t("finland")}</MenuItem>
+                      <MenuItem value="Sweden">{t("sweden")}</MenuItem>
+                      <MenuItem value="Norway">{t("norway")}</MenuItem>
+                      <MenuItem value="Denmark">{t("denmark")}</MenuItem>
                     </Select>
                   }
                   name="address.country"
@@ -258,9 +295,9 @@ const Register = () => {
             </form>
           </Grid>
         </Card>
-        :
+      ) : (
         <RegisterDone />
-      }
+      )}
     </div>
   );
 };
